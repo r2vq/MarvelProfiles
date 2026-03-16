@@ -1,0 +1,66 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 6
+    },
+    "agility": {
+      "ability": 1,
+      "defense": 15,
+      "noncombat": 1
+    },
+    "resilience": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "damage": {
+    "melee": {
+      "multiplier": 4,
+      "ability": 5
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 1
+    },
+    "ego": {
+      "multiplier": 2,
+      "ability": 0
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 0
+    }
+  },
+  "focus": 20,
+  "health": 30,
+  "initiative": {
+    "value": 3,
+    "edge": true
+  },
+  "karma": 1,
+  "name": "Character Name",
+  "photoUrl": "https://picsum.photos/200",
+  "powers": [0, 2, 5, 10],
+  "rank": 1,
+  "secretIdentity": "Secret Identity",
+  "tags": [1, 2],
+  "traits": [3, 4, 9]
+}

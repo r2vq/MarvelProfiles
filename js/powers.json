@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Brawling 0",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 0
+  },
+  {
+    "name": "Brawling 1",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 1
+  },
+  {
+    "name": "Brawling 2",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 2
+  },
+  {
+    "name": "Brawling 3",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 3
+  },
+  {
+    "name": "Brawling 4",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 4
+  },
+  {
+    "name": "Brawling 5",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 5
+  },
+  {
+    "name": "Brawling 6",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 6
+  },
+  {
+    "name": "Brawling 7",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 7
+  },
+  {
+    "name": "Brawling 8",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 8
+  },
+  {
+    "name": "Brawling 9",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 9
+  },
+  {
+    "name": "Brawling 10",
+    "description": "The character has the moves and is hard to hit.",
+    "focus": 10
+  }
+]

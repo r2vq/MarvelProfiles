@@ -10,7 +10,11 @@
         grid-template-columns: repeat(4, 1fr);
       }
 
-      .damage-grid {
+      .content {
+        display: contents;
+      }
+
+      #damage-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
       }
@@ -19,25 +23,21 @@
         font-weight: bold;
       }
 
-      .grid-row {
-        display: contents;
-      }
-
-      .grid-row .label {
+      .label {
         font-weight: bold;
       }
 
-      .powers-grid {
+      #powers-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
       }
 
-      .tags-grid {
+      #tags-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .traits-grid {
+      #traits-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
       }
@@ -46,31 +46,31 @@
   <body>
     <header>
       <section id="character-id">
-        <h1 id="character-name">Character Name</h1>
-        <h2 id="secret-identity">Secret Identity</h2>
-        <img src="https://picsum.photos/200" id="character-photo" />
+        <h1 id="character-name"></h1>
+        <h2 id="secret-identity"></h2>
+        <img id="character-photo" />
       </section>
 
       <section id="stats-container">
         <div class="stat-card" id="stat-rank">
-          <span class="stat-label">Rank</span>
-          <span class="stat-value">0</span>
+          <span class="label">Rank</span>
+          <span class="value">0</span>
         </div>
         <div class="stat-card" id="stat-karma">
-          <span class="stat-label">Karma</span>
-          <span class="stat-value">0</span>
+          <span class="label">Karma</span>
+          <span class="value">0</span>
         </div>
         <div class="stat-card" id="stat-health">
-          <span class="stat-label">Health</span>
-          <span class="stat-value">0</span>
+          <span class="label">Health</span>
+          <span class="value">0</span>
         </div>
         <div class="stat-card" id="stat-focus">
-          <span class="stat-label">Focus</span>
-          <span class="stat-value">0</span>
+          <span class="label">Focus</span>
+          <span class="value">0</span>
         </div>
         <div class="stat-card" id="stat-init">
-          <span class="stat-label">Initiative</span>
-          <span class="stat-value">0</span>
+          <span class="label">Initiative</span>
+          <span class="value">0</span>
         </div>
       </section>
     </header>
@@ -78,83 +78,18 @@
     <main>
       <section id="traits">
         <h1>Traits</h1>
-        <div class="traits-grid">
+        <div id="traits-grid">
           <div class="grid-header">Name</div>
           <div class="grid-header">Description</div>
-
-          <!-- Example Delete These -->
-          <div class="grid-row">
-            <div class="trait-label">Gearhead</div>
-            <div class="trait-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="trait-label">Gearhead</div>
-            <div class="trait-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="trait-label">Gearhead</div>
-            <div class="trait-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="trait-label">Gearhead</div>
-            <div class="trait-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="trait-label">Gearhead</div>
-            <div class="trait-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <!-- End of Example -->
+          <div class="content"></div>
         </div>
       </section>
 
       <section id="tags">
         <h1>Tags</h1>
-        <div class="tags-grid">
+        <div id="tags-grid">
           <div class="grid-header">Name</div>
           <div class="grid-header">Description</div>
-
-          <!-- Example Delete These -->
-          <div class="grid-row">
-            <div class="tag-label">Gearhead</div>
-            <div class="tag-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="tag-label">Gearhead</div>
-            <div class="tag-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="tag-label">Gearhead</div>
-            <div class="tag-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="tag-label">Gearhead</div>
-            <div class="tag-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <div class="grid-row">
-            <div class="tag-label">Gearhead</div>
-            <div class="tag-value">
-              The character knows their way around machines.
-            </div>
-          </div>
-          <!-- End of Example -->
         </div>
       </section>
 
@@ -166,42 +101,42 @@
           <div class="grid-header">Defense</div>
           <div class="grid-header">Non-Combat</div>
 
-          <div class="grid-row" id="ability-row-melee">
+          <div class="content" id="ability-row-melee">
             <div class="label">Melee</div>
             <div class="ability">0</div>
             <div class="defense">0</div>
             <div class="noncombat">+0</div>
           </div>
 
-          <div class="grid-row" id="ability-row-agility">
+          <div class="content" id="ability-row-agility">
             <div class="label">Agility</div>
             <div class="ability">0</div>
             <div class="defense">0</div>
             <div class="noncombat">+0</div>
           </div>
 
-          <div class="grid-row" id="ability-row-resilience">
+          <div class="content" id="ability-row-resilience">
             <div class="label">Resilience</div>
             <div class="ability">0</div>
             <div class="defense">0</div>
             <div class="noncombat">+0</div>
           </div>
 
-          <div class="grid-row" id="ability-row-vigilance">
+          <div class="content" id="ability-row-vigilance">
             <div class="label">Vigilance</div>
             <div class="ability">0</div>
             <div class="defense">0</div>
             <div class="noncombat">+0</div>
           </div>
 
-          <div class="grid-row" id="ability-row-ego">
+          <div class="content" id="ability-row-ego">
             <div class="label">Ego</div>
             <div class="ability">0</div>
             <div class="defense">0</div>
             <div class="noncombat">+0</div>
           </div>
 
-          <div class="grid-row" id="ability-row-logic">
+          <div class="content" id="ability-row-logic">
             <div class="label">Logic</div>
             <div class="ability">0</div>
             <div class="defense">0</div>
@@ -212,29 +147,29 @@
 
       <section id="damage">
         <h1>Damage</h1>
-        <div class="damage-grid">
-          <div class="grid-row" id="damage-row-melee">
+        <div id="damage-grid">
+          <div class="content" id="damage-row-melee">
             <div class="label">Melee</div>
             <div class="multiplier">0</div>
             <div class="text">+</div>
             <div class="ability">0</div>
           </div>
 
-          <div class="grid-row" id="damage-row-agility">
+          <div class="content" id="damage-row-agility">
             <div class="label">Agility</div>
             <div class="multiplier">0</div>
             <div class="text">+</div>
             <div class="ability">0</div>
           </div>
 
-          <div class="grid-row" id="damage-row-ego">
+          <div class="content" id="damage-row-ego">
             <div class="label">Ego</div>
             <div class="multiplier">0</div>
             <div class="text">+</div>
             <div class="ability">0</div>
           </div>
 
-          <div class="grid-row" id="damage-row-logic">
+          <div class="content" id="damage-row-logic">
             <div class="label">Logic</div>
             <div class="multiplier">0</div>
             <div class="text">+</div>
@@ -246,58 +181,14 @@
       <section id="powers">
         <h1>Powers</h1>
 
-        <div class="powers-grid">
+        <div id="powers-grid">
           <div class="grid-header">Name</div>
           <div class="grid-header">Description</div>
           <div class="grid-header">Focus</div>
-
-          <!-- Example Delete These -->
-          <div class="grid-row">
-            <div class="label">Brawling</div>
-            <div class="description">
-              The character has the moves and is hard to hit.
-            </div>
-            <div class="focus">--</div>
-          </div>
-
-          <div class="grid-row">
-            <div class="label">Brawling</div>
-            <div class="description">
-              The character has the moves and is hard to hit.
-            </div>
-            <div class="focus">--</div>
-          </div>
-
-          <div class="grid-row">
-            <div class="label">Brawling</div>
-            <div class="description">
-              The character has the moves and is hard to hit.
-            </div>
-            <div class="focus">--</div>
-          </div>
-
-          <div class="grid-row">
-            <div class="label">Brawling</div>
-            <div class="description">
-              The character has the moves and is hard to hit.
-            </div>
-            <div class="focus">--</div>
-          </div>
-
-          <div class="grid-row">
-            <div class="label">Brawling</div>
-            <div class="description">
-              The character has the moves and is hard to hit.
-            </div>
-            <div class="focus">--</div>
-          </div>
-          <!-- End of Example -->
         </div>
       </section>
     </main>
 
-    <script>
-      console.log("Hello world!");
-    </script>
+    <script src="./js/script.js" type="module" />
   </body>
 </html>
