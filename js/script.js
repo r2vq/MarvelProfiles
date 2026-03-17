@@ -1,7 +1,11 @@
 const tags = await fetch("./js/tags.json").then((response) => response.json());
 const traits = await fetch("./js/traits.json").then((response) => response.json());
 const powers = await fetch("./js/powers.json").then((response) => response.json());
-const profile = await fetch("./js/profile.json").then((response) => response.json());
+
+const urlParams = new URLSearchParams(window.location.search);
+const profileId = urlParams.get("c");
+
+const profile = await fetch(`./js/profile-${profileId}.json`).then((response) => response.json());
 
 const select = function(selector) {
     return document.querySelector(selector);
@@ -74,11 +78,11 @@ HTMLElement.prototype.select = function (selector) {
 
       const rowDescription = document.createElement("div");
       rowDescription.classList.add("power-value");
-      rowDescription.innerHTML = power.description;
+      rowDescription.innerHTML = power.text;
 
       const rowFocus = document.createElement("div");
       rowFocus.classList.add("power-focus");
-      rowFocus.innerHTML = `${power.focus == 0 ? "--" : power.focus}`;
+      rowFocus.innerHTML = `${power.cost == 0 ? "--" : power.cost}`;
 
       const gridRow = document.createElement("div");
       gridRow.classList.add("content");
