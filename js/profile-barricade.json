@@ -1,0 +1,69 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 6
+    },
+    "agility": {
+      "ability": 0,
+      "defense": 15,
+      "noncombat": 0
+    },
+    "resilience": {
+      "ability": 6,
+      "defense": 16,
+      "noncombat": 6
+    },
+    "vigilance": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "ego": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "logic": {
+      "ability": -1,
+      "defense": 9,
+      "noncombat": -1
+    }
+  },
+  "color": 4857611,
+  "damage": {
+    "melee": {
+      "multiplier": 4,
+      "ability": 12
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 0
+    },
+    "ego": {
+      "multiplier": 3,
+      "ability": 1
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": -1
+    }
+  },
+  "damageReduction": -2,
+  "focus": 120,
+  "health": 180,
+  "initiative": {
+    "value": 4,
+    "edge": false
+  },
+  "karma": 3,
+  "name": "Barricade",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/barricade.jpeg",
+  "powers": [14, 29, 37, 50, 75, 92, 96, 123, 135, 146, 163, 172],
+  "rank": 3,
+  "secretIdentity": "Elias Kaine",
+  "tags": [7, 8, 13, 23, 40, 53, 54],
+  "theme": "theme-barricade",
+  "traits": [12, 18, 35, 37, 57]
+}
