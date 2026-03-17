@@ -5,49 +5,233 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MMRPG Profile</title>
     <style>
-      .ability-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+      /* --- THEME VARIABLES --- */
+      :root {
+        --accent-color: #3b82f6;
+        --bg-card: #ffffff;
+        --bg-header: #e4e4e7;
+        --bg-main: #f4f4f5;
+        --border-color: #d4d4d8;
+        --border-radius: 8px;
+        --spacing-lg: 24px;
+        --spacing-md: 16px;
+        --spacing-sm: 8px;
+        --text-primary: #18181b;
+        --text-secondary: #52525b;
+        --touch-target: 48px;
+      }
+
+      .theme-dark {
+        --bg-main: #09090b;
+        --bg-card: #18181b;
+        --bg-header: #27272a;
+        --text-primary: #f4f4f5;
+        --text-secondary: #a1a1aa;
+        --border-color: #3f3f46;
+        --accent-color: #60a5fa;
+      }
+
+      /* --- BASE STYLES --- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: var(--bg-main);
+        color: var(--text-primary);
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        line-height: 1.5;
+        padding: var(--spacing-md);
+      }
+
+      main,
+      header {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin: 0 auto;
+        max-width: 800px;
+      }
+
+      header {
+        margin-bottom: var(--spacing-lg);
+      }
+
+      /* --- HEADER & ID SECTIONS --- */
+      #character-id {
+        background: var(--bg-card);
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+        padding: var(--spacing-md);
+        text-align: center;
       }
 
       #character-photo {
-        max-width: 90vw;
+        border-radius: var(--border-radius);
+        margin-top: var(--spacing-sm);
+        object-fit: contain;
+        max-height: 500px;
+        max-width: 100%;
       }
 
-      .content {
-        display: contents;
+      #stats-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        justify-content: space-between;
       }
 
-      #damage-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+      .stat-card {
+        background: var(--bg-card);
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 calc(20% - var(--spacing-sm));
+        justify-content: center;
+        min-height: var(--touch-target);
+        min-width: 80px;
+        padding: var(--spacing-sm);
+        text-align: center;
       }
 
-      .grid-header {
+      /* --- COLLAPSIBLE SECTIONS --- */
+      .collapsible-section {
+        background-color: var(--bg-card);
+        border-radius: var(--border-radius);
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+      }
+
+      .collapsible-section summary {
+        align-items: center;
+        background-color: var(--bg-header);
+        cursor: pointer;
+        display: flex;
+        font-size: 1.25rem;
         font-weight: bold;
+        min-height: var(--touch-target);
+        padding: 0 var(--spacing-md);
+        user-select: none;
+      }
+
+      .collapsible-content {
+        padding: var(--spacing-md);
+      }
+
+      /* --- GRIDS --- */
+      .grid-header {
+        border-bottom: 2px solid var(--border-color);
+        color: var(--text-secondary);
+        font-weight: bold;
+        margin-bottom: var(--spacing-sm);
+        padding-bottom: var(--spacing-sm);
+        font-size: small;
       }
 
       .label {
         font-weight: bold;
       }
 
-      #powers-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+      .content {
+        display: contents; /* Allows children to participate in the parent grid */
       }
 
-      #tags-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-      }
-
+      /* Common Grid Layouts */
+      .ability-grid,
+      #damage-grid,
+      #powers-grid,
+      #tags-grid,
       #traits-grid {
+        align-items: center;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm) var(--spacing-md);
+      }
+
+      /* Fix: Target the individual cells inside .content, NOT the .content wrapper itself */
+      .ability-grid > .grid-header,
+      .ability-grid > .content > div,
+      #damage-grid > .content > div {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        min-height: calc(var(--touch-target) * 0.8);
+      }
+
+      /* Specific Grid Columns */
+      .ability-grid {
+        grid-template-columns: repeat(4, 1fr); /* Restored your 4 column layout */
+        text-align: center;
+      }
+      .ability-grid .label,
+      #damage-grid > .label,
+      .ability-grid .grid-header:first-child {
+        justify-content: flex-start;
+      }
+
+      #damage-grid {
+        grid-template-columns: repeat(4, 1fr); /* Restored your 4 column layout */
+      }
+
+      #powers-grid {
+        grid-template-columns: 1fr 80px; /* Name/Desc gets remaining space, Focus gets 80px */
+        row-gap: 2px; /* Tighter vertical spacing between a Name and its Description */
+      }
+
+      /* Grid placement rules for the Powers section */
+      #powers-grid .power-name {
+        grid-column: 1;
+      }
+
+      #powers-grid .power-desc {
+        color: var(--text-secondary);
+        font-weight: normal;
+        grid-column: 1 / -1;
+        margin-bottom: var(--spacing-lg);
+      }
+
+      #powers-grid .power-focus {
+        font-size: small;
+        grid-column: 2;
+        text-align: center;
+      }
+
+      /* Clean up the headers so Name and Desc look attached */
+      #powers-grid .grid-header.power-name, #powers-grid .grid-header.power-focus {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+
+      #tags-grid,
+      #traits-grid {
+        grid-template-columns: repeat(2, 1fr); /* Restored your 2 column layout */
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 600px) {
+        .stat-card {
+          flex: 1 1 30%;
+        }
+
+        .collapsible-content {
+          padding: var(--spacing-sm);
+        }
+
+        .ability-grid,
+        #damage-grid {
+          font-size: 0.9rem;
+          gap: var(--spacing-sm) 4px;
+        }
       }
     </style>
   </head>
-  <body>
+  <body class="theme-dark">
     <header>
       <section id="character-id">
         <h1 id="character-name"></h1>
@@ -80,119 +264,130 @@
     </header>
 
     <main>
-      <section id="traits">
-        <h1>Traits</h1>
-        <div id="traits-grid">
-          <div class="grid-header">Name</div>
-          <div class="grid-header">Description</div>
-          <div class="content"></div>
-        </div>
-      </section>
-
-      <section id="tags">
-        <h1>Tags</h1>
-        <div id="tags-grid">
-          <div class="grid-header">Name</div>
-          <div class="grid-header">Description</div>
-        </div>
-      </section>
-
-      <section id="abilities">
-        <h1>Abilities</h1>
-        <div class="ability-grid">
-          <div class="grid-header">&nbsp;</div>
-          <div class="grid-header">Ability</div>
-          <div class="grid-header">Defense</div>
-          <div class="grid-header">Non-Combat</div>
-
-          <div class="content" id="ability-row-melee">
-            <div class="label">Melee</div>
-            <div class="ability">0</div>
-            <div class="defense">0</div>
-            <div class="noncombat">+0</div>
-          </div>
-
-          <div class="content" id="ability-row-agility">
-            <div class="label">Agility</div>
-            <div class="ability">0</div>
-            <div class="defense">0</div>
-            <div class="noncombat">+0</div>
-          </div>
-
-          <div class="content" id="ability-row-resilience">
-            <div class="label">Resilience</div>
-            <div class="ability">0</div>
-            <div class="defense">0</div>
-            <div class="noncombat">+0</div>
-          </div>
-
-          <div class="content" id="ability-row-vigilance">
-            <div class="label">Vigilance</div>
-            <div class="ability">0</div>
-            <div class="defense">0</div>
-            <div class="noncombat">+0</div>
-          </div>
-
-          <div class="content" id="ability-row-ego">
-            <div class="label">Ego</div>
-            <div class="ability">0</div>
-            <div class="defense">0</div>
-            <div class="noncombat">+0</div>
-          </div>
-
-          <div class="content" id="ability-row-logic">
-            <div class="label">Logic</div>
-            <div class="ability">0</div>
-            <div class="defense">0</div>
-            <div class="noncombat">+0</div>
+      <details id="traits" class="collapsible-section">
+        <summary>Traits</summary>
+        <div class="collapsible-content">
+          <div id="traits-grid">
+            <div class="grid-header">Name</div>
+            <div class="grid-header">Description</div>
+            <div class="content"></div>
           </div>
         </div>
-      </section>
+      </details>
 
-      <section id="damage">
-        <h1>Damage</h1>
-        <div id="damage-grid">
-          <div class="content" id="damage-row-melee">
-            <div class="label">Melee</div>
-            <div class="multiplier">0</div>
-            <div class="text">+</div>
-            <div class="ability">0</div>
-          </div>
-
-          <div class="content" id="damage-row-agility">
-            <div class="label">Agility</div>
-            <div class="multiplier">0</div>
-            <div class="text">+</div>
-            <div class="ability">0</div>
-          </div>
-
-          <div class="content" id="damage-row-ego">
-            <div class="label">Ego</div>
-            <div class="multiplier">0</div>
-            <div class="text">+</div>
-            <div class="ability">0</div>
-          </div>
-
-          <div class="content" id="damage-row-logic">
-            <div class="label">Logic</div>
-            <div class="multiplier">0</div>
-            <div class="text">+</div>
-            <div class="ability">0</div>
+      <details id="tags" class="collapsible-section">
+        <summary>Tags</summary>
+        <div class="collapsible-content">
+          <div id="tags-grid">
+            <div class="grid-header">Name</div>
+            <div class="grid-header">Description</div>
           </div>
         </div>
-      </section>
+      </details>
 
-      <section id="powers">
-        <h1>Powers</h1>
+      <details id="abilities" class="collapsible-section" open>
+        <summary>Abilities</summary>
+        <div class="collapsible-content">
+          <div class="ability-grid">
+            <div class="grid-header">&nbsp;</div>
+            <div class="grid-header">Ability</div>
+            <div class="grid-header">Defense</div>
+            <div class="grid-header">Non-Combat</div>
 
-        <div id="powers-grid">
-          <div class="grid-header">Name</div>
-          <div class="grid-header">Description</div>
-          <div class="grid-header">Focus</div>
+            <div class="content" id="ability-row-melee">
+              <div class="label">Melee</div>
+              <div class="ability">0</div>
+              <div class="defense">0</div>
+              <div class="noncombat">+0</div>
+            </div>
+
+            <div class="content" id="ability-row-agility">
+              <div class="label">Agility</div>
+              <div class="ability">0</div>
+              <div class="defense">0</div>
+              <div class="noncombat">+0</div>
+            </div>
+
+            <div class="content" id="ability-row-resilience">
+              <div class="label">Resilience</div>
+              <div class="ability">0</div>
+              <div class="defense">0</div>
+              <div class="noncombat">+0</div>
+            </div>
+
+            <div class="content" id="ability-row-vigilance">
+              <div class="label">Vigilance</div>
+              <div class="ability">0</div>
+              <div class="defense">0</div>
+              <div class="noncombat">+0</div>
+            </div>
+
+            <div class="content" id="ability-row-ego">
+              <div class="label">Ego</div>
+              <div class="ability">0</div>
+              <div class="defense">0</div>
+              <div class="noncombat">+0</div>
+            </div>
+
+            <div class="content" id="ability-row-logic">
+              <div class="label">Logic</div>
+              <div class="ability">0</div>
+              <div class="defense">0</div>
+              <div class="noncombat">+0</div>
+            </div>
+          </div>
         </div>
-      </section>
+      </details>
+
+      <details id="damage" class="collapsible-section" open>
+        <summary>Damage</summary>
+        <div class="collapsible-content">
+          <div id="damage-grid">
+            <div class="content" id="damage-row-melee">
+              <div class="label">Melee</div>
+              <div class="multiplier">0</div>
+              <div class="text">+</div>
+              <div class="ability">0</div>
+            </div>
+
+            <div class="content" id="damage-row-agility">
+              <div class="label">Agility</div>
+              <div class="multiplier">0</div>
+              <div class="text">+</div>
+              <div class="ability">0</div>
+            </div>
+
+            <div class="content" id="damage-row-ego">
+              <div class="label">Ego</div>
+              <div class="multiplier">0</div>
+              <div class="text">+</div>
+              <div class="ability">0</div>
+            </div>
+
+            <div class="content" id="damage-row-logic">
+              <div class="label">Logic</div>
+              <div class="multiplier">0</div>
+              <div class="text">+</div>
+              <div class="ability">0</div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details id="powers" class="collapsible-section" open>
+        <summary>Powers</summary>
+        <div class="collapsible-content">
+          <div id="powers-grid">
+            <div class="grid-header power-name">Name</div>
+            <div class="grid-header power-focus">Focus</div>
+            <div class="grid-header power-desc">Description</div>
+
+            <div class="content"></div>
+          </div>
+        </div>
+      </details>
     </main>
 
-    <script src="./js/script.js" type="module" />
+    <script src="./js/script.js" type="module"></script>
   </body>
 </html>

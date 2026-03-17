@@ -73,11 +73,12 @@ HTMLElement.prototype.select = function (selector) {
       const power = powers[i];
 
       const rowTitle = document.createElement("div");
-      rowTitle.classList.add("power-label");
+      rowTitle.classList.add("label");
+      rowTitle.classList.add("power-name");
       rowTitle.innerHTML = power.name;
 
       const rowDescription = document.createElement("div");
-      rowDescription.classList.add("power-value");
+      rowDescription.classList.add("power-desc");
       rowDescription.innerHTML = power.text;
 
       const rowFocus = document.createElement("div");
@@ -87,8 +88,8 @@ HTMLElement.prototype.select = function (selector) {
       const gridRow = document.createElement("div");
       gridRow.classList.add("content");
       gridRow.appendChild(rowTitle);
-      gridRow.appendChild(rowDescription);
       gridRow.appendChild(rowFocus);
+      gridRow.appendChild(rowDescription);
 
       powersGrid.appendChild(gridRow);
     });
