@@ -1,0 +1,64 @@
+:root {
+  --accent-color: #3b82f6;
+  --bg-card: #ffffff;
+  --bg-header: #e4e4e7;
+  --bg-main: #f4f4f5;
+  --border-color: #d4d4d8;
+  --border-radius: 8px;
+  --spacing-lg: 24px;
+  --spacing-md: 16px;
+  --spacing-sm: 8px;
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --touch-target: 48px;
+}
+
+.theme-barricade {
+  --bg-main: #4a1f0b;
+  --bg-card: #18181b;
+  --bg-header: #d07030;
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --border-color: #d07030;
+  --accent-color: #fa5050;
+}
+
+.theme-bulwark {
+  --bg-main: #2c699e;
+  --bg-card: #505058;
+  --bg-header: #361775;
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --border-color: #c02020;
+  --accent-color: #fa5050;
+}
+
+.theme-dark {
+  --bg-main: #09090b;
+  --bg-card: #18181b;
+  --bg-header: #27272a;
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --border-color: #3f3f46;
+  --accent-color: #60a5fa;
+}
+
+.theme-lupin {
+  --bg-main: #600b0b;
+  --bg-card: #ffffff;
+  --bg-header: #e0e0e0;
+  --text-primary: #18181b;
+  --text-secondary: #a1a1aa;
+  --border-color: #ff0b0b;
+  --accent-color: #4a1f0b;
+}
+
+.theme-vael {
+  --bg-main: #300b60;
+  --bg-card: #18181b;
+  --bg-header: #201830;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a1a1aa;
+  --border-color: #602090;
+  --accent-color: #900fd0;
+}

@@ -27,6 +27,8 @@ HTMLElement.prototype.select = function (selector) {
     select("#stat-focus > .value").innerText = profile.focus;
     select("#stat-init > .value").innerText = buildInitiative(profile.initiative);
 
+    select("body").className = profile.theme;
+
     renderTraits(profile.traits);
     renderTags(profile.tags);
 
