@@ -5,26 +5,35 @@ const powers = await fetch("./js/powers.json").then((response) => response.json(
 const urlParams = new URLSearchParams(window.location.search);
 const profileId = urlParams.get("c");
 
-const profile = await fetch(`./js/profile-${profileId}.json`).then((response) => response.json());
+// Retrieve the profile JSON or null if we don't have a query parameter.
+const profile = profileId ? await fetch(`./js/profile-${profileId}.json`).then((response) => response.json()) : null;
 
-const select = function(selector) {
-    return document.querySelector(selector);
+/**
+ * Helper function so I don't have to type in document.querySelector everywhere.
+ */
+const select = function (selector) {
+  return document.querySelector(selector);
 };
 
+/**
+ * Helper function so I don't have to type Element.querySelector everywhere.
+ */
 HTMLElement.prototype.select = function (selector) {
   return this.querySelector(selector);
 };
 
 (() => {
   function main() {
+    if (!profile) return; // Profile is null. No character found.
+
     select("#character-name").innerText = profile.name;
     select("#secret-identity").innerText = profile.secretIdentity;
     select("#character-photo").src = profile.photoUrl;
 
     select("#stat-rank > .value").innerText = profile.rank;
-    select("#stat-karma > .value").innerText = profile.karma;
-    select("#stat-health > .value").innerText = profile.health;
-    select("#stat-focus > .value").innerText = profile.focus;
+    select("#stat-karma > .value").innerText = `${profile.karma} / ${profile.karma}`;
+    select("#stat-health > .value").innerText = `${profile.health} / ${profile.health}`;
+    select("#stat-focus > .value").innerText = `${profile.focus} / ${profile.focus}`;
     select("#stat-init > .value").innerText = buildInitiative(profile.initiative);
 
     select("body").className = profile.theme;
@@ -57,7 +66,7 @@ HTMLElement.prototype.select = function (selector) {
   }
 
   function renderDamage(view, damage) {
-    view.querySelector(".multiplier").innerText = damage.multiplier;
+    view.querySelector(".multiplier").innerText = `Marvel X ${damage.multiplier}`;
     view.querySelector(".ability").innerText = damage.ability;
   }
 
