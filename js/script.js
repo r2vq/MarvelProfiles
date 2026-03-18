@@ -1,154 +1,164 @@
-const tags = await fetch("./js/tags.json").then((response) => response.json());
-const traits = await fetch("./js/traits.json").then((response) => response.json());
-const powers = await fetch("./js/powers.json").then((response) => response.json());
-
-const urlParams = new URLSearchParams(window.location.search);
-const profileId = urlParams.get("c");
-
-// Retrieve the profile JSON or null if we don't have a query parameter.
-const profile = profileId ? await fetch(`./js/profile-${profileId}.json`).then((response) => response.json()) : null;
-
 /**
- * Helper function so I don't have to type in document.querySelector everywhere.
+ * Helper function to select elements.
+ * Pass a parent element to scope the search, otherwise it defaults to the whole document.
  */
-const select = function (selector) {
-  return document.querySelector(selector);
-};
+const select = (selector, parent = document) => parent.querySelector(selector);
 
-/**
- * Helper function so I don't have to type Element.querySelector everywhere.
- */
-HTMLElement.prototype.select = function (selector) {
-  return this.querySelector(selector);
-};
+async function init() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const profileId = urlParams.get("c");
 
-(() => {
-  function main() {
-    if (!profile) return; // Profile is null. No character found.
-
-    select("#character-name").innerText = profile.name;
-    select("#secret-identity").innerText = profile.secretIdentity;
-    select("#character-photo").src = profile.photoUrl;
-
-    select("#stat-rank > .value").innerText = profile.rank;
-    select("#stat-karma > .value").innerText = `${profile.karma} / ${profile.karma}`;
-    select("#stat-health > .value").innerText = `${profile.health} / ${profile.health}`;
-    select("#stat-focus > .value").innerText = `${profile.focus} / ${profile.focus}`;
-    select("#stat-init > .value").innerText = buildInitiative(profile.initiative);
-
-    select("body").className = profile.theme;
-
-    renderTraits(profile.traits);
-    renderTags(profile.tags);
-
-    renderAbilities(profile.abilities);
-    renderDamages(profile.damage);
-    renderPowers(profile.powers);
+  if (!profileId) {
+    console.warn("No character ID provided.");
+    return;
   }
 
-  function buildInitiative(initiative) {
-    return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
+  try {
+    const [tags, traits, powers, profile] = await Promise.all([
+      fetch("./js/tags.json").then((res) => res.json()),
+      fetch("./js/traits.json").then((res) => res.json()),
+      fetch("./js/powers.json").then((res) => res.json()),
+      fetch(`./js/profile-${profileId}.json`).then((res) => res.json()),
+    ]);
+    buildCharacterSheet(profile, tags, traits, powers);
+  } catch (error) {
+    console.error("Failed to load data:", error);
   }
+}
 
-  function renderAbility(view, value) {
-    view.select(".ability").innerText = value.ability;
-    view.select(".defense").innerText = value.defense;
-    view.select(".noncombat").innerText = `+${value.noncombat}`;
-  }
+function buildCharacterSheet(profile, tagsData, traitsData, powersData) {
+  select("#character-name").textContent = profile.name;
+  select("#secret-identity").textContent = profile.secretIdentity;
+  select("#character-photo").src = profile.photoUrl;
 
-  function renderAbilities(abilities) {
-    renderAbility(select("#ability-row-melee"), abilities.melee);
-    renderAbility(select("#ability-row-agility"), abilities.agility);
-    renderAbility(select("#ability-row-resilience"), abilities.resilience);
-    renderAbility(select("#ability-row-vigilance"), abilities.vigilance);
-    renderAbility(select("#ability-row-ego"), abilities.ego);
-    renderAbility(select("#ability-row-logic"), abilities.logic);
-  }
+  select(".value", select("#stat-rank")).textContent = profile.rank;
+  select(".value", select("#stat-karma")).textContent = `${profile.karma} / ${profile.karma}`;
+  select(".value", select("#stat-health")).textContent = `${profile.health} / ${profile.health}`;
+  select(".value", select("#stat-focus")).textContent = `${profile.focus} / ${profile.focus}`;
+  select(".value", select("#stat-init")).textContent = buildInitiative(profile.initiative);
 
-  function renderDamage(view, damage) {
-    view.querySelector(".multiplier").innerText = `Marvel X ${damage.multiplier}`;
-    view.querySelector(".ability").innerText = damage.ability;
-  }
+  document.body.className = profile.theme;
 
-  function renderDamages(damage) {
-    const damageGrid = select("#damage-grid");
-    renderDamage(damageGrid.select("#damage-row-melee"), damage.melee);
-    renderDamage(damageGrid.select("#damage-row-agility"), damage.agility);
-    renderDamage(damageGrid.select("#damage-row-ego"), damage.ego);
-    renderDamage(damageGrid.select("#damage-row-logic"), damage.logic);
-  }
+  renderTraits(profile.traits, traitsData);
+  renderTags(profile.tags, tagsData);
+  renderAbilities(profile.abilities);
+  renderDamages(profile.damage);
+  renderPowers(profile.powers, powersData);
+}
 
-  function renderPowers(characterPowers) {
-    const powersGrid = select("#powers-grid");
-    characterPowers.forEach((i) => {
-      const power = powers[i];
+function buildInitiative(initiative) {
+  return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
+}
 
-      const rowTitle = document.createElement("div");
-      rowTitle.classList.add("label");
-      rowTitle.classList.add("power-name");
-      rowTitle.innerHTML = power.name;
+function renderAbility(view, value) {
+  select(".ability", view).textContent = value.ability;
+  select(".defense", view).textContent = value.defense;
+  select(".noncombat", view).textContent = `+${value.noncombat}`;
+}
 
-      const rowDescription = document.createElement("div");
-      rowDescription.classList.add("power-desc");
-      rowDescription.innerHTML = power.text;
+function renderAbilities(abilities) {
+  renderAbility(select("#ability-row-melee"), abilities.melee);
+  renderAbility(select("#ability-row-agility"), abilities.agility);
+  renderAbility(select("#ability-row-resilience"), abilities.resilience);
+  renderAbility(select("#ability-row-vigilance"), abilities.vigilance);
+  renderAbility(select("#ability-row-ego"), abilities.ego);
+  renderAbility(select("#ability-row-logic"), abilities.logic);
+}
 
-      const rowFocus = document.createElement("div");
-      rowFocus.classList.add("power-focus");
-      rowFocus.innerHTML = `${power.cost == 0 ? "--" : power.cost}`;
+function renderDamage(view, damage) {
+  select(".multiplier", view).textContent = `Marvel X ${damage.multiplier}`;
+  select(".ability", view).textContent = damage.ability;
+}
 
-      const gridRow = document.createElement("div");
-      gridRow.classList.add("content");
-      gridRow.appendChild(rowTitle);
-      gridRow.appendChild(rowFocus);
-      gridRow.appendChild(rowDescription);
+function renderDamages(damage) {
+  const damageGrid = select("#damage-grid");
+  renderDamage(select("#damage-row-melee", damageGrid), damage.melee);
+  renderDamage(select("#damage-row-agility", damageGrid), damage.agility);
+  renderDamage(select("#damage-row-ego", damageGrid), damage.ego);
+  renderDamage(select("#damage-row-logic", damageGrid), damage.logic);
+}
 
-      powersGrid.appendChild(gridRow);
-    });
-  }
+function renderPowers(characterPowers, powersData) {
+  const powersGrid = select("#powers-grid");
+  const fragment = document.createDocumentFragment();
 
-  function renderTags(characterTags) {
-    const tagsGrid = select("#tags-grid");
-    characterTags.forEach((i) => {
-      const tag = tags[i];
+  characterPowers.forEach((i) => {
+    const power = powersData[i];
 
-      const rowTitle = document.createElement("div");
-      rowTitle.classList.add("tag-label");
-      rowTitle.innerHTML = tag.name;
+    const rowTitle = document.createElement("div");
+    rowTitle.className = "label power-name";
+    rowTitle.textContent = power.name;
 
-      const rowDescription = document.createElement("div");
-      rowDescription.classList.add("tag-value");
-      rowDescription.innerHTML = tag.value;
+    const rowDescription = document.createElement("div");
+    rowDescription.className = "power-desc";
+    rowDescription.textContent = power.text;
 
-      const gridRow = document.createElement("div");
-      gridRow.classList.add("content");
-      gridRow.appendChild(rowTitle);
-      gridRow.appendChild(rowDescription);
+    const rowFocus = document.createElement("div");
+    rowFocus.className = "power-focus";
+    rowFocus.textContent = power.cost === 0 ? "--" : power.cost;
 
-      tagsGrid.appendChild(gridRow);
-    });
-  }
+    const gridRow = document.createElement("div");
+    gridRow.className = "content";
+    gridRow.appendChild(rowTitle);
+    gridRow.appendChild(rowFocus);
+    gridRow.appendChild(rowDescription);
 
-  function renderTraits(characterTraits) {
-    const traitsGrid = select("#traits-grid");
-    characterTraits.forEach((i) => {
-      const trait = traits[i];
+    fragment.appendChild(gridRow);
+  });
 
-      const rowTitle = document.createElement("div");
-      rowTitle.classList.add("trait-label");
-      rowTitle.innerHTML = trait.name;
+  powersGrid.appendChild(fragment);
+}
 
-      const rowDescription = document.createElement("div");
-      rowDescription.classList.add("trait-value");
-      rowDescription.innerHTML = trait.value;
+function renderTags(characterTags, tagsData) {
+  const tagsGrid = select("#tags-grid");
+  const fragment = document.createDocumentFragment();
 
-      const gridRow = document.createElement("div");
-      gridRow.classList.add("content");
-      gridRow.appendChild(rowTitle);
-      gridRow.appendChild(rowDescription);
+  characterTags.forEach((i) => {
+    const tag = tagsData[i];
 
-      traitsGrid.appendChild(gridRow);
-    });
-  }
+    const rowTitle = document.createElement("div");
+    rowTitle.className = "tag-label";
+    rowTitle.textContent = tag.name;
 
-  main();
-})();
+    const rowDescription = document.createElement("div");
+    rowDescription.className = "tag-value";
+    rowDescription.textContent = tag.value;
+
+    const gridRow = document.createElement("div");
+    gridRow.className = "content";
+    gridRow.appendChild(rowTitle);
+    gridRow.appendChild(rowDescription);
+
+    fragment.appendChild(gridRow);
+  });
+
+  tagsGrid.appendChild(fragment);
+}
+
+function renderTraits(characterTraits, traitsData) {
+  const traitsGrid = select("#traits-grid");
+  const fragment = document.createDocumentFragment();
+
+  characterTraits.forEach((i) => {
+    const trait = traitsData[i];
+
+    const rowTitle = document.createElement("div");
+    rowTitle.className = "trait-label";
+    rowTitle.textContent = trait.name;
+
+    const rowDescription = document.createElement("div");
+    rowDescription.className = "trait-value";
+    rowDescription.textContent = trait.value;
+
+    const gridRow = document.createElement("div");
+    gridRow.className = "content";
+    gridRow.appendChild(rowTitle);
+    gridRow.appendChild(rowDescription);
+
+    fragment.appendChild(gridRow);
+  });
+
+  traitsGrid.appendChild(fragment);
+}
+
+init();
