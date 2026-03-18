@@ -1,0 +1,69 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "agility": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "resilience": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 6,
+      "defense": 16,
+      "noncombat": 8
+    },
+    "logic": {
+      "ability": 2,
+      "defense": 16,
+      "noncombat": 2
+    }
+  },
+  "color": 3148640,
+  "damage": {
+    "melee": {
+      "multiplier": 3,
+      "ability": 2
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 1
+    },
+    "ego": {
+      "multiplier": 5,
+      "ability": 8
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": 2
+    }
+  },
+  "damageReduction": 0,
+  "focus": 90,
+  "health": 30,
+  "initiative": {
+    "value": 3,
+    "edge": false
+  },
+  "karma": 3,
+  "name": "Vael",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/vael.png",
+  "powers": [11, 23, 28, 48, 59, 60, 84, 115, 129, 141, 158, 198, 211],
+  "rank": 3,
+  "secretIdentity": "Vaelaris the Wayward",
+  "tags": [9, 23, 52, 54],
+  "theme": "theme-vael",
+  "traits": [13, 35, 40, 42, 55]
+}
