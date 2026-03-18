@@ -1,0 +1,69 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "agility": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "resilience": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "vigilance": {
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 5
+    },
+    "ego": {
+      "ability": 6,
+      "defense": 16,
+      "noncombat": 6
+    },
+    "logic": {
+      "ability": -1,
+      "defense": 16,
+      "noncombat": -1
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 4,
+      "ability": 0
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 1
+    },
+    "ego": {
+      "multiplier": 3,
+      "ability": 6
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": -1
+    }
+  },
+  "damageReduction": -1,
+  "focus": 150,
+  "health": 110,
+  "initiative": {
+    "value": 5,
+    "edge": false
+  },
+  "karma": 3,
+  "name": "Bulwark",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/bulwark.png",
+  "powers": [11, 23, 28, 48, 59, 60, 84, 115, 129, 141, 158, 198, 211],
+  "rank": 3,
+  "secretIdentity": "Cassandra \"c'ASS\" Cruz",
+  "tags": [8, 23, 30],
+  "theme": "theme-bulwark",
+  "traits": [5, 9, 11, 24, 57, 64]
+}
