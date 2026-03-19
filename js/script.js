@@ -30,13 +30,13 @@ async function init() {
       fetch("./js/powers.json").then((res) => res.json()),
       fetch(`./js/profile-${profileId}.json`).then((res) => res.json()),
     ]);
-    buildCharacterSheet(profile, tags, traits, powers);
+    buildCharacterSheet(profile, tags, traits, powers, webhookUrl);
   } catch (error) {
     console.error("Failed to load data:", error);
   }
 }
 
-function buildCharacterSheet(profile, tagsData, traitsData, powersData) {
+function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookUrl) {
   select("#character-name").textContent = profile.name;
   select("#secret-identity").textContent = profile.secretIdentity;
   select("#character-photo").src = profile.photoUrl;
@@ -51,13 +51,98 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData) {
 
   renderTraits(profile.traits, traitsData);
   renderTags(profile.tags, tagsData);
-  renderAbilities(profile.abilities);
-  renderDamages(profile.damage);
+  renderAbilities(profile, webhookUrl);
+  renderDamages(profile, webhookUrl);
   renderPowers(profile.powers, powersData);
 }
 
 function buildInitiative(initiative) {
   return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
+}
+
+function buildRollMessage({
+  abilityScore,
+  abilityType,
+  characterName,
+  color,
+  damageBonus,
+  damageMultiplier,
+  dieResult1,
+  dieResult2,
+  dieResult3,
+  thumbnailUrl,
+}) {
+  const isAttack = damageMultiplier;
+  const isFantastic = dieResult2 === 1;
+  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult2 == 6;
+  const marvelizedDieResult2 = isFantastic ? 6 : dieResult2;
+
+  const resultTotal = dieResult1 + marvelizedDieResult2 + dieResult3 + abilityScore;
+  const damageTotal = isAttack ? (marvelizedDieResult2 * damageMultiplier + damageBonus) * (isFantastic ? 2 : 1) : 0;
+
+  const dieEmoji1 = getDieEmoji(dieResult1);
+  const dieEmoji2 = getDieEmoji(dieResult2 === 1 ? 7 : dieResult2);
+  const dieEmoji3 = getDieEmoji(dieResult3);
+
+  const damageString = isAttack ? ` Damage ${damageTotal}.` : "";
+  const contentString = `${characterName} rolled ${abilityType}${isAttack ? " Attack" : ""}.\nResult ${resultTotal}.${damageString}`;
+
+  const fields = [
+    {
+      name: "Result",
+      value: `**${resultTotal}**`,
+    },
+  ];
+
+  if (isAttack) {
+    const damageBonusString = damageBonus >= 0 ? `+ ${damageBonus}` : `- ${Math.abs(damageBonus)}`;
+    const fantasticString = isFantastic ? "(x2) " : "";
+    fields.push({
+      name: "Damage",
+      value: `${dieEmoji2} x ${damageMultiplier} ${damageBonusString} ${fantasticString}= ${damageTotal}`,
+    });
+  }
+
+  const abilityScoreString = `${abilityScore >= 0 ? `+${abilityScore}` : `-${Math.abs(abilityScore)}`}`;
+
+  const jsonData = {
+    content: contentString,
+    embeds: [
+      {
+        color: color,
+        description: `**${dieEmoji1} ${dieEmoji2} ${dieEmoji3}** ${abilityScoreString}`,
+        footer: {
+          text: isUltimateFantastic ? "ULTIMATE FANTASTIC" : isFantastic ? "Fantastic" : "Standard",
+        },
+        thumbnail: {
+          url: thumbnailUrl,
+        },
+        fields: fields,
+      },
+    ],
+  };
+  return JSON.stringify(jsonData);
+}
+
+function getDieEmoji(value) {
+  switch (value) {
+    case 1:
+      return "1️⃣";
+    case 2:
+      return "2️⃣";
+    case 3:
+      return "3️⃣";
+    case 4:
+      return "4️⃣";
+    case 5:
+      return "5️⃣";
+    case 6:
+      return "6️⃣";
+    case 7:
+      return "🟥";
+    default:
+      return null;
+  }
 }
 
 function isValidHttpUrl(string) {
@@ -69,32 +154,149 @@ function isValidHttpUrl(string) {
   }
 }
 
-function renderAbility(view, value) {
-  select(".ability", view).textContent = value.ability;
-  select(".defense", view).textContent = value.defense;
-  select(".noncombat", view).textContent = `+${value.noncombat}`;
+function renderAbility(view, ability, abilityType, characterName, color, thumbnailUrl, webhookUrl) {
+  select(".ability", view).textContent = ability.ability;
+  select(".defense", view).textContent = ability.defense;
+  select(".noncombat", view).textContent = `+${ability.noncombat}`;
+
+  view.addEventListener("click", () => {
+    const message = buildRollMessage({
+      abilityScore: ability.ability,
+      abilityType: abilityType,
+      characterName: characterName,
+      color: color,
+      dieResult1: rollD6(),
+      dieResult2: rollD6(),
+      dieResult3: rollD6(),
+      thumbnailUrl: thumbnailUrl,
+    });
+
+    sendWebhookMessage(webhookUrl, message);
+  });
 }
 
-function renderAbilities(abilities) {
-  renderAbility(select("#ability-row-melee"), abilities.melee);
-  renderAbility(select("#ability-row-agility"), abilities.agility);
-  renderAbility(select("#ability-row-resilience"), abilities.resilience);
-  renderAbility(select("#ability-row-vigilance"), abilities.vigilance);
-  renderAbility(select("#ability-row-ego"), abilities.ego);
-  renderAbility(select("#ability-row-logic"), abilities.logic);
+function renderAbilities(profile, webhookUrl) {
+  renderAbility(
+    select("#ability-row-melee"),
+    profile.abilities.melee,
+    "Melee",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl
+  );
+  renderAbility(
+    select("#ability-row-agility"),
+    profile.abilities.agility,
+    "Agility",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl
+  );
+  renderAbility(
+    select("#ability-row-resilience"),
+    profile.abilities.resilience,
+    "Resilience",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl
+  );
+  renderAbility(
+    select("#ability-row-vigilance"),
+    profile.abilities.vigilance,
+    "Vigilance",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl
+  );
+  renderAbility(
+    select("#ability-row-ego"),
+    profile.abilities.ego,
+    "Ego",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl
+  );
+  renderAbility(
+    select("#ability-row-logic"),
+    profile.abilities.logic,
+    "Logic",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl
+  );
 }
 
-function renderDamage(view, damage) {
+function renderDamage(view, damage, abilityScore, abilityType, characterName, color, thumbnailUrl, webhookUrl) {
   select(".multiplier", view).textContent = `Marvel X ${damage.multiplier}`;
   select(".ability", view).textContent = damage.ability;
+
+  view.addEventListener("click", () => {
+    const message = buildRollMessage({
+      abilityScore: abilityScore,
+      abilityType: abilityType,
+      characterName: characterName,
+      color: color,
+      damageBonus: damage.ability,
+      damageMultiplier: damage.multiplier,
+      dieResult1: rollD6(),
+      dieResult2: rollD6(),
+      dieResult3: rollD6(),
+      thumbnailUrl: thumbnailUrl,
+    });
+
+    sendWebhookMessage(webhookUrl, message);
+  });
 }
 
-function renderDamages(damage) {
+function renderDamages(profile, webhookUrl) {
   const damageGrid = select("#damage-grid");
-  renderDamage(select("#damage-row-melee", damageGrid), damage.melee);
-  renderDamage(select("#damage-row-agility", damageGrid), damage.agility);
-  renderDamage(select("#damage-row-ego", damageGrid), damage.ego);
-  renderDamage(select("#damage-row-logic", damageGrid), damage.logic);
+
+  renderDamage(
+    select("#damage-row-melee", damageGrid),
+    profile.damage.melee,
+    profile.abilities.melee.ability,
+    "Melee",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl,
+  );
+  renderDamage(
+    select("#damage-row-agility", damageGrid),
+    profile.damage.agility,
+    profile.abilities.agility.ability,
+    "Agility",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl,
+  );
+  renderDamage(
+    select("#damage-row-ego", damageGrid),
+    profile.damage.ego,
+    profile.abilities.ego.ability,
+    "Ego",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl,
+  );
+  renderDamage(
+    select("#damage-row-logic", damageGrid),
+    profile.damage.logic,
+    profile.abilities.logic.ability,
+    "Logic",
+    profile.name,
+    profile.color,
+    profile.photoUrl,
+    webhookUrl,
+  );
 }
 
 function renderPowers(characterPowers, powersData) {
@@ -178,6 +380,28 @@ function renderTraits(characterTraits, traitsData) {
   });
 
   traitsGrid.appendChild(fragment);
+}
+
+function rollD6() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+function sendWebhookMessage(webhookUrl, jsonMessage) {
+  if (!webhookUrl) return;
+
+  console.log(jsonMessage);
+
+  fetch(webhookUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: jsonMessage,
+  })
+    .then((data) => console.log("Success:", data))
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
 
 init();
