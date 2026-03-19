@@ -26,6 +26,18 @@ header {
   margin-bottom: var(--spacing-lg);
 }
 
+.button {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  min-height: calc(var(--touch-target) * 0.8);
+}
+
+.danger {
+  background-color: red;
+  color: black;
+}
+
 /* --- HEADER & ID SECTIONS --- */
 #character-id {
   background: var(--bg-card);
@@ -111,13 +123,14 @@ header {
 }
 
 .content {
-  display: contents; /* Allows children to participate in the parent grid */
+  display: contents;
 }
 
 /* Common Grid Layouts */
-.ability-grid,
+#ability-grid,
 #damage-grid,
 #powers-grid,
+#settings-grid,
 #tags-grid,
 #traits-grid {
   align-items: center;
@@ -125,10 +138,9 @@ header {
   gap: var(--spacing-sm) var(--spacing-md);
 }
 
-/* Fix: Target the individual cells inside .content, NOT the .content wrapper itself */
-.ability-grid > .grid-header,
-.ability-grid > .content > div,
-#damage-grid > .content > div {
+#ability-grid > .content > div,
+#damage-grid > .content > div,
+#settings-grid > .content > div {
   align-items: center;
   display: flex;
   justify-content: center;
@@ -136,26 +148,26 @@ header {
 }
 
 /* Specific Grid Columns */
-.ability-grid {
-  grid-template-columns: repeat(4, 1fr); /* Restored your 4 column layout */
+#ability-grid {
+  grid-template-columns: repeat(4, 1fr);
   text-align: center;
 }
-.ability-grid .label,
+
+#ability-grid .label,
 #damage-grid > .label,
-.ability-grid .grid-header:first-child {
+#ability-grid .grid-header:first-child {
   justify-content: flex-start;
 }
 
 #damage-grid {
-  grid-template-columns: repeat(4, 1fr); /* Restored your 4 column layout */
+  grid-template-columns: repeat(4, 1fr);
 }
 
 #powers-grid {
-  grid-template-columns: 1fr 80px; /* Name/Desc gets remaining space, Focus gets 80px */
-  row-gap: 2px; /* Tighter vertical spacing between a Name and its Description */
+  grid-template-columns: 1fr 80px;
+  row-gap: 2px;
 }
 
-/* Grid placement rules for the Powers section */
 #powers-grid .power-name {
   grid-column: 1;
 }
@@ -173,7 +185,6 @@ header {
   text-align: center;
 }
 
-/* Clean up the headers so Name and Desc look attached */
 #powers-grid .grid-header.power-name,
 #powers-grid .grid-header.power-focus {
   border-bottom: none;
@@ -183,10 +194,9 @@ header {
 
 #tags-grid,
 #traits-grid {
-  grid-template-columns: repeat(2, 1fr); /* Restored your 2 column layout */
+  grid-template-columns: repeat(2, 1fr);
 }
 
-/* Responsive adjustments */
 @media (max-width: 600px) {
   .stat-card {
     flex: 1 1 30%;
@@ -196,7 +206,7 @@ header {
     padding: var(--spacing-sm);
   }
 
-  .ability-grid,
+  #ability-grid,
   #damage-grid {
     font-size: 0.9rem;
     gap: var(--spacing-sm) 4px;

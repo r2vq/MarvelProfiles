@@ -6,21 +6,36 @@ const select = (selector, parent = document) => parent.querySelector(selector);
 
 async function init() {
   const urlParams = new URLSearchParams(window.location.search);
-  const profileId = urlParams.get("c");
+  let profileId = urlParams.get("c");
   let webhookUrl = urlParams.get("w");
+
+  if (profileId) {
+    localStorage.setItem("profileId", profileId);
+  } else {
+    profileId = localStorage.getItem("profileId");
+  }
 
   if (!profileId) {
     console.warn("No character ID provided.");
     return;
   }
 
-  if (!webhookUrl) {
+  if (webhookUrl) {
+    localStorage.setItem("webhookUrl", webhookUrl);
+  } else {
+    webhookUrl = localStorage.getItem("webhookUrl");
+  }
+
+  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
     webhookUrl = prompt("Please enter your webhook url:", "URL");
   }
 
   if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
     webhookUrl = null;
+    localStorage.removeItem("webhookUrl");
     alert("Invalid URL. Proceeding without webhooks.");
+  } else {
+    localStorage.setItem("webhookUrl", webhookUrl);
   }
 
   try {
@@ -54,6 +69,12 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
   renderAbilities(profile, webhookUrl);
   renderDamages(profile, webhookUrl);
   renderPowers(profile.powers, powersData);
+
+  select("#btn-delete-webhook").addEventListener("click", () => {
+    if (confirm("Delete the webhook URL? This cannot be undone!!")) {
+      localStorage.removeItem("webhookUrl");
+    }
+  });
 }
 
 function buildInitiative(initiative) {
