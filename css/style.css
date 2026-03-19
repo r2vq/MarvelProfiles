@@ -33,6 +33,10 @@ header {
   min-height: calc(var(--touch-target) * 0.8);
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .danger {
   background-color: red;
   color: black;
