@@ -7,10 +7,20 @@ const select = (selector, parent = document) => parent.querySelector(selector);
 async function init() {
   const urlParams = new URLSearchParams(window.location.search);
   const profileId = urlParams.get("c");
+  let webhookUrl = urlParams.get("w");
 
   if (!profileId) {
     console.warn("No character ID provided.");
     return;
+  }
+
+  if (!webhookUrl) {
+    webhookUrl = prompt("Please enter your webhook url:", "URL");
+  }
+
+  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
+    webhookUrl = null;
+    alert("Invalid URL. Proceeding without webhooks.");
   }
 
   try {
@@ -48,6 +58,15 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData) {
 
 function buildInitiative(initiative) {
   return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
+}
+
+function isValidHttpUrl(string) {
+  try {
+    const url = new URL(string);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch (err) {
+    return false;
+  }
 }
 
 function renderAbility(view, value) {
