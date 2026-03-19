@@ -27,10 +27,20 @@ header {
 }
 
 .button {
+  align-items: center;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   cursor: pointer;
+  display: flex;
+  justify-content: center;
   min-height: calc(var(--touch-target) * 0.8);
+  padding: var(--spacing-sm);
+}
+
+.button-primary {
+  background-color: var(--bg-main);
+  border: 1px solid var(--bg-main) !important;
+  color: var(--text-on-main);
 }
 
 .clickable {
@@ -40,6 +50,49 @@ header {
 .danger {
   background-color: red;
   color: black;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.text-input {
+  border-radius: var(--border-radius);
+  font-size: large;
+  padding: var(--spacing-sm);
+}
+
+#alert {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-direction: column;
+  min-height: 100px;
+  min-width: 100px;
+  padding: var(--spacing-lg);
+}
+
+#alert-container {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+#alert-content {
+  font-size: medium;
+}
+
+#lbl-number {
+  font-size: small;
 }
 
 /* --- HEADER & ID SECTIONS --- */

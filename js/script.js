@@ -63,18 +63,27 @@ function buildRollMessage({
   color,
   damageBonus,
   damageMultiplier,
+  damageReduction,
   dieResult1,
   dieResult2,
   dieResult3,
   thumbnailUrl,
 }) {
-  const isAttack = damageMultiplier;
+  const isAttack = damageMultiplier > 0;
   const isFantastic = dieResult2 === 1;
-  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult2 == 6;
-  const marvelizedDieResult2 = isFantastic ? 6 : dieResult2;
+  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult3 === 6;
+  const isAbsorbedByDamageReduction = isAttack && damageReduction >= damageMultiplier;
+  const marvelizedDieResult = isFantastic ? 6 : dieResult2;
+  const resultTotal = dieResult1 + marvelizedDieResult + dieResult3 + abilityScore;
 
-  const resultTotal = dieResult1 + marvelizedDieResult2 + dieResult3 + abilityScore;
-  const damageTotal = isAttack ? (marvelizedDieResult2 * damageMultiplier + damageBonus) * (isFantastic ? 2 : 1) : 0;
+  const damageTotal = calculateDamageTotal(
+    isAttack,
+    marvelizedDieResult,
+    damageMultiplier,
+    damageReduction,
+    damageBonus,
+    isFantastic,
+  );
 
   const dieEmoji1 = getDieEmoji(dieResult1);
   const dieEmoji2 = getDieEmoji(dieResult2 === 1 ? 7 : dieResult2);
@@ -95,8 +104,15 @@ function buildRollMessage({
     const fantasticString = isFantastic ? "(x2) " : "";
     fields.push({
       name: "Damage",
-      value: `${dieEmoji2} x ${damageMultiplier} ${damageBonusString} ${fantasticString}= ${damageTotal}`,
+      value: `${dieEmoji2} x (${damageMultiplier} - ${damageReduction}) ${damageBonusString} ${fantasticString}= **${damageTotal}**`,
     });
+
+    if (isAbsorbedByDamageReduction) {
+      fields.push({
+        name: "Note",
+        value: `Damage Reduction (${damageReduction}) completely absorbed the Damage Multiplier (${damageMultiplier}).`,
+      });
+    }
   }
 
   const abilityScoreString = `${abilityScore >= 0 ? `+${abilityScore}` : `-${Math.abs(abilityScore)}`}`;
@@ -118,6 +134,29 @@ function buildRollMessage({
     ],
   };
   return JSON.stringify(jsonData);
+}
+
+function calculateDamageTotal(
+  isAttack,
+  marvelizedDieResult,
+  damageMultiplier,
+  damageReduction,
+  damageBonus,
+  isFantastic,
+) {
+  if (!isAttack) return 0;
+
+  const effectiveMultiplier = Math.max(0, damageMultiplier - damageReduction);
+
+  if (effectiveMultiplier <= 0) return 0;
+
+  let total = marvelizedDieResult * effectiveMultiplier + damageBonus;
+
+  if (isFantastic) {
+    total *= 2;
+  }
+
+  return Math.max(0, total);
 }
 
 function getDieEmoji(value) {
@@ -208,21 +247,30 @@ function isValidHttpUrl(string) {
 function renderAbility(view, ability, abilityType, characterName, color, thumbnailUrl, webhookUrl) {
   select(".ability", view).textContent = ability.ability;
   select(".defense", view).textContent = ability.defense;
-  select(".noncombat", view).textContent = `+${ability.noncombat}`;
+  select(".noncombat", view).textContent = `${ability.noncombat >= 0 ? "+" : "-"}${Math.abs(ability.noncombat)}`;
 
   view.addEventListener("click", () => {
-    const message = buildRollMessage({
-      abilityScore: ability.ability,
-      abilityType: abilityType,
-      characterName: characterName,
-      color: color,
-      dieResult1: rollD6(),
-      dieResult2: rollD6(),
-      dieResult3: rollD6(),
-      thumbnailUrl: thumbnailUrl,
-    });
+    showPopUp({
+      content: `Roll ${abilityType} Non-Combat?`,
+      isPrimaryVisible: true,
+      isSecondaryVisible: true,
+      primaryText: "OK",
+      secondaryText: "Cancel",
+      onPrimaryClick: () => {
+        const message = buildRollMessage({
+          abilityScore: ability.ability,
+          abilityType: abilityType,
+          characterName: characterName,
+          color: color,
+          dieResult1: rollD6(),
+          dieResult2: rollD6(),
+          dieResult3: rollD6(),
+          thumbnailUrl: thumbnailUrl,
+        });
 
-    sendWebhookMessage(webhookUrl, message);
+        sendWebhookMessage(webhookUrl, message);
+      },
+    });
   });
 }
 
@@ -288,20 +336,32 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
   select(".ability", view).textContent = damage.ability;
 
   view.addEventListener("click", () => {
-    const message = buildRollMessage({
-      abilityScore: abilityScore,
-      abilityType: abilityType,
-      characterName: characterName,
-      color: color,
-      damageBonus: damage.ability,
-      damageMultiplier: damage.multiplier,
-      dieResult1: rollD6(),
-      dieResult2: rollD6(),
-      dieResult3: rollD6(),
-      thumbnailUrl: thumbnailUrl,
-    });
+    showPopUp({
+      content: `Roll ${abilityType} Attack?`,
+      isNumberInputVisible: true,
+      isPrimaryVisible: true,
+      isSecondaryVisible: true,
+      primaryText: "OK",
+      secondaryText: "Cancel",
+      numberLabelText: "Enter Damage Reduction:",
+      onPrimaryClick: (damageReduction) => {
+        const message = buildRollMessage({
+          abilityScore: abilityScore,
+          abilityType: abilityType,
+          characterName: characterName,
+          color: color,
+          damageBonus: damage.ability,
+          damageMultiplier: damage.multiplier,
+          damageReduction: damageReduction > 0 ? damageReduction : 0,
+          dieResult1: rollD6(),
+          dieResult2: rollD6(),
+          dieResult3: rollD6(),
+          thumbnailUrl: thumbnailUrl,
+        });
 
-    sendWebhookMessage(webhookUrl, message);
+        sendWebhookMessage(webhookUrl, message);
+      },
+    });
   });
 }
 
@@ -453,6 +513,69 @@ function sendWebhookMessage(webhookUrl, jsonMessage) {
     .catch((error) => {
       console.error("Error:", error);
     });
+}
+
+function showPopUp({
+  content,
+  primaryText,
+  isPrimaryVisible,
+  onPrimaryClick,
+  secondaryText,
+  isSecondaryVisible,
+  onSecondaryClick,
+  isNumberInputVisible,
+  numberLabelText,
+}) {
+  const alertContainer = select("#alert-container");
+
+  const contentContainer = select("#alert-content", alertContainer);
+  if (content) {
+    contentContainer.textContent = content;
+    contentContainer.classList.remove("hidden");
+  } else {
+    contentContainer.classList.add("hidden");
+  }
+
+  const inputNumber = select("#inp-number");
+  inputNumber.value = "";
+  const labelNumber = select("#lbl-number");
+  if (isNumberInputVisible) {
+    inputNumber.classList.remove("hidden");
+    labelNumber.classList.remove("hidden");
+    labelNumber.textContent = numberLabelText;
+  } else {
+    inputNumber.classList.add("hidden");
+    labelNumber.classList.add("hidden");
+  }
+
+  const btnPrimary = select("#btn-primary", alertContainer);
+  if (isPrimaryVisible) {
+    btnPrimary.textContent = primaryText;
+    btnPrimary.classList.remove("hidden");
+    btnPrimary.onclick = () => {
+      alertContainer.classList.add("hidden");
+      const inputNumberValue = isNumberInputVisible ? parseInt(inputNumber.value, 10) || 0 : null;
+      if (onPrimaryClick) onPrimaryClick(inputNumberValue);
+    };
+  } else {
+    btnPrimary.textContent = "";
+    btnPrimary.classList.add("hidden");
+  }
+
+  const btnSecondary = select("#btn-secondary", alertContainer);
+  if (isSecondaryVisible) {
+    btnSecondary.textContent = secondaryText;
+    btnSecondary.classList.remove("hidden");
+    btnSecondary.onclick = () => {
+      alertContainer.classList.add("hidden");
+      if (onSecondaryClick) onSecondaryClick();
+    };
+  } else {
+    btnSecondary.textContent = "";
+    btnSecondary.classList.add("hidden");
+  }
+
+  alertContainer.classList.remove("hidden");
 }
 
 init();
