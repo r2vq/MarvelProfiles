@@ -9,16 +9,31 @@ async function init() {
   let profileId = urlParams.get("c");
   let webhookUrl = urlParams.get("w");
 
-  if (profileId) {
-    localStorage.setItem("profileId", profileId);
-  } else {
+  if (!profileId) {
     profileId = localStorage.getItem("profileId");
   }
 
   if (!profileId) {
-    console.warn("No character ID provided.");
+    profileId = prompt("Please enter your profile id:", "");
+  }
+
+  let profile;
+  try {
+    if (profileId) {
+      profile = await fetch(`./js/profile-${profileId}.json`).then((res) => res.json());
+    }
+  } catch (error) {
+    profile = null;
+    console.error("Failed to load profile:", error);
+  }
+
+  if (!profile) {
+    console.warn(`No character with ID: ${profileId} found.`);
+    localStorage.removeItem("profileId");
     return;
   }
+
+  localStorage.setItem("profileId", profileId);
 
   if (webhookUrl) {
     localStorage.setItem("webhookUrl", webhookUrl);
