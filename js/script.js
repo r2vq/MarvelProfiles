@@ -6,59 +6,19 @@ const select = (selector, parent = document) => parent.querySelector(selector);
 
 async function init() {
   const urlParams = new URLSearchParams(window.location.search);
-  let profileId = urlParams.get("c");
-  let webhookUrl = urlParams.get("w");
 
-  if (!profileId) {
-    profileId = localStorage.getItem("profileId");
-  }
-
-  if (!profileId) {
-    profileId = prompt("Please enter your profile id:", "");
-  }
-
-  let profile;
-  try {
-    if (profileId) {
-      profile = await fetch(`./js/profile-${profileId}.json`).then((res) => res.json());
-    }
-  } catch (error) {
-    profile = null;
-    console.error("Failed to load profile:", error);
-  }
-
+  const profile = await getProfile(urlParams);
   if (!profile) {
-    console.warn(`No character with ID: ${profileId} found.`);
-    localStorage.removeItem("profileId");
     return;
   }
 
-  localStorage.setItem("profileId", profileId);
-
-  if (webhookUrl) {
-    localStorage.setItem("webhookUrl", webhookUrl);
-  } else {
-    webhookUrl = localStorage.getItem("webhookUrl");
-  }
-
-  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
-    webhookUrl = prompt("Please enter your webhook url:", "URL");
-  }
-
-  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
-    webhookUrl = null;
-    localStorage.removeItem("webhookUrl");
-    alert("Invalid URL. Proceeding without webhooks.");
-  } else {
-    localStorage.setItem("webhookUrl", webhookUrl);
-  }
+  const webhookUrl = getWebhookUrl(urlParams);
 
   try {
-    const [tags, traits, powers, profile] = await Promise.all([
+    const [tags, traits, powers] = await Promise.all([
       fetch("./js/tags.json").then((res) => res.json()),
       fetch("./js/traits.json").then((res) => res.json()),
       fetch("./js/powers.json").then((res) => res.json()),
-      fetch(`./js/profile-${profileId}.json`).then((res) => res.json()),
     ]);
     buildCharacterSheet(profile, tags, traits, powers, webhookUrl);
   } catch (error) {
@@ -181,6 +141,61 @@ function getDieEmoji(value) {
   }
 }
 
+async function getProfile(urlParams) {
+  let profileId = urlParams.get("c");
+
+  if (!profileId) {
+    profileId = localStorage.getItem("profileId");
+  }
+
+  if (!profileId) {
+    profileId = prompt("Please enter your profile id:", "");
+  }
+
+  let profile;
+  try {
+    if (profileId) {
+      profile = await fetch(`./js/profile-${profileId}.json`).then((res) => res.json());
+    }
+  } catch (error) {
+    profile = null;
+    console.error("Failed to load profile:", error);
+  }
+
+  if (!profile) {
+    console.warn(`No character with ID: ${profileId} found.`);
+    localStorage.removeItem("profileId");
+    return;
+  }
+
+  localStorage.setItem("profileId", profileId);
+  return profile;
+}
+
+function getWebhookUrl(urlParams) {
+  let webhookUrl = urlParams.get("w");
+
+  if (webhookUrl) {
+    localStorage.setItem("webhookUrl", webhookUrl);
+  } else {
+    webhookUrl = localStorage.getItem("webhookUrl");
+  }
+
+  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
+    webhookUrl = prompt("Please enter your webhook url:", "URL");
+  }
+
+  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
+    webhookUrl = null;
+    localStorage.removeItem("webhookUrl");
+    alert("Invalid URL. Proceeding without webhooks.");
+  } else {
+    localStorage.setItem("webhookUrl", webhookUrl);
+  }
+
+  return webhookUrl;
+}
+
 function isValidHttpUrl(string) {
   try {
     const url = new URL(string);
@@ -219,7 +234,7 @@ function renderAbilities(profile, webhookUrl) {
     profile.name,
     profile.color,
     profile.photoUrl,
-    webhookUrl
+    webhookUrl,
   );
   renderAbility(
     select("#ability-row-agility"),
@@ -228,7 +243,7 @@ function renderAbilities(profile, webhookUrl) {
     profile.name,
     profile.color,
     profile.photoUrl,
-    webhookUrl
+    webhookUrl,
   );
   renderAbility(
     select("#ability-row-resilience"),
@@ -237,7 +252,7 @@ function renderAbilities(profile, webhookUrl) {
     profile.name,
     profile.color,
     profile.photoUrl,
-    webhookUrl
+    webhookUrl,
   );
   renderAbility(
     select("#ability-row-vigilance"),
@@ -246,7 +261,7 @@ function renderAbilities(profile, webhookUrl) {
     profile.name,
     profile.color,
     profile.photoUrl,
-    webhookUrl
+    webhookUrl,
   );
   renderAbility(
     select("#ability-row-ego"),
@@ -255,7 +270,7 @@ function renderAbilities(profile, webhookUrl) {
     profile.name,
     profile.color,
     profile.photoUrl,
-    webhookUrl
+    webhookUrl,
   );
   renderAbility(
     select("#ability-row-logic"),
@@ -264,7 +279,7 @@ function renderAbilities(profile, webhookUrl) {
     profile.name,
     profile.color,
     profile.photoUrl,
-    webhookUrl
+    webhookUrl,
   );
 }
 
