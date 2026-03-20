@@ -118,7 +118,7 @@ function buildRollMessage({ roll, abilityType, characterName, color, thumbnailUr
 
 function calculateRoll({ dieResult1, dieResult2, dieResult3, abilityScore }) {
   const isFantastic = dieResult2 === 1;
-  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult3 == 6;
+  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult3 === 6;
   const marvelDieResult = isFantastic ? 6 : dieResult2;
   const marvelDieText = isFantastic ? "M" : dieResult2;
   const result = dieResult1 + marvelDieResult + dieResult3 + abilityScore;
@@ -159,52 +159,49 @@ function calculateCombatRoll({
   return roll;
 }
 
+function createGridRow(classes, textContents) {
+  const gridRow = document.createElement("div");
+  gridRow.className = "content";
+
+  classes.forEach((className, index) => {
+    const cell = document.createElement("div");
+    cell.className = className;
+    cell.textContent = textContents[index];
+    gridRow.appendChild(cell);
+  });
+
+  return gridRow;
+}
+
 function getDieEmoji(value) {
   switch (value) {
-    case 1:
-      return "1️⃣";
-    case 2:
-      return "2️⃣";
-    case 3:
-      return "3️⃣";
-    case 4:
-      return "4️⃣";
-    case 5:
-      return "5️⃣";
-    case 6:
-      return "6️⃣";
-    case 7:
-      return "🟥";
-    default:
-      return null;
+    case 1: return "1️⃣";
+    case 2: return "2️⃣";
+    case 3: return "3️⃣";
+    case 4: return "4️⃣";
+    case 5: return "5️⃣";
+    case 6: return "6️⃣";
+    case 7: return "🟥";
+    default: return null;
   }
 }
 
 async function getProfile(urlParams) {
-  let profileId = urlParams.get("c");
+  let profileId = urlParams.get("c") || localStorage.getItem("profileId") || prompt("Please enter your profile id:", "");
 
-  if (!profileId) {
-    profileId = localStorage.getItem("profileId");
-  }
-
-  if (!profileId) {
-    profileId = prompt("Please enter your profile id:", "");
-  }
-
-  let profile;
-  try {
-    if (profileId) {
+  let profile = null;
+  if (profileId) {
+    try {
       profile = await fetch(`./js/profile-${profileId}.json`).then((res) => res.json());
+    } catch (error) {
+      console.error("Failed to load profile:", error);
     }
-  } catch (error) {
-    profile = null;
-    console.error("Failed to load profile:", error);
   }
 
   if (!profile) {
     console.warn(`No character with ID: ${profileId} found.`);
     localStorage.removeItem("profileId");
-    return;
+    return null;
   }
 
   localStorage.setItem("profileId", profileId);
@@ -257,13 +254,10 @@ function renderAbility(view, ability, abilityType, characterName, color, thumbna
       primaryText: "OK",
       secondaryText: "Cancel",
       onPrimaryClick: () => {
-        const dieResult1 = rollD6();
-        const dieResult2 = rollD6();
-        const dieResult3 = rollD6();
         const roll = calculateRoll({
-          dieResult1,
-          dieResult2,
-          dieResult3,
+          dieResult1: rollD6(),
+          dieResult2: rollD6(),
+          dieResult3: rollD6(),
           abilityScore: ability.noncombat,
         });
 
@@ -271,10 +265,10 @@ function renderAbility(view, ability, abilityType, characterName, color, thumbna
 
         const message = buildRollMessage({
           roll,
-          abilityType: abilityType,
-          characterName: characterName,
-          color: color,
-          thumbnailUrl: thumbnailUrl,
+          abilityType,
+          characterName,
+          color,
+          thumbnailUrl,
         });
 
         sendWebhookMessage(webhookUrl, message);
@@ -284,70 +278,28 @@ function renderAbility(view, ability, abilityType, characterName, color, thumbna
 }
 
 function renderAbilities(profile, webhookUrl) {
-  renderAbility(
-    select("#ability-row-melee"),
-    profile.abilities.melee,
-    "Melee",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderAbility(
-    select("#ability-row-agility"),
-    profile.abilities.agility,
-    "Agility",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderAbility(
-    select("#ability-row-resilience"),
-    profile.abilities.resilience,
-    "Resilience",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderAbility(
-    select("#ability-row-vigilance"),
-    profile.abilities.vigilance,
-    "Vigilance",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderAbility(
-    select("#ability-row-ego"),
-    profile.abilities.ego,
-    "Ego",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderAbility(
-    select("#ability-row-logic"),
-    profile.abilities.logic,
-    "Logic",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
+  const abilities = ["melee", "agility", "resilience", "vigilance", "ego", "logic"];
+
+  abilities.forEach((stat) => {
+    const statName = stat.charAt(0).toUpperCase() + stat.slice(1);
+
+    renderAbility(
+      select(`#ability-row-${stat}`),
+      profile.abilities[stat],
+      statName,
+      profile.name,
+      profile.color,
+      profile.photoUrl,
+      webhookUrl
+    );
+  });
 }
 
 function renderDamage(view, damage, abilityScore, abilityType, characterName, color, thumbnailUrl, webhookUrl) {
-  select(".multiplier", view).textContent = `Marvel X ${damage.multiplier}`;
+  select(".multiplier", view).textContent = `Marvel x ${damage.multiplier}`;
   select(".ability", view).textContent = damage.ability;
 
   view.addEventListener("click", () => {
-    const dieResult1 = rollD6();
-    const dieResult2 = rollD6();
-    const dieResult3 = rollD6();
     const damageAbilityScore = damage.ability;
     const damageMultiplier = damage.multiplier;
     showPopUp({
@@ -360,9 +312,9 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
       numberLabelText: "Enter Damage Reduction:",
       onPrimaryClick: (damageReduction) => {
         const roll = calculateCombatRoll({
-          dieResult1,
-          dieResult2,
-          dieResult3,
+          dieResult1: rollD6(),
+          dieResult2: rollD6(),
+          dieResult3: rollD6(),
           abilityScore,
           damageAbilityScore,
           damageMultiplier,
@@ -372,11 +324,11 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
         renderDice(roll);
 
         const message = buildRollMessage({
-          roll: roll,
-          abilityType: abilityType,
-          characterName: characterName,
-          color: color,
-          thumbnailUrl: thumbnailUrl,
+          roll,
+          abilityType,
+          characterName,
+          color,
+          thumbnailUrl,
         });
 
         sendWebhookMessage(webhookUrl, message);
@@ -387,47 +339,21 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
 
 function renderDamages(profile, webhookUrl) {
   const damageGrid = select("#damage-grid");
+  const stats = ["melee", "agility", "ego", "logic"];
 
-  renderDamage(
-    select("#damage-row-melee", damageGrid),
-    profile.damage.melee,
-    profile.abilities.melee.ability,
-    "Melee",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderDamage(
-    select("#damage-row-agility", damageGrid),
-    profile.damage.agility,
-    profile.abilities.agility.ability,
-    "Agility",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderDamage(
-    select("#damage-row-ego", damageGrid),
-    profile.damage.ego,
-    profile.abilities.ego.ability,
-    "Ego",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
-  renderDamage(
-    select("#damage-row-logic", damageGrid),
-    profile.damage.logic,
-    profile.abilities.logic.ability,
-    "Logic",
-    profile.name,
-    profile.color,
-    profile.photoUrl,
-    webhookUrl,
-  );
+  stats.forEach((stat) => {
+    const statName = stat.charAt(0).toUpperCase() + stat.slice(1);
+    renderDamage(
+      select(`#damage-row-${stat}`, damageGrid),
+      profile.damage[stat],
+      profile.abilities[stat].ability,
+      statName,
+      profile.name,
+      profile.color,
+      profile.photoUrl,
+      webhookUrl
+    );
+  });
 }
 
 function renderDice(roll) {
@@ -438,6 +364,7 @@ function renderDice(roll) {
   select("#dice-ability-bonus", rerollContainer).textContent =
     `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}`;
   select("#dice-result-value", rerollContainer).textContent = roll.result;
+
   if (roll.hasDamage) {
     let formula = `<div id="dice-damage-die">${roll.marvelDieText}</div> x (${roll.damageMultiplier} - ${roll.damageReduction}) ${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
     if (roll.isFantastic) {
@@ -461,86 +388,41 @@ function renderDice(roll) {
 }
 
 function renderPowers(characterPowers, powersData) {
-  const powersGrid = select("#powers-grid");
   const fragment = document.createDocumentFragment();
 
   characterPowers.forEach((i) => {
     const power = powersData[i];
-
-    const rowTitle = document.createElement("div");
-    rowTitle.className = "label power-name";
-    rowTitle.textContent = power.name;
-
-    const rowDescription = document.createElement("div");
-    rowDescription.className = "power-desc";
-    rowDescription.textContent = power.text;
-
-    const rowFocus = document.createElement("div");
-    rowFocus.className = "power-focus";
-    rowFocus.textContent = power.cost === 0 ? "--" : power.cost;
-
-    const gridRow = document.createElement("div");
-    gridRow.className = "content";
-    gridRow.appendChild(rowTitle);
-    gridRow.appendChild(rowFocus);
-    gridRow.appendChild(rowDescription);
-
-    fragment.appendChild(gridRow);
+    const cost = power.cost === 0 ? "--" : power.cost;
+    
+    const row = createGridRow(["label power-name", "power-focus", "power-desc"], [power.name, cost, power.text]);
+    fragment.appendChild(row);
   });
 
-  powersGrid.appendChild(fragment);
+  select("#powers-grid").appendChild(fragment);
 }
 
 function renderTags(characterTags, tagsData) {
-  const tagsGrid = select("#tags-grid");
   const fragment = document.createDocumentFragment();
 
   characterTags.forEach((i) => {
     const tag = tagsData[i];
-
-    const rowTitle = document.createElement("div");
-    rowTitle.className = "tag-label";
-    rowTitle.textContent = tag.name;
-
-    const rowDescription = document.createElement("div");
-    rowDescription.className = "tag-value";
-    rowDescription.textContent = tag.value;
-
-    const gridRow = document.createElement("div");
-    gridRow.className = "content";
-    gridRow.appendChild(rowTitle);
-    gridRow.appendChild(rowDescription);
-
-    fragment.appendChild(gridRow);
+    const row = createGridRow(["tag-label", "tag-value"], [tag.name, tag.value]);
+    fragment.appendChild(row);
   });
 
-  tagsGrid.appendChild(fragment);
+  select("#tags-grid").appendChild(fragment);
 }
 
 function renderTraits(characterTraits, traitsData) {
-  const traitsGrid = select("#traits-grid");
   const fragment = document.createDocumentFragment();
 
   characterTraits.forEach((i) => {
     const trait = traitsData[i];
-
-    const rowTitle = document.createElement("div");
-    rowTitle.className = "trait-label";
-    rowTitle.textContent = trait.name;
-
-    const rowDescription = document.createElement("div");
-    rowDescription.className = "trait-value";
-    rowDescription.textContent = trait.value;
-
-    const gridRow = document.createElement("div");
-    gridRow.className = "content";
-    gridRow.appendChild(rowTitle);
-    gridRow.appendChild(rowDescription);
-
-    fragment.appendChild(gridRow);
+    const row = createGridRow(["trait-label", "trait-value"], [trait.name, trait.value]);
+    fragment.appendChild(row);
   });
 
-  traitsGrid.appendChild(fragment);
+  select("#traits-grid").appendChild(fragment);
 }
 
 function rollD6() {
@@ -550,8 +432,6 @@ function rollD6() {
 function sendWebhookMessage(webhookUrl, jsonMessage) {
   if (!webhookUrl) return;
 
-  console.log(jsonMessage);
-
   fetch(webhookUrl, {
     method: "POST",
     headers: {
@@ -559,10 +439,8 @@ function sendWebhookMessage(webhookUrl, jsonMessage) {
     },
     body: jsonMessage,
   })
-    .then((data) => console.log("Success:", data))
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    .then((data) => console.log("Webhook Success:", data))
+    .catch((error) => console.error("Webhook Error:", error));
 }
 
 function showPopUp({
