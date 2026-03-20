@@ -53,8 +53,8 @@ header {
 }
 
 .hidden {
-  display: none;
-  visibility: hidden;
+  display: none !important;
+  visibility: hidden !important;
 }
 
 .text-input {
@@ -63,7 +63,7 @@ header {
   padding: var(--spacing-sm);
 }
 
-#alert {
+.alert {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
@@ -75,7 +75,7 @@ header {
   padding: var(--spacing-lg);
 }
 
-#alert-container {
+.alert-background {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
@@ -85,6 +85,127 @@ header {
   position: fixed;
   top: 0;
   width: 100vw;
+}
+
+#reroll-alert {
+  background-color: grey;
+  border: 1px solid darkred;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#dice-container {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-top: 20px
+}
+
+#dice-row {
+  display: flex;
+}
+
+.die {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(135deg, #ffffff 0%, #ccc 100%);
+  border: 1px solid black;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  font-size: 45px;
+  justify-content: center;
+  width: 70px;
+}
+
+.die.marvel-die {
+  background: linear-gradient(135deg,#A00000 0%, #700000 100%);
+  color: #ffffff;
+}
+
+#dice-ability-bonus {
+  align-items: center;
+  color: darkred;
+  display: flex;
+  font-size: large;
+  justify-content: center;
+  width: 45px;
+}
+
+#dice-btn-close-dice {
+  color: black;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+#dice-damage-row {
+  background-color: white;
+  border: 1px solid darkred;
+  display: flex;
+}
+
+#dice-damage-calc {
+  align-items: center;
+  color: black;
+  display: flex;
+  flex-grow: 1;
+  gap: 5px;
+  justify-content: right;
+  padding-right: 20px;
+}
+
+#dice-damage-die {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  border: 1px solid black;
+  border-radius: 5px;
+  background: linear-gradient(135deg,#A00000 0%, #700000 100%);
+  color: #ffffff;
+  display: flex;
+  font-size: 15px;
+  justify-content: center;
+  width: 30px;
+}
+
+#dice-damage-total {
+  align-items: center;
+  background-color: darkred;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+}
+
+#dice-damage-value {
+  font-size: 20px;
+}
+
+#dice-result {
+  align-items: center;
+  align-self: flex-start;
+  background-color: darkred;
+  border: 1px darkred solid;
+  display: flex;
+  flex-direction: column;
+  width: 90px;
+}
+
+#dice-result-value {
+  font-size: 20px;
+}
+
+#dice-type {
+  background-color: #000000;
+  font-size: 15px;
+  padding: 10px;
 }
 
 #alert-content {

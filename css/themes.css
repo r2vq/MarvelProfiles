@@ -8,6 +8,7 @@
   --spacing-lg: 24px;
   --spacing-md: 16px;
   --spacing-sm: 8px;
+  --text-on-card: #18181b;
   --text-primary: #18181b;
   --text-secondary: #52525b;
   --text-on-main: #18181b;
@@ -20,6 +21,7 @@
   --bg-header: #d07030;
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
+  --text-on-card: #f4f4f5;
   --text-on-main: #f4f4f5;
   --border-color: #d07030;
   --accent-color: #fa5050;
@@ -31,6 +33,7 @@
   --bg-header: #361775;
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
+  --text-on-card: #f4f4f5;
   --text-on-main: #f4f4f5;
   --border-color: #c02020;
   --accent-color: #fa5050;
@@ -42,6 +45,7 @@
   --bg-header: #27272a;
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
+  --text-on-card: #f4f4f5;
   --text-on-main: #f4f4f5;
   --border-color: #3f3f46;
   --accent-color: #60a5fa;
@@ -53,6 +57,7 @@
   --bg-header: #e0e0e0;
   --text-primary: #18181b;
   --text-secondary: #a1a1aa;
+  --text-on-card: #18181b;
   --text-on-main: #f4f4f5;
   --border-color: #ff0b0b;
   --accent-color: #4a1f0b;
@@ -64,6 +69,7 @@
   --bg-header: #201830;
   --text-primary: #e0e0e0;
   --text-secondary: #a1a1aa;
+  --text-on-card: #f4f4f5;
   --text-on-main: #f4f4f5;
   --border-color: #602090;
   --accent-color: #900fd0;

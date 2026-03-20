@@ -50,72 +50,52 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
       localStorage.removeItem("webhookUrl");
     }
   });
+
+  select("#dice-btn-close-dice").addEventListener("click", () => {
+    select("#reroll-container").classList.add("hidden");
+  });
 }
 
 function buildInitiative(initiative) {
   return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
 }
 
-function buildRollMessage({
-  abilityScore,
-  abilityType,
-  characterName,
-  color,
-  damageBonus,
-  damageMultiplier,
-  damageReduction,
-  dieResult1,
-  dieResult2,
-  dieResult3,
-  thumbnailUrl,
-}) {
-  const isAttack = damageMultiplier > 0;
-  const isFantastic = dieResult2 === 1;
-  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult3 === 6;
-  const isAbsorbedByDamageReduction = isAttack && damageReduction >= damageMultiplier;
-  const marvelizedDieResult = isFantastic ? 6 : dieResult2;
-  const resultTotal = dieResult1 + marvelizedDieResult + dieResult3 + abilityScore;
+function buildRollMessage({ roll, abilityType, characterName, color, thumbnailUrl }) {
+  const dieEmoji1 = getDieEmoji(roll.dieResult1);
+  const dieEmoji2 = getDieEmoji(roll.isFantastic ? 7 : roll.marvelDieResult);
+  const dieEmoji3 = getDieEmoji(roll.dieResult3);
 
-  const damageTotal = calculateDamageTotal(
-    isAttack,
-    marvelizedDieResult,
-    damageMultiplier,
-    damageReduction,
-    damageBonus,
-    isFantastic,
-  );
-
-  const dieEmoji1 = getDieEmoji(dieResult1);
-  const dieEmoji2 = getDieEmoji(dieResult2 === 1 ? 7 : dieResult2);
-  const dieEmoji3 = getDieEmoji(dieResult3);
-
-  const damageString = isAttack ? ` Damage ${damageTotal}.` : "";
-  const contentString = `${characterName} rolled ${abilityType}${isAttack ? " Attack" : ""}.\nResult ${resultTotal}.${damageString}`;
+  const damageString = roll.hasDamage ? ` Damage ${roll.damage}.` : "";
+  const contentString = `${characterName} rolled ${abilityType}${roll.hasDamage ? " Attack" : ""}.\nResult ${roll.result}.${damageString}`;
 
   const fields = [
     {
       name: "Result",
-      value: `**${resultTotal}**`,
+      value: `**${roll.result}**`,
     },
   ];
 
-  if (isAttack) {
-    const damageBonusString = damageBonus >= 0 ? `+ ${damageBonus}` : `- ${Math.abs(damageBonus)}`;
-    const fantasticString = isFantastic ? "(x2) " : "";
+  if (roll.hasDamage) {
+    const damageBonusString = `${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
+    let message = `${dieEmoji2} x (${roll.damageMultiplier} - ${roll.damageReduction}) ${damageBonusString}`;
+    if (roll.isFantastic) {
+      message = `(${message}) x 2`;
+    }
+    message = `${message} = **${roll.damage}**`;
     fields.push({
       name: "Damage",
-      value: `${dieEmoji2} x (${damageMultiplier} - ${damageReduction}) ${damageBonusString} ${fantasticString}= **${damageTotal}**`,
+      value: message,
     });
 
-    if (isAbsorbedByDamageReduction) {
+    if (roll.isNegated) {
       fields.push({
         name: "Note",
-        value: `Damage Reduction (${damageReduction}) completely absorbed the Damage Multiplier (${damageMultiplier}).`,
+        value: `Damage Reduction (${roll.damageReduction}) completely absorbed the Damage Multiplier (${roll.damageMultiplier}).`,
       });
     }
   }
 
-  const abilityScoreString = `${abilityScore >= 0 ? `+${abilityScore}` : `-${Math.abs(abilityScore)}`}`;
+  const abilityScoreString = `${roll.abilityScore >= 0 ? `+${roll.abilityScore}` : `-${Math.abs(roll.abilityScore)}`}`;
 
   const jsonData = {
     content: contentString,
@@ -124,7 +104,7 @@ function buildRollMessage({
         color: color,
         description: `**${dieEmoji1} ${dieEmoji2} ${dieEmoji3}** ${abilityScoreString}`,
         footer: {
-          text: isUltimateFantastic ? "ULTIMATE FANTASTIC" : isFantastic ? "Fantastic" : "Standard",
+          text: roll.isUltimateFantastic ? "ULTIMATE FANTASTIC" : roll.isFantastic ? "Fantastic" : "Standard",
         },
         thumbnail: {
           url: thumbnailUrl,
@@ -136,27 +116,47 @@ function buildRollMessage({
   return JSON.stringify(jsonData);
 }
 
-function calculateDamageTotal(
-  isAttack,
-  marvelizedDieResult,
+function calculateRoll({ dieResult1, dieResult2, dieResult3, abilityScore }) {
+  const isFantastic = dieResult2 === 1;
+  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult3 == 6;
+  const marvelDieResult = isFantastic ? 6 : dieResult2;
+  const marvelDieText = isFantastic ? "M" : dieResult2;
+  const result = dieResult1 + marvelDieResult + dieResult3 + abilityScore;
+  return {
+    abilityScore,
+    dieResult1,
+    dieResult3,
+    marvelDieResult,
+    marvelDieText,
+    isFantastic,
+    isUltimateFantastic,
+    result,
+  };
+}
+
+function calculateCombatRoll({
+  dieResult1,
+  dieResult2,
+  dieResult3,
+  abilityScore,
+  damageAbilityScore,
   damageMultiplier,
   damageReduction,
-  damageBonus,
-  isFantastic,
-) {
-  if (!isAttack) return 0;
-
-  const effectiveMultiplier = Math.max(0, damageMultiplier - damageReduction);
-
-  if (effectiveMultiplier <= 0) return 0;
-
-  let total = marvelizedDieResult * effectiveMultiplier + damageBonus;
-
-  if (isFantastic) {
-    total *= 2;
-  }
-
-  return Math.max(0, total);
+}) {
+  const roll = calculateRoll({ dieResult1, dieResult2, dieResult3, abilityScore });
+  const evaluatedDamageMultipler = damageMultiplier - damageReduction;
+  const isNegated = evaluatedDamageMultipler <= 0;
+  roll.isNegated = isNegated;
+  const fantasticMultiplier = roll.isFantastic ? 2 : 1;
+  const damage = isNegated
+    ? 0
+    : fantasticMultiplier * (roll.marvelDieResult * evaluatedDamageMultipler + damageAbilityScore);
+  roll.damage = damage;
+  roll.damageAbilityScore = damageAbilityScore;
+  roll.damageMultiplier = damageMultiplier;
+  roll.damageReduction = damageReduction;
+  roll.hasDamage = true;
+  return roll;
 }
 
 function getDieEmoji(value) {
@@ -257,14 +257,23 @@ function renderAbility(view, ability, abilityType, characterName, color, thumbna
       primaryText: "OK",
       secondaryText: "Cancel",
       onPrimaryClick: () => {
+        const dieResult1 = rollD6();
+        const dieResult2 = rollD6();
+        const dieResult3 = rollD6();
+        const roll = calculateRoll({
+          dieResult1,
+          dieResult2,
+          dieResult3,
+          abilityScore: ability.noncombat,
+        });
+
+        renderDice(roll);
+
         const message = buildRollMessage({
-          abilityScore: ability.ability,
+          roll,
           abilityType: abilityType,
           characterName: characterName,
           color: color,
-          dieResult1: rollD6(),
-          dieResult2: rollD6(),
-          dieResult3: rollD6(),
           thumbnailUrl: thumbnailUrl,
         });
 
@@ -336,6 +345,11 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
   select(".ability", view).textContent = damage.ability;
 
   view.addEventListener("click", () => {
+    const dieResult1 = rollD6();
+    const dieResult2 = rollD6();
+    const dieResult3 = rollD6();
+    const damageAbilityScore = damage.ability;
+    const damageMultiplier = damage.multiplier;
     showPopUp({
       content: `Roll ${abilityType} Attack?`,
       isNumberInputVisible: true,
@@ -345,17 +359,23 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
       secondaryText: "Cancel",
       numberLabelText: "Enter Damage Reduction:",
       onPrimaryClick: (damageReduction) => {
+        const roll = calculateCombatRoll({
+          dieResult1,
+          dieResult2,
+          dieResult3,
+          abilityScore,
+          damageAbilityScore,
+          damageMultiplier,
+          damageReduction,
+        });
+
+        renderDice(roll);
+
         const message = buildRollMessage({
-          abilityScore: abilityScore,
+          roll: roll,
           abilityType: abilityType,
           characterName: characterName,
           color: color,
-          damageBonus: damage.ability,
-          damageMultiplier: damage.multiplier,
-          damageReduction: damageReduction > 0 ? damageReduction : 0,
-          dieResult1: rollD6(),
-          dieResult2: rollD6(),
-          dieResult3: rollD6(),
           thumbnailUrl: thumbnailUrl,
         });
 
@@ -408,6 +428,36 @@ function renderDamages(profile, webhookUrl) {
     profile.photoUrl,
     webhookUrl,
   );
+}
+
+function renderDice(roll) {
+  const rerollContainer = select("#reroll-container");
+  select("#die1", rerollContainer).textContent = roll.dieResult1;
+  select("#die2", rerollContainer).textContent = roll.marvelDieText;
+  select("#die3", rerollContainer).textContent = roll.dieResult3;
+  select("#dice-ability-bonus", rerollContainer).textContent =
+    `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}`;
+  select("#dice-result-value", rerollContainer).textContent = roll.result;
+  if (roll.hasDamage) {
+    let formula = `<div id="dice-damage-die">${roll.marvelDieText}</div> x (${roll.damageMultiplier} - ${roll.damageReduction}) ${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
+    if (roll.isFantastic) {
+      formula = `(${formula}) x 2`;
+    }
+    select("#dice-damage-calc", rerollContainer).innerHTML = formula;
+    select("#dice-damage-value", rerollContainer).textContent = roll.damage;
+    select("#dice-damage-row", rerollContainer).classList.remove("hidden");
+  } else {
+    select("#dice-damage-row", rerollContainer).classList.add("hidden");
+  }
+
+  if (roll.isUltimateFantastic) {
+    select("#dice-type", rerollContainer).textContent = "ULTIMATE FANTASTIC!";
+  } else if (roll.isFantastic) {
+    select("#dice-type", rerollContainer).textContent = "Fantastic!";
+  } else {
+    select("#dice-type", rerollContainer).textContent = "Standard";
+  }
+  rerollContainer.classList.remove("hidden");
 }
 
 function renderPowers(characterPowers, powersData) {

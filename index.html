@@ -175,13 +175,39 @@
       </details>
     </main>
 
-    <div id="alert-container" class="hidden">
-      <div id="alert">
+    <div id="alert-container" class="hidden alert-background">
+      <div id="confirmation-alert" class="alert">
         <div id="alert-content" class="hidden"></div>
         <label id="lbl-number" for="inp-number"></label>
         <input id="inp-number" min="0" class="text-input hidden" type="number" />
         <div id="btn-primary" class="hidden button button-primary"></div>
         <div id="btn-secondary" class="hidden button"></div>
+      </div>
+    </div>
+
+    <div id="reroll-container" class="alert-background hidden">
+      <div id="reroll-alert">
+        <div id="dice-row">
+          <div id="dice-container">
+            <div id="die1" class="die"></div>
+            <div id="die2" class="die marvel-die"></div>
+            <div id="die3" class="die"></div>
+          </div>
+          <div id="dice-ability-bonus"></div>
+          <div id="dice-result">
+            <div id="dice-result-label">Result</div>
+            <div id="dice-result-value"></div>
+          </div>
+        </div>
+        <div id="dice-damage-row">
+          <div id="dice-damage-calc"></div>
+          <div id="dice-damage-total">
+            <div id="dice-damage-label">Damage</div>
+            <div id="dice-damage-value"></div>
+          </div>
+        </div>
+        <div id="dice-type"></div>
+        <div id="dice-btn-close-dice" class="clickable">Close</div>
       </div>
     </div>
 
