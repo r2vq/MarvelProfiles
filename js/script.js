@@ -52,7 +52,7 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
   });
 
   select("#dice-btn-close-dice").addEventListener("click", () => {
-    select("#reroll-container").classList.add("hidden");
+    select("#dice-container").classList.add("hidden");
   });
 }
 
@@ -125,6 +125,7 @@ function calculateRoll({ dieResult1, dieResult2, dieResult3, abilityScore }) {
   return {
     abilityScore,
     dieResult1,
+    dieResult2,
     dieResult3,
     marvelDieResult,
     marvelDieText,
@@ -175,19 +176,28 @@ function createGridRow(classes, textContents) {
 
 function getDieEmoji(value) {
   switch (value) {
-    case 1: return "1️⃣";
-    case 2: return "2️⃣";
-    case 3: return "3️⃣";
-    case 4: return "4️⃣";
-    case 5: return "5️⃣";
-    case 6: return "6️⃣";
-    case 7: return "🟥";
-    default: return null;
+    case 1:
+      return "1️⃣";
+    case 2:
+      return "2️⃣";
+    case 3:
+      return "3️⃣";
+    case 4:
+      return "4️⃣";
+    case 5:
+      return "5️⃣";
+    case 6:
+      return "6️⃣";
+    case 7:
+      return "🟥";
+    default:
+      return null;
   }
 }
 
 async function getProfile(urlParams) {
-  let profileId = urlParams.get("c") || localStorage.getItem("profileId") || prompt("Please enter your profile id:", "");
+  let profileId =
+    urlParams.get("c") || localStorage.getItem("profileId") || prompt("Please enter your profile id:", "");
 
   let profile = null;
   if (profileId) {
@@ -290,7 +300,7 @@ function renderAbilities(profile, webhookUrl) {
       profile.name,
       profile.color,
       profile.photoUrl,
-      webhookUrl
+      webhookUrl,
     );
   });
 }
@@ -351,40 +361,53 @@ function renderDamages(profile, webhookUrl) {
       profile.name,
       profile.color,
       profile.photoUrl,
-      webhookUrl
+      webhookUrl,
     );
   });
 }
 
 function renderDice(roll) {
-  const rerollContainer = select("#reroll-container");
-  select("#die1", rerollContainer).textContent = roll.dieResult1;
-  select("#die2", rerollContainer).textContent = roll.marvelDieText;
-  select("#die3", rerollContainer).textContent = roll.dieResult3;
-  select("#dice-ability-bonus", rerollContainer).textContent =
-    `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}`;
-  select("#dice-result-value", rerollContainer).textContent = roll.result;
+  const diceContainer = select("#dice-container");
+
+  const die1 = select("#die1", diceContainer);
+  die1.textContent = roll.dieResult1;
+  die1.onclick = () => {
+    renderReroll(roll, 1);
+  };
+  const die2 = select("#die2", diceContainer);
+  die2.textContent = roll.marvelDieText;
+  die2.onclick = () => {
+    renderReroll(roll, 2);
+  };
+  const die3 = select("#die3", diceContainer);
+  die3.textContent = roll.dieResult3;
+  die3.onclick = () => {
+    renderReroll(roll, 3);
+  };
+
+  select("#dice-ability-bonus", diceContainer).textContent = `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}`;
+  select("#dice-result-value", diceContainer).textContent = roll.result;
 
   if (roll.hasDamage) {
     let formula = `<div id="dice-damage-die">${roll.marvelDieText}</div> x (${roll.damageMultiplier} - ${roll.damageReduction}) ${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
     if (roll.isFantastic) {
       formula = `(${formula}) x 2`;
     }
-    select("#dice-damage-calc", rerollContainer).innerHTML = formula;
-    select("#dice-damage-value", rerollContainer).textContent = roll.damage;
-    select("#dice-damage-row", rerollContainer).classList.remove("hidden");
+    select("#dice-damage-calc", diceContainer).innerHTML = formula;
+    select("#dice-damage-value", diceContainer).textContent = roll.damage;
+    select("#dice-damage-row", diceContainer).classList.remove("hidden");
   } else {
-    select("#dice-damage-row", rerollContainer).classList.add("hidden");
+    select("#dice-damage-row", diceContainer).classList.add("hidden");
   }
 
   if (roll.isUltimateFantastic) {
-    select("#dice-type", rerollContainer).textContent = "ULTIMATE FANTASTIC!";
+    select("#dice-type", diceContainer).textContent = "ULTIMATE FANTASTIC!";
   } else if (roll.isFantastic) {
-    select("#dice-type", rerollContainer).textContent = "Fantastic!";
+    select("#dice-type", diceContainer).textContent = "Fantastic!";
   } else {
-    select("#dice-type", rerollContainer).textContent = "Standard";
+    select("#dice-type", diceContainer).textContent = "Standard";
   }
-  rerollContainer.classList.remove("hidden");
+  diceContainer.classList.remove("hidden");
 }
 
 function renderPowers(characterPowers, powersData) {
@@ -393,12 +416,129 @@ function renderPowers(characterPowers, powersData) {
   characterPowers.forEach((i) => {
     const power = powersData[i];
     const cost = power.cost === 0 ? "--" : power.cost;
-    
+
     const row = createGridRow(["label power-name", "power-focus", "power-desc"], [power.name, cost, power.text]);
     fragment.appendChild(row);
   });
 
   select("#powers-grid").appendChild(fragment);
+}
+
+function renderReroll(roll, dieIndex) {
+  const rerollContainer = select("#reroll-container");
+  rerollContainer.classList.remove("hidden");
+  const dieElement = select("#reroll-alert-die", rerollContainer);
+  const dieResultElement = select("#reroll-alert-die-result", rerollContainer);
+  dieResultElement.textContent = "";
+
+  const btnContainer = select("#reroll-top-button-container", rerollContainer);
+  btnContainer.classList.remove("hidden");
+  const btnCancel = select("#btn-reroll-cancel", rerollContainer);
+  btnCancel.classList.remove("hidden");
+  btnCancel.textContent = "Cancel";
+  btnCancel.onclick = () => {
+    rerollContainer.classList.add("hidden");
+  };
+
+  const btnEdge = select("#btn-reroll-edge", btnContainer);
+  const btnTrouble = select("#btn-reroll-trouble", btnContainer);
+  let oldResult;
+  switch (dieIndex) {
+    case 1:
+      oldResult = roll.dieResult1;
+      dieElement.classList.remove("marvel-die");
+      dieElement.textContent = roll.dieResult1;
+
+      dieResultElement.classList.remove("marvel-die");
+      break;
+    case 2:
+      oldResult = roll.dieResult2;
+      dieElement.classList.add("marvel-die");
+      dieElement.textContent = roll.marvelDieText;
+
+      dieResultElement.classList.add("marvel-die");
+      break;
+    case 3:
+      oldResult = roll.dieResult3;
+      dieElement.classList.remove("marvel-die");
+      dieElement.textContent = roll.dieResult3;
+
+      dieResultElement.classList.remove("marvel-die");
+      break;
+  }
+  function reroll(isForEdge) {
+    const newResult = rollD6();
+    let oldResult1 = dieIndex === 1 ? newResult : roll.dieResult1;
+    let oldResult2 = dieIndex === 2 ? newResult : roll.dieResult2;
+    let oldResult3 = dieIndex === 3 ? newResult : roll.dieResult3;
+    let newRoll;
+    if (roll.hasDamage) {
+      newRoll = calculateCombatRoll({
+        dieResult1: oldResult1,
+        dieResult2: oldResult2,
+        dieResult3: oldResult3,
+        abilityScore: roll.abilityScore,
+        damageAbilityScore: roll.damageAbilityScore,
+        damageMultiplier: roll.damageMultiplier,
+        damageReduction: roll.damageReduction,
+      });
+    } else {
+      newRoll = calculateRoll({
+        dieResult1: oldResult1,
+        dieResult2: oldResult2,
+        dieResult3: oldResult3,
+        abilityScore: roll.abilityScore,
+      });
+    }
+
+    let textContent;
+    switch (dieIndex) {
+      case 1:
+        textContent = newRoll.dieResult1;
+        break;
+      case 2:
+        textContent = newRoll.marvelDieText;
+        break;
+      case 3:
+        textContent = newRoll.dieResult3;
+        break;
+    }
+
+    dieResultElement.textContent = textContent;
+    btnCancel.classList.remove("hidden");
+    btnCancel.textContent = "Close";
+    btnCancel.onclick = () => {
+      if (isForEdge && (newRoll.result > roll.result) || (!roll.isFantastic && newRoll.isFantastic)) {
+        renderDice(newRoll);
+      }
+      if (!isForEdge && (newRoll.result < roll.result) || (roll.isFantastic && !newRoll.isFantastic)) {
+        renderDice(newRoll);
+      }
+      rerollContainer.classList.add("hidden");
+    };
+  }
+
+  let didRoll = false;
+  btnEdge.onclick = () => {
+    if (!didRoll) {
+      didRoll = true;
+      btnContainer.classList.add("hidden");
+      btnCancel.classList.add("hidden");
+      rotate360(dieElement, () => {
+        reroll(true);
+      });
+    }
+  };
+  btnTrouble.onclick = () => {
+    if (!didRoll) {
+      didRoll = true;
+      btnContainer.classList.add("hidden");
+      btnCancel.classList.add("hidden");
+      rotate360(dieElement, () => {
+        reroll(false);
+      });
+    }
+  };
 }
 
 function renderTags(characterTags, tagsData) {
@@ -427,6 +567,14 @@ function renderTraits(characterTraits, traitsData) {
 
 function rollD6() {
   return Math.floor(Math.random() * 6) + 1;
+}
+
+function rotate360(die, callback) {
+  die.classList.add("spin-active");
+  setTimeout(() => {
+    die.classList.remove("spin-active");
+    callback();
+  }, 750);
 }
 
 function sendWebhookMessage(webhookUrl, jsonMessage) {

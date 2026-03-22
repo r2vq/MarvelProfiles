@@ -8,7 +8,10 @@
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
   line-height: 1.5;
   padding: var(--spacing-md);
   -webkit-font-smoothing: antialiased;
@@ -29,13 +32,23 @@ header {
 
 /* --- ANIMATIONS --- */
 @keyframes modalPop {
-  0% { opacity: 0; transform: scale(0.95) translateY(10px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 @keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* --- UTILITY COMPONENTS --- */
@@ -76,7 +89,9 @@ header {
 .clickable {
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
 }
 
 .clickable:hover {
@@ -122,7 +137,9 @@ header {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.5),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2);
   display: flex;
   gap: var(--spacing-sm);
   flex-direction: column;
@@ -207,7 +224,9 @@ header {
   min-width: 80px;
   padding: var(--spacing-sm);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .stat-card:hover {
@@ -341,13 +360,51 @@ header {
   margin-bottom: 0;
 }
 
+#reroll-alert-dice {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+#reroll-alert-die {
+  align-self: center;
+}
+
+#reroll-confirmation-alert {
+  display: flex;
+  flex-direction: column;
+}
+
+#reroll-top-button-container {
+  display: flex;
+  gap: 5px;
+}
+
+#reroll-top-button-container .button {
+  flex: 1 1 0px;
+}
+
+.spin-active {
+  animation: spin 750ms linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 #tags-grid,
 #traits-grid {
   grid-template-columns: repeat(2, 1fr);
 }
 
 /* --- DICE ROLLER SPECIFICS --- */
-#reroll-alert {
+#dice-alert {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -375,8 +432,11 @@ header {
   background: linear-gradient(135deg, #ffffff 0%, #e5e7eb 100%);
   border: 1px solid #d1d5db;
   border-radius: 12px;
-  box-shadow: inset -2px -4px 6px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.2); /* 3D effect */
+  box-shadow:
+    inset -2px -4px 6px rgba(0, 0, 0, 0.1),
+    0 4px 6px rgba(0, 0, 0, 0.2); /* 3D effect */
   color: #111827;
+  cursor: pointer;
   display: flex;
   font-size: 40px;
   font-weight: bold;
@@ -384,10 +444,16 @@ header {
   width: 70px;
 }
 
+#dice-row > #dice-container > .die:hover {
+  box-shadow: 0px 0px 10px #b91c1c;
+}
+
 .die.marvel-die {
   background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
   border: 1px solid #991b1b;
-  box-shadow: inset -2px -4px 6px rgba(0,0,0,0.2), 0 4px 6px rgba(0,0,0,0.3);
+  box-shadow:
+    inset -2px -4px 6px rgba(0, 0, 0, 0.2),
+    0 4px 6px rgba(0, 0, 0, 0.3);
   color: #ffffff;
 }
 
@@ -449,7 +515,7 @@ header {
   border: 1px solid #991b1b;
   border-radius: 4px;
   background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
-  box-shadow: inset -1px -2px 3px rgba(0,0,0,0.2);
+  box-shadow: inset -1px -2px 3px rgba(0, 0, 0, 0.2);
   color: #ffffff;
   display: flex;
   font-size: 14px;
@@ -521,18 +587,18 @@ header {
     font-size: 0.9rem;
     gap: var(--spacing-sm) 4px;
   }
-  
+
   #dice-container {
     padding: 16px 0 16px 16px;
     gap: 8px;
   }
-  
+
   .die {
     width: 55px;
     font-size: 30px;
     border-radius: 8px;
   }
-  
+
   #dice-result-value {
     font-size: 24px;
   }
