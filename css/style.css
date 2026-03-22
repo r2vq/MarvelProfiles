@@ -376,6 +376,16 @@ header {
   flex-direction: column;
 }
 
+#reroll-rejected {
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  background-color: var(--bg-main);
+  color: var(--text-on-main);
+  font-size: large;
+  padding: var(--spacing-sm);
+}
+
 #reroll-top-button-container {
   display: flex;
   gap: 5px;

@@ -39,8 +39,9 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
 
   document.body.className = profile.theme;
 
-  renderTraits(profile.traits, traitsData);
-  renderTags(profile.tags, tagsData);
+  renderSimpleGrid(profile.traits, traitsData, "#traits-grid", ["trait-label", "trait-value"]);
+  renderSimpleGrid(profile.tags, tagsData, "#tags-grid", ["tag-label", "tag-value"]);
+
   renderAbilities(profile, webhookUrl);
   renderDamages(profile, webhookUrl);
   renderPowers(profile.powers, powersData);
@@ -60,13 +61,14 @@ function buildInitiative(initiative) {
   return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
 }
 
-function buildRollMessage({ roll, abilityType, characterName, color, thumbnailUrl }) {
+function buildRollMessage({ roll, isReroll, abilityType, characterName, color, thumbnailUrl }) {
   const dieEmoji1 = getDieEmoji(roll.dieResult1);
   const dieEmoji2 = getDieEmoji(roll.isFantastic ? 7 : roll.marvelDieResult);
   const dieEmoji3 = getDieEmoji(roll.dieResult3);
 
   const damageString = roll.hasDamage ? ` Damage ${roll.damage}.` : "";
-  const contentString = `${characterName} rolled ${abilityType}${roll.hasDamage ? " Attack" : ""}.\nResult ${roll.result}.${damageString}`;
+  const rerollPrefix = isReroll ? "**[REROLL]** " : "";
+  const contentString = `${rerollPrefix}${characterName} rolled ${abilityType}${roll.hasDamage ? " Attack" : ""}.\nResult ${roll.result}.${damageString}`;
 
   const fields = [
     {
@@ -145,13 +147,13 @@ function calculateCombatRoll({
   damageReduction,
 }) {
   const roll = calculateRoll({ dieResult1, dieResult2, dieResult3, abilityScore });
-  const evaluatedDamageMultipler = damageMultiplier - damageReduction;
-  const isNegated = evaluatedDamageMultipler <= 0;
+  const evaluatedDamageMultiplier = damageMultiplier - damageReduction;
+  const isNegated = evaluatedDamageMultiplier <= 0;
   roll.isNegated = isNegated;
   const fantasticMultiplier = roll.isFantastic ? 2 : 1;
   const damage = isNegated
     ? 0
-    : fantasticMultiplier * (roll.marvelDieResult * evaluatedDamageMultipler + damageAbilityScore);
+    : fantasticMultiplier * (roll.marvelDieResult * evaluatedDamageMultiplier + damageAbilityScore);
   roll.damage = damage;
   roll.damageAbilityScore = damageAbilityScore;
   roll.damageMultiplier = damageMultiplier;
@@ -270,17 +272,10 @@ function renderAbility(view, ability, abilityType, characterName, color, thumbna
           dieResult3: rollD6(),
           abilityScore: ability.noncombat,
         });
+        roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl };
 
         renderDice(roll);
-
-        const message = buildRollMessage({
-          roll,
-          abilityType,
-          characterName,
-          color,
-          thumbnailUrl,
-        });
-
+        const message = buildRollMessage({ roll, ...roll.context });
         sendWebhookMessage(webhookUrl, message);
       },
     });
@@ -330,17 +325,10 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
           damageMultiplier,
           damageReduction,
         });
+        roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl };
 
         renderDice(roll);
-
-        const message = buildRollMessage({
-          roll,
-          abilityType,
-          characterName,
-          color,
-          thumbnailUrl,
-        });
-
+        const message = buildRollMessage({ roll, ...roll.context });
         sendWebhookMessage(webhookUrl, message);
       },
     });
@@ -371,19 +359,15 @@ function renderDice(roll) {
 
   const die1 = select("#die1", diceContainer);
   die1.textContent = roll.dieResult1;
-  die1.onclick = () => {
-    renderReroll(roll, 1);
-  };
+  die1.onclick = () => renderReroll(roll, 1);
+
   const die2 = select("#die2", diceContainer);
   die2.textContent = roll.marvelDieText;
-  die2.onclick = () => {
-    renderReroll(roll, 2);
-  };
+  die2.onclick = () => renderReroll(roll, 2);
+
   const die3 = select("#die3", diceContainer);
   die3.textContent = roll.dieResult3;
-  die3.onclick = () => {
-    renderReroll(roll, 3);
-  };
+  die3.onclick = () => renderReroll(roll, 3);
 
   select("#dice-ability-bonus", diceContainer).textContent = `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}`;
   select("#dice-result-value", diceContainer).textContent = roll.result;
@@ -442,29 +426,18 @@ function renderReroll(roll, dieIndex) {
 
   const btnEdge = select("#btn-reroll-edge", btnContainer);
   const btnTrouble = select("#btn-reroll-trouble", btnContainer);
-  let oldResult;
-  switch (dieIndex) {
-    case 1:
-      oldResult = roll.dieResult1;
-      dieElement.classList.remove("marvel-die");
-      dieElement.textContent = roll.dieResult1;
 
-      dieResultElement.classList.remove("marvel-die");
-      break;
-    case 2:
-      oldResult = roll.dieResult2;
-      dieElement.classList.add("marvel-die");
-      dieElement.textContent = roll.marvelDieText;
+  const rerollRejected = select("#reroll-rejected", rerollContainer);
+  rerollRejected.classList.add("hidden");
 
-      dieResultElement.classList.add("marvel-die");
-      break;
-    case 3:
-      oldResult = roll.dieResult3;
-      dieElement.classList.remove("marvel-die");
-      dieElement.textContent = roll.dieResult3;
-
-      dieResultElement.classList.remove("marvel-die");
-      break;
+  if (dieIndex === 2) {
+    dieElement.classList.add("marvel-die");
+    dieElement.textContent = roll.marvelDieText;
+    dieResultElement.classList.add("marvel-die");
+  } else {
+    dieElement.classList.remove("marvel-die");
+    dieElement.textContent = dieIndex === 1 ? roll.dieResult1 : roll.dieResult3;
+    dieResultElement.classList.remove("marvel-die");
   }
   function reroll(isForEdge) {
     const newResult = rollD6();
@@ -491,27 +464,25 @@ function renderReroll(roll, dieIndex) {
       });
     }
 
-    let textContent;
-    switch (dieIndex) {
-      case 1:
-        textContent = newRoll.dieResult1;
-        break;
-      case 2:
-        textContent = newRoll.marvelDieText;
-        break;
-      case 3:
-        textContent = newRoll.dieResult3;
-        break;
+    newRoll.context = roll.context;
+
+    dieResultElement.textContent = dieIndex === 2 ? newRoll.marvelDieText : newResult;
+
+    const isBetter = newRoll.result > roll.result || (!roll.isFantastic && newRoll.isFantastic);
+    const isForEdgeAndBetter = isForEdge && isBetter;
+    const isWorse = newRoll.result < roll.result || (roll.isFantastic && !newRoll.isFantastic);
+    const isForTroubleAndWorse = !isForEdge && isWorse;
+    if (!isForEdgeAndBetter && !isForTroubleAndWorse) {
+      rerollRejected.classList.remove("hidden");
+    } else if (newRoll.context && newRoll.context.webhookUrl) {
+      const message = buildRollMessage({ roll: newRoll, isReroll: true, ...newRoll.context });
+      sendWebhookMessage(newRoll.context.webhookUrl, message);
     }
 
-    dieResultElement.textContent = textContent;
     btnCancel.classList.remove("hidden");
     btnCancel.textContent = "Close";
     btnCancel.onclick = () => {
-      if (isForEdge && (newRoll.result > roll.result) || (!roll.isFantastic && newRoll.isFantastic)) {
-        renderDice(newRoll);
-      }
-      if (!isForEdge && (newRoll.result < roll.result) || (roll.isFantastic && !newRoll.isFantastic)) {
+      if (isForEdgeAndBetter || isForTroubleAndWorse) {
         renderDice(newRoll);
       }
       rerollContainer.classList.add("hidden");
@@ -524,9 +495,7 @@ function renderReroll(roll, dieIndex) {
       didRoll = true;
       btnContainer.classList.add("hidden");
       btnCancel.classList.add("hidden");
-      rotate360(dieElement, () => {
-        reroll(true);
-      });
+      rotate360(dieElement, () => reroll(true));
     }
   };
   btnTrouble.onclick = () => {
@@ -534,35 +503,21 @@ function renderReroll(roll, dieIndex) {
       didRoll = true;
       btnContainer.classList.add("hidden");
       btnCancel.classList.add("hidden");
-      rotate360(dieElement, () => {
-        reroll(false);
-      });
+      rotate360(dieElement, () => reroll(false));
     }
   };
 }
 
-function renderTags(characterTags, tagsData) {
+function renderSimpleGrid(itemIds, sourceData, gridSelector, classes) {
   const fragment = document.createDocumentFragment();
 
-  characterTags.forEach((i) => {
-    const tag = tagsData[i];
-    const row = createGridRow(["tag-label", "tag-value"], [tag.name, tag.value]);
+  itemIds.forEach((id) => {
+    const item = sourceData[id];
+    const row = createGridRow(classes, [item.name, item.value]);
     fragment.appendChild(row);
   });
 
-  select("#tags-grid").appendChild(fragment);
-}
-
-function renderTraits(characterTraits, traitsData) {
-  const fragment = document.createDocumentFragment();
-
-  characterTraits.forEach((i) => {
-    const trait = traitsData[i];
-    const row = createGridRow(["trait-label", "trait-value"], [trait.name, trait.value]);
-    fragment.appendChild(row);
-  });
-
-  select("#traits-grid").appendChild(fragment);
+  select(gridSelector).appendChild(fragment);
 }
 
 function rollD6() {
