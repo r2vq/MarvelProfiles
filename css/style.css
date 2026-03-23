@@ -413,6 +413,48 @@ header {
   grid-template-columns: repeat(2, 1fr);
 }
 
+#details-body {
+  white-space: pre-wrap;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.details-meta-badge {
+  background-color: var(--bg-header);
+  border: 1px solid var(--border-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.details-meta-badge>strong {
+  color: var(--text-secondary);
+}
+
+#details-container-alert {
+  max-width: 500px;
+  width: 90vw;
+}
+
+#details-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+#details-subtitle {
+  color: var(--accent-color);
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+#details-title {
+  margin-bottom: 0;
+}
+
 /* --- DICE ROLLER SPECIFICS --- */
 #dice-alert {
   background-color: var(--bg-card);

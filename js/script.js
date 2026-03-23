@@ -75,8 +75,8 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
 
   document.body.className = profile.theme;
 
-  renderSimpleGrid(profile.traits, traitsData, "#traits-grid", ["trait-label", "trait-value"]);
-  renderSimpleGrid(profile.tags, tagsData, "#tags-grid", ["tag-label", "tag-value"]);
+  renderSimpleGrid(profile.traits, traitsData, "#traits-grid", ["trait-label", "trait-value"], "Trait");
+  renderSimpleGrid(profile.tags, tagsData, "#tags-grid", ["tag-label", "tag-value"], "Tag");
 
   renderAbilities(profile, webhookUrl);
   renderDamages(profile, webhookUrl);
@@ -97,6 +97,10 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
     select("#dice-damage-row", diceContainer).classList.add("hidden");
 
     select("#dice-ability-bonus", diceContainer).textContent = "";
+  });
+
+  select("#btn-close-details").addEventListener("click", () => {
+    select("#details-container").classList.add("hidden");
   });
 
   select("#stat-init").addEventListener("click", () => {
@@ -210,9 +214,14 @@ function calculateCombatRoll({
   return roll;
 }
 
-function createGridRow(classes, textContents) {
+function createGridRow(classes, textContents, onClick) {
   const gridRow = document.createElement("div");
   gridRow.className = "content";
+
+  if (onClick) {
+    gridRow.classList.add("clickable");
+    gridRow.addEventListener("click", onClick);
+  }
 
   classes.forEach((className, index) => {
     const cell = document.createElement("div");
@@ -482,7 +491,26 @@ function renderPowers(characterPowers, powersData) {
     const power = powersData[i];
     const cost = power.cost === 0 ? "--" : power.cost;
 
-    const row = createGridRow(["label power-name", "power-focus", "power-desc"], [power.name, cost, power.text]);
+    const row = createGridRow(
+      ["label power-name", "power-focus", "power-desc"],
+      [power.name, cost, power.text],
+      () => {
+        showDetails({
+          title: power.name,
+          subtitle: power.power_set || "Power",
+          meta: {
+            "Action": power.action,
+            "Trigger": power.trigger,
+            "Cost": power.cost === 0 ? "None" : power.cost,
+            "Range": power.range,
+            "Duration": power.duration,
+            "Effect": power.effect,
+            "Prerequisites": power.prerequisites
+          },
+          bodyText: power.text
+        });
+      }
+    );
     fragment.appendChild(row);
   });
 
@@ -589,12 +617,19 @@ function renderReroll(roll, dieIndex) {
   };
 }
 
-function renderSimpleGrid(itemIds, sourceData, gridSelector, classes) {
+function renderSimpleGrid(itemIds, sourceData, gridSelector, classes, itemType) {
   const fragment = document.createDocumentFragment();
 
   itemIds.forEach((id) => {
     const item = sourceData[id];
-    const row = createGridRow(classes, [item.name, item.value]);
+    const row = createGridRow(classes, [item.name, item.value], () => {
+      showDetails({
+        title: item.name,
+        subtitle: itemType,
+        meta: {},
+        bodyText: item.value
+      });
+    });
     fragment.appendChild(row);
   });
 
@@ -655,6 +690,28 @@ function sendWebhookMessage(webhookUrl, jsonMessage) {
   })
     .then((data) => console.log("Webhook Success:", data))
     .catch((error) => console.error("Webhook Error:", error));
+}
+
+function showDetails({ title, subtitle, meta = {}, bodyText }) {
+  const detailsContainer = select("#details-container");
+
+  select("#details-title", detailsContainer).textContent = title;
+  select("#details-subtitle", detailsContainer).textContent = subtitle;
+  select("#details-body", detailsContainer).textContent = bodyText || "";
+
+  const metaContainer = select("#details-meta", detailsContainer);
+  metaContainer.innerHTML = "";
+
+  for (const [key, value] of Object.entries(meta)) {
+    if (value && value !== "--" && value !== "None" && value !== "") {
+      const badge = document.createElement("div");
+      badge.classList.add("details-meta-badge");
+      badge.innerHTML = `<strong>${key}:</strong> ${value}`;
+      metaContainer.appendChild(badge);
+    }
+  }
+
+  detailsContainer.classList.remove("hidden");
 }
 
 function showPopUp({
