@@ -1,244 +1,247 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MMRPG Profile</title>
-    <link rel="stylesheet" href="css/themes.css" />
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body class="theme-dark">
-    <header>
-      <section id="character-id">
-        <h1 id="character-name"></h1>
-        <h2 id="secret-identity"></h2>
-        <img id="character-photo" />
-      </section>
 
-      <section id="stats-container">
-        <div class="stat-card" id="stat-rank">
-          <span class="label">Rank</span>
-          <span class="value">0</span>
-        </div>
-        <div class="stat-card" id="stat-karma">
-          <span class="label">Karma</span>
-          <span class="value">0</span>
-        </div>
-        <div class="stat-card" id="stat-health">
-          <span class="label">Health</span>
-          <span class="value">0</span>
-        </div>
-        <div class="stat-card" id="stat-focus">
-          <span class="label">Focus</span>
-          <span class="value">0</span>
-        </div>
-        <div class="stat-card" id="stat-init">
-          <span class="label">Initiative</span>
-          <span class="value">0</span>
-        </div>
-      </section>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MMRPG Profile</title>
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
 
-    <main>
-      <details id="traits" class="collapsible-section">
-        <summary>Traits</summary>
-        <div class="collapsible-content">
-          <div id="traits-grid">
-            <div class="grid-header">Name</div>
-            <div class="grid-header">Description</div>
-            <div class="content"></div>
-          </div>
-        </div>
-      </details>
+<body class="theme-dark">
+  <header>
+    <section id="character-id">
+      <h1 id="character-name"></h1>
+      <h2 id="secret-identity"></h2>
+      <img id="character-photo" />
+    </section>
 
-      <details id="tags" class="collapsible-section">
-        <summary>Tags</summary>
-        <div class="collapsible-content">
-          <div id="tags-grid">
-            <div class="grid-header">Name</div>
-            <div class="grid-header">Description</div>
-          </div>
-        </div>
-      </details>
-
-      <details id="abilities" class="collapsible-section" open>
-        <summary>Abilities</summary>
-        <div class="collapsible-content">
-          <div id="ability-grid">
-            <div class="grid-header">&nbsp;</div>
-            <div class="grid-header">Ability</div>
-            <div class="grid-header">Defense</div>
-            <div class="grid-header">Non-Combat</div>
-
-            <div class="content clickable" id="ability-row-melee">
-              <div class="label">Melee</div>
-              <div class="ability">0</div>
-              <div class="defense">0</div>
-              <div class="noncombat">+0</div>
-            </div>
-
-            <div class="content clickable" id="ability-row-agility">
-              <div class="label">Agility</div>
-              <div class="ability">0</div>
-              <div class="defense">0</div>
-              <div class="noncombat">+0</div>
-            </div>
-
-            <div class="content clickable" id="ability-row-resilience">
-              <div class="label">Resilience</div>
-              <div class="ability">0</div>
-              <div class="defense">0</div>
-              <div class="noncombat">+0</div>
-            </div>
-
-            <div class="content clickable" id="ability-row-vigilance">
-              <div class="label">Vigilance</div>
-              <div class="ability">0</div>
-              <div class="defense">0</div>
-              <div class="noncombat">+0</div>
-            </div>
-
-            <div class="content clickable" id="ability-row-ego">
-              <div class="label">Ego</div>
-              <div class="ability">0</div>
-              <div class="defense">0</div>
-              <div class="noncombat">+0</div>
-            </div>
-
-            <div class="content clickable" id="ability-row-logic">
-              <div class="label">Logic</div>
-              <div class="ability">0</div>
-              <div class="defense">0</div>
-              <div class="noncombat">+0</div>
-            </div>
-          </div>
-        </div>
-      </details>
-
-      <details id="damage" class="collapsible-section" open>
-        <summary>Damage</summary>
-        <div class="collapsible-content">
-          <div id="damage-grid">
-            <div class="content clickable" id="damage-row-melee">
-              <div class="label">Melee</div>
-              <div class="multiplier">0</div>
-              <div class="text">+</div>
-              <div class="ability">0</div>
-            </div>
-
-            <div class="content clickable" id="damage-row-agility">
-              <div class="label">Agility</div>
-              <div class="multiplier">0</div>
-              <div class="text">+</div>
-              <div class="ability">0</div>
-            </div>
-
-            <div class="content clickable" id="damage-row-ego">
-              <div class="label">Ego</div>
-              <div class="multiplier">0</div>
-              <div class="text">+</div>
-              <div class="ability">0</div>
-            </div>
-
-            <div class="content clickable" id="damage-row-logic">
-              <div class="label">Logic</div>
-              <div class="multiplier">0</div>
-              <div class="text">+</div>
-              <div class="ability">0</div>
-            </div>
-          </div>
-        </div>
-      </details>
-
-      <details id="powers" class="collapsible-section" open>
-        <summary>Powers</summary>
-        <div class="collapsible-content">
-          <div id="powers-grid">
-            <div class="grid-header power-name">Name</div>
-            <div class="grid-header power-focus">Focus</div>
-            <div class="grid-header power-desc">Description</div>
-
-            <div class="content"></div>
-          </div>
-        </div>
-      </details>
-
-      <details id="settings" class="collapsible-section">
-        <summary>Settings</summary>
-        <div class="collapsible-content">
-          <div id="settings-grid">
-            <div class="content" id="settings-row-webhook">
-              <div id="btn-delete-webhook" class="button danger">Delete Saved Webhook URL</div>
-            </div>
-          </div>
-        </div>
-      </details>
-    </main>
-
-    <div id="alert-container" class="hidden alert-background">
-      <div id="confirmation-alert" class="alert">
-        <div id="alert-content" class="hidden"></div>
-        <label id="lbl-number" for="inp-number"></label>
-        <input id="inp-number" min="0" class="text-input hidden" type="number" />
-        <div id="btn-primary" class="hidden button button-primary"></div>
-        <div id="btn-secondary" class="hidden button"></div>
+    <section id="stats-container">
+      <div class="stat-card" id="stat-rank">
+        <span class="label">Rank</span>
+        <span class="value">0</span>
       </div>
-    </div>
-
-    <div id="dice-container" class="alert-background hidden">
-      <div id="dice-alert">
-        <div id="dice-row">
-          <div id="dice-container">
-            <div id="die1" class="die"></div>
-            <div id="die2" class="die marvel-die"></div>
-            <div id="die3" class="die"></div>
-          </div>
-          <div id="dice-ability-bonus"></div>
-          <div id="dice-result">
-            <div id="dice-result-label">Result</div>
-            <div id="dice-result-value"></div>
-          </div>
-        </div>
-        <div id="dice-damage-row">
-          <div id="dice-damage-calc"></div>
-          <div id="dice-damage-total">
-            <div id="dice-damage-label">Damage</div>
-            <div id="dice-damage-value"></div>
-          </div>
-        </div>
-        <div id="dice-type"></div>
-        <div id="dice-btn-close-dice" class="clickable">Close</div>
+      <div class="stat-card" id="stat-karma">
+        <span class="label">Karma</span>
+        <span class="value">0</span>
       </div>
-    </div>
-
-    <div id="reroll-container" class="alert-background hidden">
-      <div id="reroll-confirmation-alert" class="alert">
-        <div id="reroll-alert-dice">
-          <div id="reroll-alert-die" class="die"></div>
-          =&gt;
-          <div id="reroll-alert-die-result" class="die"></div>
-        </div>
-        <div id="reroll-top-button-container">
-          <div id="btn-reroll-edge" class="button button-primary">Edge</div>
-          <div id="btn-reroll-trouble" class="button button-primary">Trouble</div>
-        </div>
-        <div id="btn-reroll-cancel" class="button">Cancel</div>
-        <div id="reroll-rejected" class="hidden">Keeping old roll</div>
+      <div class="stat-card" id="stat-health">
+        <span class="label">Health</span>
+        <span class="value">0</span>
       </div>
-    </div>
-
-    <div id="details-container" class="alert-background hidden">
-      <div id="details-container-alert" class="alert">
-        <h2 id="details-title"></h2>
-        <div id="details-subtitle"></div>
-
-        <div id="details-meta"></div>
-
-        <div id="details-body"></div>
-        <div id="btn-close-details" class="button button-primary">Close</div>
+      <div class="stat-card" id="stat-focus">
+        <span class="label">Focus</span>
+        <span class="value">0</span>
       </div>
-    </div>
+      <div class="stat-card" id="stat-init">
+        <span class="label">Initiative</span>
+        <span class="value">0</span>
+      </div>
+    </section>
+  </header>
 
-    <script src="./js/script.js" type="module"></script>
-  </body>
+  <main>
+    <details id="traits" class="collapsible-section">
+      <summary>Traits</summary>
+      <div class="collapsible-content">
+        <div id="traits-grid">
+          <div class="grid-header">Name</div>
+          <div class="grid-header">Description</div>
+          <div class="content"></div>
+        </div>
+      </div>
+    </details>
+
+    <details id="tags" class="collapsible-section">
+      <summary>Tags</summary>
+      <div class="collapsible-content">
+        <div id="tags-grid">
+          <div class="grid-header">Name</div>
+          <div class="grid-header">Description</div>
+        </div>
+      </div>
+    </details>
+
+    <details id="abilities" class="collapsible-section" open>
+      <summary>Abilities</summary>
+      <div class="collapsible-content">
+        <div id="ability-grid">
+          <div class="grid-header">&nbsp;</div>
+          <div class="grid-header">Ability</div>
+          <div class="grid-header">Defense</div>
+          <div class="grid-header">Non-Combat</div>
+
+          <div class="content clickable" id="ability-row-melee">
+            <div class="label">Melee</div>
+            <div class="ability">0</div>
+            <div class="defense">0</div>
+            <div class="noncombat">+0</div>
+          </div>
+
+          <div class="content clickable" id="ability-row-agility">
+            <div class="label">Agility</div>
+            <div class="ability">0</div>
+            <div class="defense">0</div>
+            <div class="noncombat">+0</div>
+          </div>
+
+          <div class="content clickable" id="ability-row-resilience">
+            <div class="label">Resilience</div>
+            <div class="ability">0</div>
+            <div class="defense">0</div>
+            <div class="noncombat">+0</div>
+          </div>
+
+          <div class="content clickable" id="ability-row-vigilance">
+            <div class="label">Vigilance</div>
+            <div class="ability">0</div>
+            <div class="defense">0</div>
+            <div class="noncombat">+0</div>
+          </div>
+
+          <div class="content clickable" id="ability-row-ego">
+            <div class="label">Ego</div>
+            <div class="ability">0</div>
+            <div class="defense">0</div>
+            <div class="noncombat">+0</div>
+          </div>
+
+          <div class="content clickable" id="ability-row-logic">
+            <div class="label">Logic</div>
+            <div class="ability">0</div>
+            <div class="defense">0</div>
+            <div class="noncombat">+0</div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details id="damage" class="collapsible-section" open>
+      <summary>Damage</summary>
+      <div class="collapsible-content">
+        <div id="damage-grid">
+          <div class="content clickable" id="damage-row-melee">
+            <div class="label">Melee</div>
+            <div class="multiplier">0</div>
+            <div class="text">+</div>
+            <div class="ability">0</div>
+          </div>
+
+          <div class="content clickable" id="damage-row-agility">
+            <div class="label">Agility</div>
+            <div class="multiplier">0</div>
+            <div class="text">+</div>
+            <div class="ability">0</div>
+          </div>
+
+          <div class="content clickable" id="damage-row-ego">
+            <div class="label">Ego</div>
+            <div class="multiplier">0</div>
+            <div class="text">+</div>
+            <div class="ability">0</div>
+          </div>
+
+          <div class="content clickable" id="damage-row-logic">
+            <div class="label">Logic</div>
+            <div class="multiplier">0</div>
+            <div class="text">+</div>
+            <div class="ability">0</div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details id="powers" class="collapsible-section" open>
+      <summary>Powers</summary>
+      <div class="collapsible-content">
+        <div id="powers-grid">
+          <div class="grid-header power-name">Name</div>
+          <div class="grid-header power-focus">Focus</div>
+          <div class="grid-header power-desc">Description</div>
+
+          <div class="content"></div>
+        </div>
+      </div>
+    </details>
+
+    <details id="settings" class="collapsible-section">
+      <summary>Settings</summary>
+      <div class="collapsible-content">
+        <div id="settings-grid">
+          <div class="content" id="settings-row-webhook">
+            <div id="btn-delete-webhook" class="button danger">Delete Saved Webhook URL</div>
+          </div>
+        </div>
+      </div>
+    </details>
+  </main>
+
+  <div id="alert-container" class="hidden alert-background">
+    <div id="confirmation-alert" class="alert">
+      <div id="alert-content" class="hidden"></div>
+      <label id="lbl-number" for="inp-number"></label>
+      <input id="inp-number" min="0" class="text-input hidden" type="number" />
+      <div id="btn-primary" class="hidden button button-primary"></div>
+      <div id="btn-secondary" class="hidden button"></div>
+    </div>
+  </div>
+
+  <div id="dice-container" class="alert-background hidden">
+    <div id="dice-alert">
+      <div id="dice-row">
+        <div id="dice-container">
+          <div id="die1" class="die"></div>
+          <div id="die2" class="die marvel-die"></div>
+          <div id="die3" class="die"></div>
+        </div>
+        <div id="dice-ability-bonus"></div>
+        <div id="dice-result">
+          <div id="dice-result-label">Result</div>
+          <div id="dice-result-value"></div>
+        </div>
+      </div>
+      <div id="dice-damage-row">
+        <div id="dice-damage-calc"></div>
+        <div id="dice-damage-total">
+          <div id="dice-damage-label">Damage</div>
+          <div id="dice-damage-value"></div>
+        </div>
+      </div>
+      <div id="dice-type"></div>
+      <div id="dice-btn-close-dice" class="clickable">Close</div>
+    </div>
+  </div>
+
+  <div id="reroll-container" class="alert-background hidden">
+    <div id="reroll-confirmation-alert" class="alert">
+      <div id="reroll-alert-dice">
+        <div id="reroll-alert-die" class="die"></div>
+        =&gt;
+        <div id="reroll-alert-die-result" class="die"></div>
+      </div>
+      <div id="reroll-top-button-container">
+        <div id="btn-reroll-edge" class="button button-primary">Edge</div>
+        <div id="btn-reroll-trouble" class="button button-primary">Trouble</div>
+      </div>
+      <div id="btn-reroll-cancel" class="button">Cancel</div>
+      <div id="reroll-rejected" class="hidden">Keeping old roll</div>
+    </div>
+  </div>
+
+  <div id="details-container" class="alert-background hidden">
+    <div id="details-container-alert" class="alert">
+      <h2 id="details-title"></h2>
+      <div id="details-subtitle"></div>
+
+      <div id="details-meta"></div>
+
+      <div id="details-body"></div>
+      <div id="btn-close-details" class="button button-primary">Close</div>
+    </div>
+  </div>
+
+  <script src="./js/script.js" type="module"></script>
+</body>
+
 </html>

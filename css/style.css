@@ -427,7 +427,7 @@ header {
   font-size: 0.8rem;
 }
 
-.details-meta-badge>strong {
+.details-meta-badge > strong {
   color: var(--text-secondary);
 }
 

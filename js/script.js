@@ -491,26 +491,22 @@ function renderPowers(characterPowers, powersData) {
     const power = powersData[i];
     const cost = power.cost === 0 ? "--" : power.cost;
 
-    const row = createGridRow(
-      ["label power-name", "power-focus", "power-desc"],
-      [power.name, cost, power.text],
-      () => {
-        showDetails({
-          title: power.name,
-          subtitle: power.power_set || "Power",
-          meta: {
-            "Action": power.action,
-            "Trigger": power.trigger,
-            "Cost": power.cost === 0 ? "None" : power.cost,
-            "Range": power.range,
-            "Duration": power.duration,
-            "Effect": power.effect,
-            "Prerequisites": power.prerequisites
-          },
-          bodyText: power.text
-        });
-      }
-    );
+    const row = createGridRow(["label power-name", "power-focus", "power-desc"], [power.name, cost, power.text], () => {
+      showDetails({
+        title: power.name,
+        subtitle: power.power_set || "Power",
+        meta: {
+          Action: power.action,
+          Trigger: power.trigger,
+          Cost: power.cost === 0 ? "None" : power.cost,
+          Range: power.range,
+          Duration: power.duration,
+          Effect: power.effect,
+          Prerequisites: power.prerequisites,
+        },
+        bodyText: power.text,
+      });
+    });
     fragment.appendChild(row);
   });
 
@@ -627,7 +623,7 @@ function renderSimpleGrid(itemIds, sourceData, gridSelector, classes, itemType) 
         title: item.name,
         subtitle: itemType,
         meta: {},
-        bodyText: item.value
+        bodyText: item.value,
       });
     });
     fragment.appendChild(row);
