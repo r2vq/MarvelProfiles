@@ -53,7 +53,18 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
   });
 
   select("#dice-btn-close-dice").addEventListener("click", () => {
-    select("#dice-container").classList.add("hidden");
+    const diceContainer = select("#dice-container");
+    diceContainer.classList.add("hidden");
+    select("#die1", diceContainer).textContent = "";
+    select("#die2", diceContainer).textContent = "";
+    select("#die3", diceContainer).textContent = "";
+    select("#dice-damage-row", diceContainer).classList.add("hidden");
+
+    select("#dice-ability-bonus", diceContainer).textContent = "";
+  });
+
+  select("#stat-init").addEventListener("click", () => {
+    rollInitiative(profile, webhookUrl);
   });
 }
 
@@ -61,7 +72,7 @@ function buildInitiative(initiative) {
   return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
 }
 
-function buildRollMessage({ roll, isReroll, abilityType, characterName, color, thumbnailUrl }) {
+function buildRollMessage({ roll, isReroll, abilityType, characterName, color, thumbnailUrl, isInit, hasEdge }) {
   const dieEmoji1 = getDieEmoji(roll.dieResult1);
   const dieEmoji2 = getDieEmoji(roll.isFantastic ? 7 : roll.marvelDieResult);
   const dieEmoji3 = getDieEmoji(roll.dieResult3);
@@ -98,13 +109,14 @@ function buildRollMessage({ roll, isReroll, abilityType, characterName, color, t
   }
 
   const abilityScoreString = `${roll.abilityScore >= 0 ? `+${roll.abilityScore}` : `-${Math.abs(roll.abilityScore)}`}`;
+  const initEdge = isInit && hasEdge ? "E" : "";
 
   const jsonData = {
     content: contentString,
     embeds: [
       {
         color: color,
-        description: `**${dieEmoji1} ${dieEmoji2} ${dieEmoji3}** ${abilityScoreString}`,
+        description: `**${dieEmoji1} ${dieEmoji2} ${dieEmoji3}** ${abilityScoreString}${initEdge}`,
         footer: {
           text: roll.isUltimateFantastic ? "ULTIMATE FANTASTIC" : roll.isFantastic ? "Fantastic" : "Standard",
         },
@@ -274,7 +286,7 @@ function renderAbility(view, ability, abilityType, characterName, color, thumbna
         });
         roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl };
 
-        renderDice(roll);
+        renderDice(roll, true);
         const message = buildRollMessage({ roll, ...roll.context });
         sendWebhookMessage(webhookUrl, message);
       },
@@ -327,7 +339,7 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
         });
         roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl };
 
-        renderDice(roll);
+        renderDice(roll, true);
         const message = buildRollMessage({ roll, ...roll.context });
         sendWebhookMessage(webhookUrl, message);
       },
@@ -354,42 +366,75 @@ function renderDamages(profile, webhookUrl) {
   });
 }
 
-function renderDice(roll) {
+function renderDice(roll, animate) {
   const diceContainer = select("#dice-container");
 
   const die1 = select("#die1", diceContainer);
-  die1.textContent = roll.dieResult1;
+  if (animate) {
+    rotate360(die1, () => {
+      die1.textContent = roll.dieResult1;
+    });
+  } else {
+    die1.textContent = roll.dieResult1;
+  }
   die1.onclick = () => renderReroll(roll, 1);
 
   const die2 = select("#die2", diceContainer);
-  die2.textContent = roll.marvelDieText;
+  if (animate) {
+    rotate360(die2, () => {
+      die2.textContent = roll.marvelDieText;
+    });
+  } else {
+    die2.textContent = roll.dieResult2;
+  }
   die2.onclick = () => renderReroll(roll, 2);
 
   const die3 = select("#die3", diceContainer);
-  die3.textContent = roll.dieResult3;
+  if (animate) {
+    rotate360(die3, () => {
+      die3.textContent = roll.dieResult3;
+    });
+  } else {
+    die3.textContent = roll.dieResult3;
+  }
   die3.onclick = () => renderReroll(roll, 3);
 
-  select("#dice-ability-bonus", diceContainer).textContent = `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}`;
-  select("#dice-result-value", diceContainer).textContent = roll.result;
+  function renderCallback() {
+    const isInit = roll.context.isInit;
+    const hasEdge = roll.context.hasEdge;
+    const initEdgeText = isInit && hasEdge ? "E" : "";
 
-  if (roll.hasDamage) {
-    let formula = `<div id="dice-damage-die">${roll.marvelDieText}</div> x (${roll.damageMultiplier} - ${roll.damageReduction}) ${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
-    if (roll.isFantastic) {
-      formula = `(${formula}) x 2`;
+    select("#dice-ability-bonus", diceContainer).textContent =
+      `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}${initEdgeText}`;
+    select("#dice-result-value", diceContainer).textContent = roll.result;
+
+    if (roll.hasDamage) {
+      let formula = `<div id="dice-damage-die">${roll.marvelDieText}</div> x (${roll.damageMultiplier} - ${roll.damageReduction}) ${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
+      if (roll.isFantastic) {
+        formula = `(${formula}) x 2`;
+      }
+      select("#dice-damage-calc", diceContainer).innerHTML = formula;
+      select("#dice-damage-value", diceContainer).textContent = roll.damage;
+      select("#dice-damage-row", diceContainer).classList.remove("hidden");
+    } else {
+      select("#dice-damage-row", diceContainer).classList.add("hidden");
     }
-    select("#dice-damage-calc", diceContainer).innerHTML = formula;
-    select("#dice-damage-value", diceContainer).textContent = roll.damage;
-    select("#dice-damage-row", diceContainer).classList.remove("hidden");
-  } else {
-    select("#dice-damage-row", diceContainer).classList.add("hidden");
+
+    if (roll.isUltimateFantastic) {
+      select("#dice-type", diceContainer).textContent = `ULTIMATE FANTASTIC!`;
+    } else if (roll.isFantastic) {
+      select("#dice-type", diceContainer).textContent = `Fantastic!`;
+    } else {
+      select("#dice-type", diceContainer).textContent = `Standard`;
+    }
   }
 
-  if (roll.isUltimateFantastic) {
-    select("#dice-type", diceContainer).textContent = "ULTIMATE FANTASTIC!";
-  } else if (roll.isFantastic) {
-    select("#dice-type", diceContainer).textContent = "Fantastic!";
+  if (animate) {
+    setTimeout(() => {
+      renderCallback();
+    }, 750);
   } else {
-    select("#dice-type", diceContainer).textContent = "Standard";
+    renderCallback();
   }
   diceContainer.classList.remove("hidden");
 }
@@ -483,7 +528,7 @@ function renderReroll(roll, dieIndex) {
     btnCancel.textContent = "Close";
     btnCancel.onclick = () => {
       if (isForEdgeAndBetter || isForTroubleAndWorse) {
-        renderDice(newRoll);
+        renderDice(newRoll, false);
       }
       rerollContainer.classList.add("hidden");
     };
@@ -522,6 +567,36 @@ function renderSimpleGrid(itemIds, sourceData, gridSelector, classes) {
 
 function rollD6() {
   return Math.floor(Math.random() * 6) + 1;
+}
+
+function rollInitiative(profile, webhookUrl) {
+  const initiativeModifier = profile.initiative;
+  showPopUp({
+    content: `Roll for Initiative?`,
+    isPrimaryVisible: true,
+    isSecondaryVisible: true,
+    primaryText: "OK",
+    secondaryText: "Cancel",
+    onPrimaryClick: () => {
+      const roll = calculateRoll({
+        dieResult1: rollD6(),
+        dieResult2: rollD6(),
+        dieResult3: rollD6(),
+        abilityScore: initiativeModifier.value,
+      });
+      const abilityType = "Initiative";
+      const characterName = profile.name;
+      const color = profile.color;
+      const thumbnailUrl = profile.photoUrl;
+      const isInit = true;
+      const hasEdge = initiativeModifier.edge;
+      roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl, isInit, hasEdge };
+
+      renderDice(roll, true);
+      const message = buildRollMessage({ roll, ...roll.context });
+      sendWebhookMessage(webhookUrl, message);
+    },
+  });
 }
 
 function rotate360(die, callback) {
