@@ -32,9 +32,45 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
   select("#character-photo").src = profile.photoUrl;
 
   select(".value", select("#stat-rank")).textContent = profile.rank;
-  select(".value", select("#stat-karma")).textContent = `${profile.karma} / ${profile.karma}`;
-  select(".value", select("#stat-health")).textContent = `${profile.health} / ${profile.health}`;
-  select(".value", select("#stat-focus")).textContent = `${profile.focus} / ${profile.focus}`;
+
+  const getStoredStat = (statName, maxVal) => {
+    const stored = localStorage.getItem(`${profile.name}_${statName}`);
+    return stored !== null ? parseInt(stored, 10) : maxVal;
+  };
+
+  const setupStatCard = (cardSelector, statName, maxVal) => {
+    const card = select(cardSelector);
+    let currentVal = getStoredStat(statName, maxVal);
+
+    select(".value", card).textContent = `${currentVal} / ${maxVal}`;
+    card.classList.add("clickable");
+
+    card.addEventListener("click", () => {
+      showPopUp({
+        content: `Update ${statName.toUpperCase()}`,
+        isNumberInputVisible: true,
+        numberLabelText: `New Value (Max: ${maxVal}):`,
+        isPrimaryVisible: true,
+        primaryText: "Save",
+        isSecondaryVisible: true,
+        secondaryText: "Cancel",
+        onPrimaryClick: (newValue) => {
+          const finalValue = newValue; // no min or max needed
+
+          localStorage.setItem(`${profile.name}_${statName}`, finalValue);
+
+          select(".value", card).textContent = `${finalValue} / ${maxVal}`;
+        },
+      });
+
+      select("#inp-number").value = currentVal;
+    });
+  };
+
+  setupStatCard("#stat-health", "Health", profile.health);
+  setupStatCard("#stat-focus", "Focus", profile.focus);
+  setupStatCard("#stat-karma", "Karma", profile.karma);
+
   select(".value", select("#stat-init")).textContent = buildInitiative(profile.initiative);
 
   document.body.className = profile.theme;
