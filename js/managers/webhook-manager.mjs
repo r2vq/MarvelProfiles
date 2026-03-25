@@ -178,6 +178,36 @@ function sendMessageInitiative({ isFailedReroll, isReroll, profile, roll }) {
   sendWebhookMessage(JSON.stringify(jsonData));
 }
 
+function sendMessageStats({ maxValue, newValue, oldValue, profile, statName, stats }) {
+  const jsonData = {
+    content: `${profile.name} updated ${statName}. ~~${oldValue}~~ ${newValue} / ${maxValue}`,
+    embeds: [
+      {
+        color: profile.color,
+        description: "Stats",
+        thumbnail: {
+          url: profile.photoUrl,
+        },
+        fields: [
+          {
+            name: "Health",
+            value: `${stats.health.current}/${stats.health.max}`,
+          },
+          {
+            name: "Focus",
+            value: `${stats.focus.current}/${stats.focus.max}`,
+          },
+          {
+            name: "Karma",
+            value: `${stats.karma.current}/${stats.karma.max}`,
+          },
+        ],
+      },
+    ],
+  };
+  sendWebhookMessage(JSON.stringify(jsonData));
+}
+
 function getDieEmoji(value) {
   switch (value) {
     case 0:
@@ -217,5 +247,6 @@ export default {
   sendMessageAbility,
   sendMessageDamage,
   sendMessageInitiative,
+  sendMessageStats,
   updateWebhookUrl,
 };

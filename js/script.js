@@ -45,7 +45,7 @@ function buildCharacterSheet({ profile }) {
         isSecondaryVisible: true,
         secondaryText: "Cancel",
         onPrimaryClick: (newValue) => {
-          onStoreStat({ newValue });
+          onStoreStat({ newValue: newValue });
           select(".value", card).textContent = `${newValue} / ${maxVal}`;
         },
       });
@@ -54,11 +54,87 @@ function buildCharacterSheet({ profile }) {
     });
   };
 
-  setupStatCard("#stat-health", "Health", profile.health, storageManager.getSavedHealth(), storageManager.updateHealth);
-  setupStatCard("#stat-focus", "Focus", profile.focus, storageManager.getSavedFocus(), storageManager.updateFocus);
-  setupStatCard("#stat-karma", "Karma", profile.karma, storageManager.getSavedKarma(), storageManager.updateKarma);
+  setupStatCard("#stat-health", "Health", profile.health, storageManager.getSavedHealth(), ({ newValue }) => {
+    const oldValue = storageManager.getSavedHealth();
+    const maxValue = profile.health;
+    storageManager.updateHealth({ newValue });
+    webhookManager.sendMessageStats({
+      maxValue,
+      newValue,
+      oldValue,
+      profile,
+      statName: "Health",
+      stats: {
+        health: {
+          current: storageManager.getSavedHealth(),
+          max: profile.health,
+        },
+        focus: {
+          current: storageManager.getSavedFocus(),
+          max: profile.focus,
+        },
+        karma: {
+          current: storageManager.getSavedKarma(),
+          max: profile.karma,
+        },
+      },
+    });
+  });
+  setupStatCard("#stat-focus", "Focus", profile.focus, storageManager.getSavedFocus(), ({ newValue }) => {
+    const oldValue = storageManager.getSavedFocus();
+    const maxValue = profile.focus;
+    storageManager.updateFocus({ newValue });
+    webhookManager.sendMessageStats({
+      maxValue,
+      newValue,
+      oldValue,
+      profile,
+      statName: "Focus",
+      stats: {
+        health: {
+          current: storageManager.getSavedHealth(),
+          max: profile.health,
+        },
+        focus: {
+          current: storageManager.getSavedFocus(),
+          max: profile.focus,
+        },
+        karma: {
+          current: storageManager.getSavedKarma(),
+          max: profile.karma,
+        },
+      },
+    });
+  });
+  setupStatCard("#stat-karma", "Karma", profile.karma, storageManager.getSavedKarma(), ({ newValue }) => {
+    const oldValue = storageManager.getSavedKarma();
+    const maxValue = profile.karma;
+    storageManager.updateKarma({ newValue });
+    webhookManager.sendMessageStats({
+      maxValue,
+      newValue,
+      oldValue,
+      profile,
+      statName: "Karma",
+      stats: {
+        health: {
+          current: storageManager.getSavedHealth(),
+          max: profile.health,
+        },
+        focus: {
+          current: storageManager.getSavedFocus(),
+          max: profile.focus,
+        },
+        karma: {
+          current: storageManager.getSavedKarma(),
+          max: profile.karma,
+        },
+      },
+    });
+  });
 
-  select(".value", select("#stat-init")).textContent = `${profile.initiative.value > 0 ? "+" : ""}${profile.initiative.value}${profile.initiative.edge ? "E" : ""}`;
+  select(".value", select("#stat-init")).textContent =
+    `${profile.initiative.value > 0 ? "+" : ""}${profile.initiative.value}${profile.initiative.edge ? "E" : ""}`;
 
   document.body.className = profile.theme;
   renderSimpleGrid({
