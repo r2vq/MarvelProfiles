@@ -141,14 +141,14 @@ function buildCharacterSheet({ profile }) {
     itemIds: profile.traits,
     sourceData: traits,
     gridSelector: "#traits-grid",
-    classes: ["trait-label", "trait-value"],
+    classes: ["trait-label"],
     itemType: "Trait",
   });
   renderSimpleGrid({
     itemIds: profile.tags,
     sourceData: tags,
     gridSelector: "#tags-grid",
-    classes: ["tag-label", "tag-value"],
+    classes: ["tag-label"],
     itemType: "Tag",
   });
 
@@ -585,7 +585,7 @@ function renderSimpleGrid({ itemIds, sourceData, gridSelector, classes, itemType
     const item = sourceData[id];
     const row = createGridRow({
       classes,
-      textContents: [item.name, item.value],
+      textContents: [item.name],
       onClick: () => {
         showDetails({
           title: item.name,

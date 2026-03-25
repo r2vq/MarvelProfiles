@@ -278,7 +278,7 @@ header {
   font-weight: bold;
   margin-bottom: var(--spacing-sm);
   padding-bottom: var(--spacing-sm);
-  font-size: 0.85rem;
+  font-size: xx-small;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -410,7 +410,17 @@ header {
 
 #tags-grid,
 #traits-grid {
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag-label, .trait-label {
+  background: var(--bg-main);
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  color: var(--text-on-main);
+  font-size: small;
+  padding: 4px 10px;
 }
 
 #details-body {
