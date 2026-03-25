@@ -1,48 +1,38 @@
-/**
- * Helper function to select elements.
- * Pass a parent element to scope the search, otherwise it defaults to the whole document.
- */
-const select = (selector, parent = document) => parent.querySelector(selector);
+import powers from "./powers.json" with { type: "json" };
+import tags from "./tags.json" with { type: "json" };
+import traits from "./traits.json" with { type: "json" };
+import d616 from "./d616.mjs";
+import profileManager from "./profile-manager.mjs";
+import storageManager from "./storage-manager.mjs";
+import webhookManager from "./webhook-manager.mjs";
+import { select } from "./view-utils.mjs";
+
+const ROTATE_TIME = 750;
 
 async function init() {
   const urlParams = new URLSearchParams(window.location.search);
 
-  const profile = await getProfile(urlParams);
+  const profile = await profileManager.getProfile(urlParams);
   if (!profile) {
     return;
   }
 
-  const webhookUrl = getWebhookUrl(urlParams);
+  webhookManager.updateWebhookUrl(urlParams);
 
-  try {
-    const [tags, traits, powers] = await Promise.all([
-      fetch("./js/tags.json").then((res) => res.json()),
-      fetch("./js/traits.json").then((res) => res.json()),
-      fetch("./js/powers.json").then((res) => res.json()),
-    ]);
-    buildCharacterSheet(profile, tags, traits, powers, webhookUrl);
-  } catch (error) {
-    console.error("Failed to load data:", error);
-  }
+  buildCharacterSheet({ profile });
 }
 
-function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookUrl) {
+function buildCharacterSheet({ profile }) {
   select("#character-name").textContent = profile.name;
   select("#secret-identity").textContent = profile.secretIdentity;
   select("#character-photo").src = profile.photoUrl;
 
   select(".value", select("#stat-rank")).textContent = profile.rank;
 
-  const getStoredStat = (statName, maxVal) => {
-    const stored = localStorage.getItem(`${profile.name}_${statName}`);
-    return stored !== null ? parseInt(stored, 10) : maxVal;
-  };
-
-  const setupStatCard = (cardSelector, statName, maxVal) => {
+  const setupStatCard = (cardSelector, statName, maxVal, currentVal, onStoreStat) => {
     const card = select(cardSelector);
-    let currentVal = getStoredStat(statName, maxVal);
 
-    select(".value", card).textContent = `${currentVal} / ${maxVal}`;
+    select(".value", card).textContent = `${currentVal === null ? maxVal : currentVal} / ${maxVal}`;
     card.classList.add("clickable");
 
     card.addEventListener("click", () => {
@@ -55,11 +45,8 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
         isSecondaryVisible: true,
         secondaryText: "Cancel",
         onPrimaryClick: (newValue) => {
-          const finalValue = newValue; // no min or max needed
-
-          localStorage.setItem(`${profile.name}_${statName}`, finalValue);
-
-          select(".value", card).textContent = `${finalValue} / ${maxVal}`;
+          onStoreStat({ newValue });
+          select(".value", card).textContent = `${newValue} / ${maxVal}`;
         },
       });
 
@@ -67,24 +54,35 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
     });
   };
 
-  setupStatCard("#stat-health", "Health", profile.health);
-  setupStatCard("#stat-focus", "Focus", profile.focus);
-  setupStatCard("#stat-karma", "Karma", profile.karma);
+  setupStatCard("#stat-health", "Health", profile.health, storageManager.getSavedHealth(), storageManager.updateHealth);
+  setupStatCard("#stat-focus", "Focus", profile.focus, storageManager.getSavedFocus(), storageManager.updateFocus);
+  setupStatCard("#stat-karma", "Karma", profile.karma, storageManager.getSavedKarma(), storageManager.updateKarma);
 
-  select(".value", select("#stat-init")).textContent = buildInitiative(profile.initiative);
+  select(".value", select("#stat-init")).textContent = `${profile.initiative.value > 0 ? "+" : ""}${profile.initiative.value}${profile.initiative.edge ? "E" : ""}`;
 
   document.body.className = profile.theme;
+  renderSimpleGrid({
+    itemIds: profile.traits,
+    sourceData: traits,
+    gridSelector: "#traits-grid",
+    classes: ["trait-label", "trait-value"],
+    itemType: "Trait",
+  });
+  renderSimpleGrid({
+    itemIds: profile.tags,
+    sourceData: tags,
+    gridSelector: "#tags-grid",
+    classes: ["tag-label", "tag-value"],
+    itemType: "Tag",
+  });
 
-  renderSimpleGrid(profile.traits, traitsData, "#traits-grid", ["trait-label", "trait-value"], "Trait");
-  renderSimpleGrid(profile.tags, tagsData, "#tags-grid", ["tag-label", "tag-value"], "Tag");
-
-  renderAbilities(profile, webhookUrl);
-  renderDamages(profile, webhookUrl);
-  renderPowers(profile.powers, powersData);
+  renderAbilities({ profile });
+  renderDamages({ profile });
+  renderPowers({ characterPowers: profile.powers, powersData: powers });
 
   select("#btn-delete-webhook").addEventListener("click", () => {
     if (confirm("Delete the webhook URL? This cannot be undone!!")) {
-      localStorage.removeItem("webhookUrl");
+      storageManager.clearWebhookUrl();
     }
   });
 
@@ -104,117 +102,11 @@ function buildCharacterSheet(profile, tagsData, traitsData, powersData, webhookU
   });
 
   select("#stat-init").addEventListener("click", () => {
-    rollInitiative(profile, webhookUrl);
+    rollInitiative({ profile });
   });
 }
 
-function buildInitiative(initiative) {
-  return `${initiative.value > 0 ? "+" : ""}${initiative.value}${initiative.edge ? "E" : ""}`;
-}
-
-function buildRollMessage({ roll, isReroll, abilityType, characterName, color, thumbnailUrl, isInit, hasEdge }) {
-  const dieEmoji1 = getDieEmoji(roll.dieResult1);
-  const dieEmoji2 = getDieEmoji(roll.isFantastic ? 7 : roll.marvelDieResult);
-  const dieEmoji3 = getDieEmoji(roll.dieResult3);
-
-  const damageString = roll.hasDamage ? ` Damage ${roll.damage}.` : "";
-  const rerollPrefix = isReroll ? "**[REROLL]** " : "";
-  const contentString = `${rerollPrefix}${characterName} rolled ${abilityType}${roll.hasDamage ? " Attack" : ""}.\nResult ${roll.result}.${damageString}`;
-
-  const fields = [
-    {
-      name: "Result",
-      value: `**${roll.result}**`,
-    },
-  ];
-
-  if (roll.hasDamage) {
-    const damageBonusString = `${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
-    let message = `${dieEmoji2} x (${roll.damageMultiplier} - ${roll.damageReduction}) ${damageBonusString}`;
-    if (roll.isFantastic) {
-      message = `(${message}) x 2`;
-    }
-    message = `${message} = **${roll.damage}**`;
-    fields.push({
-      name: "Damage",
-      value: message,
-    });
-
-    if (roll.isNegated) {
-      fields.push({
-        name: "Note",
-        value: `Damage Reduction (${roll.damageReduction}) completely absorbed the Damage Multiplier (${roll.damageMultiplier}).`,
-      });
-    }
-  }
-
-  const abilityScoreString = `${roll.abilityScore >= 0 ? `+${roll.abilityScore}` : `-${Math.abs(roll.abilityScore)}`}`;
-  const initEdge = isInit && hasEdge ? "E" : "";
-
-  const jsonData = {
-    content: contentString,
-    embeds: [
-      {
-        color: color,
-        description: `**${dieEmoji1} ${dieEmoji2} ${dieEmoji3}** ${abilityScoreString}${initEdge}`,
-        footer: {
-          text: roll.isUltimateFantastic ? "ULTIMATE FANTASTIC" : roll.isFantastic ? "Fantastic" : "Standard",
-        },
-        thumbnail: {
-          url: thumbnailUrl,
-        },
-        fields: fields,
-      },
-    ],
-  };
-  return JSON.stringify(jsonData);
-}
-
-function calculateRoll({ dieResult1, dieResult2, dieResult3, abilityScore }) {
-  const isFantastic = dieResult2 === 1;
-  const isUltimateFantastic = isFantastic && dieResult1 === 6 && dieResult3 === 6;
-  const marvelDieResult = isFantastic ? 6 : dieResult2;
-  const marvelDieText = isFantastic ? "M" : dieResult2;
-  const result = dieResult1 + marvelDieResult + dieResult3 + abilityScore;
-  return {
-    abilityScore,
-    dieResult1,
-    dieResult2,
-    dieResult3,
-    marvelDieResult,
-    marvelDieText,
-    isFantastic,
-    isUltimateFantastic,
-    result,
-  };
-}
-
-function calculateCombatRoll({
-  dieResult1,
-  dieResult2,
-  dieResult3,
-  abilityScore,
-  damageAbilityScore,
-  damageMultiplier,
-  damageReduction,
-}) {
-  const roll = calculateRoll({ dieResult1, dieResult2, dieResult3, abilityScore });
-  const evaluatedDamageMultiplier = damageMultiplier - damageReduction;
-  const isNegated = evaluatedDamageMultiplier <= 0;
-  roll.isNegated = isNegated;
-  const fantasticMultiplier = roll.isFantastic ? 2 : 1;
-  const damage = isNegated
-    ? 0
-    : fantasticMultiplier * (roll.marvelDieResult * evaluatedDamageMultiplier + damageAbilityScore);
-  roll.damage = damage;
-  roll.damageAbilityScore = damageAbilityScore;
-  roll.damageMultiplier = damageMultiplier;
-  roll.damageReduction = damageReduction;
-  roll.hasDamage = true;
-  return roll;
-}
-
-function createGridRow(classes, textContents, onClick) {
+function createGridRow({ classes, textContents, onClick }) {
   const gridRow = document.createElement("div");
   gridRow.className = "content";
 
@@ -233,84 +125,7 @@ function createGridRow(classes, textContents, onClick) {
   return gridRow;
 }
 
-function getDieEmoji(value) {
-  switch (value) {
-    case 1:
-      return "1️⃣";
-    case 2:
-      return "2️⃣";
-    case 3:
-      return "3️⃣";
-    case 4:
-      return "4️⃣";
-    case 5:
-      return "5️⃣";
-    case 6:
-      return "6️⃣";
-    case 7:
-      return "🟥";
-    default:
-      return null;
-  }
-}
-
-async function getProfile(urlParams) {
-  let profileId =
-    urlParams.get("c") || localStorage.getItem("profileId") || prompt("Please enter your profile id:", "");
-
-  let profile = null;
-  if (profileId) {
-    try {
-      profile = await fetch(`./js/profile-${profileId}.json`).then((res) => res.json());
-    } catch (error) {
-      console.error("Failed to load profile:", error);
-    }
-  }
-
-  if (!profile) {
-    console.warn(`No character with ID: ${profileId} found.`);
-    localStorage.removeItem("profileId");
-    return null;
-  }
-
-  localStorage.setItem("profileId", profileId);
-  return profile;
-}
-
-function getWebhookUrl(urlParams) {
-  let webhookUrl = urlParams.get("w");
-
-  if (webhookUrl) {
-    localStorage.setItem("webhookUrl", webhookUrl);
-  } else {
-    webhookUrl = localStorage.getItem("webhookUrl");
-  }
-
-  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
-    webhookUrl = prompt("Please enter your webhook url:", "URL");
-  }
-
-  if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
-    webhookUrl = null;
-    localStorage.removeItem("webhookUrl");
-    alert("Invalid URL. Proceeding without webhooks.");
-  } else {
-    localStorage.setItem("webhookUrl", webhookUrl);
-  }
-
-  return webhookUrl;
-}
-
-function isValidHttpUrl(string) {
-  try {
-    const url = new URL(string);
-    return url.protocol === "http:" || url.protocol === "https:";
-  } catch (err) {
-    return false;
-  }
-}
-
-function renderAbility(view, ability, abilityType, characterName, color, thumbnailUrl, webhookUrl) {
+function renderAbility({ profile, view, ability, abilityType }) {
   select(".ability", view).textContent = ability.ability;
   select(".defense", view).textContent = ability.defense;
   select(".noncombat", view).textContent = `${ability.noncombat >= 0 ? "+" : "-"}${Math.abs(ability.noncombat)}`;
@@ -323,41 +138,43 @@ function renderAbility(view, ability, abilityType, characterName, color, thumbna
       primaryText: "OK",
       secondaryText: "Cancel",
       onPrimaryClick: () => {
-        const roll = calculateRoll({
-          dieResult1: rollD6(),
-          dieResult2: rollD6(),
-          dieResult3: rollD6(),
-          abilityScore: ability.noncombat,
+        const abilityScore = ability.ability;
+        const roll = d616.rollAbility({ abilityScore });
+        renderDice({
+          abilityScore,
+          abilityType,
+          animate: true,
+          profile,
+          roll,
         });
-        roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl };
-
-        renderDice(roll, true);
-        const message = buildRollMessage({ roll, ...roll.context });
-        sendWebhookMessage(webhookUrl, message);
+        webhookManager.sendMessageAbility({
+          abilityType,
+          abilityScore,
+          isReroll: false,
+          profile,
+          roll,
+        });
       },
     });
   });
 }
 
-function renderAbilities(profile, webhookUrl) {
+function renderAbilities({ profile }) {
   const abilities = ["melee", "agility", "resilience", "vigilance", "ego", "logic"];
 
   abilities.forEach((stat) => {
     const statName = stat.charAt(0).toUpperCase() + stat.slice(1);
 
-    renderAbility(
-      select(`#ability-row-${stat}`),
-      profile.abilities[stat],
-      statName,
-      profile.name,
-      profile.color,
-      profile.photoUrl,
-      webhookUrl,
-    );
+    renderAbility({
+      profile,
+      view: select(`#ability-row-${stat}`),
+      ability: profile.abilities[stat],
+      abilityType: statName,
+    });
   });
 }
 
-function renderDamage(view, damage, abilityScore, abilityType, characterName, color, thumbnailUrl, webhookUrl) {
+function renderDamage({ view, damage, abilityScore, abilityType, profile }) {
   select(".multiplier", view).textContent = `Marvel x ${damage.multiplier}`;
   select(".ability", view).textContent = damage.ability;
 
@@ -372,140 +189,167 @@ function renderDamage(view, damage, abilityScore, abilityType, characterName, co
       primaryText: "OK",
       secondaryText: "Cancel",
       numberLabelText: "Enter Damage Reduction:",
-      onPrimaryClick: (damageReduction) => {
-        const roll = calculateCombatRoll({
-          dieResult1: rollD6(),
-          dieResult2: rollD6(),
-          dieResult3: rollD6(),
+      onPrimaryClick: (rawDamageReduction) => {
+        const damageReduction = Math.abs(rawDamageReduction);
+        const roll = d616.rollDamage({ abilityScore, damageAbilityScore, damageMultiplier, damageReduction });
+        renderDice({
+          abilityScore,
+          abilityType,
+          animate: true,
+          damageContext: {
+            damageAbilityScore,
+            damageMultiplier,
+            damageReduction,
+          },
+          profile,
+          roll,
+        });
+        webhookManager.sendMessageDamage({
+          abilityType,
           abilityScore,
           damageAbilityScore,
           damageMultiplier,
           damageReduction,
+          isReroll: false,
+          profile,
+          roll,
         });
-        roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl };
-
-        renderDice(roll, true);
-        const message = buildRollMessage({ roll, ...roll.context });
-        sendWebhookMessage(webhookUrl, message);
       },
     });
   });
 }
 
-function renderDamages(profile, webhookUrl) {
+function renderDamages({ profile }) {
   const damageGrid = select("#damage-grid");
   const stats = ["melee", "agility", "ego", "logic"];
 
   stats.forEach((stat) => {
     const statName = stat.charAt(0).toUpperCase() + stat.slice(1);
-    renderDamage(
-      select(`#damage-row-${stat}`, damageGrid),
-      profile.damage[stat],
-      profile.abilities[stat].ability,
-      statName,
-      profile.name,
-      profile.color,
-      profile.photoUrl,
-      webhookUrl,
-    );
+    renderDamage({
+      view: select(`#damage-row-${stat}`, damageGrid),
+      damage: profile.damage[stat],
+      abilityScore: profile.abilities[stat].ability,
+      abilityType: statName,
+      profile,
+    });
   });
 }
 
-function renderDice(roll, animate) {
+function renderDice({ abilityScore, abilityType, animate, damageContext, initContext, profile, roll }) {
   const diceContainer = select("#dice-container");
+  const diceResult = select("#dice-result-value", diceContainer);
+  diceResult.textContent = "";
 
   const die1 = select("#die1", diceContainer);
   if (animate) {
-    rotate360(die1, () => {
-      die1.textContent = roll.dieResult1;
+    rotate360({
+      die: die1,
+      callback: () => {
+        die1.textContent = roll.die1.text;
+      },
     });
   } else {
-    die1.textContent = roll.dieResult1;
+    die1.textContent = roll.die1.text;
   }
-  die1.onclick = () => renderReroll(roll, 1);
+  die1.onclick = () =>
+    renderReroll({ abilityScore, abilityType, damageContext, dieIndex: 1, initContext, profile, roll });
 
   const die2 = select("#die2", diceContainer);
   if (animate) {
-    rotate360(die2, () => {
-      die2.textContent = roll.marvelDieText;
+    rotate360({
+      die: die2,
+      callback: () => {
+        die2.textContent = roll.die2.text;
+      },
     });
   } else {
-    die2.textContent = roll.dieResult2;
+    die2.textContent = roll.die2.text;
   }
-  die2.onclick = () => renderReroll(roll, 2);
+  die2.onclick = () =>
+    renderReroll({ abilityScore, abilityType, damageContext, dieIndex: 2, initContext, profile, roll });
 
   const die3 = select("#die3", diceContainer);
   if (animate) {
-    rotate360(die3, () => {
-      die3.textContent = roll.dieResult3;
+    rotate360({
+      die: die3,
+      callback: () => {
+        die3.textContent = roll.die3.text;
+      },
     });
   } else {
-    die3.textContent = roll.dieResult3;
+    die3.textContent = roll.die3.text;
   }
-  die3.onclick = () => renderReroll(roll, 3);
+  die3.onclick = () =>
+    renderReroll({ abilityScore, abilityType, damageContext, dieIndex: 3, initContext, profile, roll });
 
   function renderCallback() {
-    const isInit = roll.context.isInit;
-    const hasEdge = roll.context.hasEdge;
-    const initEdgeText = isInit && hasEdge ? "E" : "";
+    const hasInitEdge = initContext != null && initContext.hasEdge;
+    const initEdgeText = hasInitEdge ? "E" : "";
 
     select("#dice-ability-bonus", diceContainer).textContent =
-      `${roll.abilityScore >= 0 ? "+" : ""}${roll.abilityScore}${initEdgeText}`;
-    select("#dice-result-value", diceContainer).textContent = roll.result;
+      `${abilityScore >= 0 ? "+" : ""}${abilityScore}${initEdgeText}`;
+    diceResult.textContent = roll.total;
 
-    if (roll.hasDamage) {
-      let formula = `<div id="dice-damage-die">${roll.marvelDieText}</div> x (${roll.damageMultiplier} - ${roll.damageReduction}) ${roll.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(roll.damageAbilityScore)}`;
+    const hasDamage = damageContext;
+    if (hasDamage) {
+      let formula = `<div id="dice-damage-die">${roll.die2.text}</div> x (${damageContext.damageMultiplier} - ${damageContext.damageReduction}) ${damageContext.damageAbilityScore >= 0 ? "+" : "-"} ${Math.abs(damageContext.damageAbilityScore)}`;
       if (roll.isFantastic) {
         formula = `(${formula}) x 2`;
       }
       select("#dice-damage-calc", diceContainer).innerHTML = formula;
-      select("#dice-damage-value", diceContainer).textContent = roll.damage;
+      select("#dice-damage-value", diceContainer).textContent = roll.totalDamage;
       select("#dice-damage-row", diceContainer).classList.remove("hidden");
     } else {
       select("#dice-damage-row", diceContainer).classList.add("hidden");
     }
 
-    if (roll.isUltimateFantastic) {
-      select("#dice-type", diceContainer).textContent = `ULTIMATE FANTASTIC!`;
-    } else if (roll.isFantastic) {
-      select("#dice-type", diceContainer).textContent = `Fantastic!`;
+    const isFantastic = roll.die2.isMarvel;
+    const isUltimateFantastic = roll.die1.value === 6 && isFantastic && roll.die3.value === 6;
+    if (isUltimateFantastic) {
+      select("#dice-type", diceContainer).textContent = "ULTIMATE FANTASTIC!";
+    } else if (isFantastic) {
+      select("#dice-type", diceContainer).textContent = "Fantastic!";
     } else {
-      select("#dice-type", diceContainer).textContent = `Standard`;
+      select("#dice-type", diceContainer).textContent = "Standard";
     }
   }
 
   if (animate) {
     setTimeout(() => {
       renderCallback();
-    }, 750);
+    }, ROTATE_TIME);
   } else {
     renderCallback();
   }
   diceContainer.classList.remove("hidden");
 }
 
-function renderPowers(characterPowers, powersData) {
+function renderPowers({ characterPowers, powersData }) {
   const fragment = document.createDocumentFragment();
 
   characterPowers.forEach((i) => {
     const power = powersData[i];
     const cost = power.cost === 0 ? "--" : power.cost;
 
-    const row = createGridRow(["label power-name", "power-focus", "power-desc"], [power.name, cost, power.text], () => {
-      showDetails({
-        title: power.name,
-        subtitle: power.power_set || "Power",
-        meta: {
-          Action: power.action,
-          Trigger: power.trigger,
-          Cost: power.cost === 0 ? "None" : power.cost,
-          Range: power.range,
-          Duration: power.duration,
-          Effect: power.effect,
-          Prerequisites: power.prerequisites,
-        },
-        bodyText: power.text,
-      });
+    const row = createGridRow({
+      classes: ["label power-name", "power-focus", "power-desc"],
+      textContents: [power.name, cost, power.text],
+      onClick: () => {
+        showDetails({
+          title: power.name,
+          subtitle: power.power_set || "Power",
+          meta: {
+            Action: power.action,
+            Trigger: power.trigger,
+            Cost: power.cost === 0 ? "None" : power.cost,
+            Range: power.range,
+            Duration: power.duration,
+            Effect: power.effect,
+            Prerequisites: power.prerequisites,
+          },
+          bodyText: power.text,
+        });
+      },
     });
     fragment.appendChild(row);
   });
@@ -513,7 +357,7 @@ function renderPowers(characterPowers, powersData) {
   select("#powers-grid").appendChild(fragment);
 }
 
-function renderReroll(roll, dieIndex) {
+function renderReroll({ abilityType, abilityScore, damageContext, dieIndex, initContext, profile, roll }) {
   const rerollContainer = select("#reroll-container");
   rerollContainer.classList.remove("hidden");
   const dieElement = select("#reroll-alert-die", rerollContainer);
@@ -537,58 +381,103 @@ function renderReroll(roll, dieIndex) {
 
   if (dieIndex === 2) {
     dieElement.classList.add("marvel-die");
-    dieElement.textContent = roll.marvelDieText;
+    dieElement.textContent = roll.die2.text;
     dieResultElement.classList.add("marvel-die");
   } else {
     dieElement.classList.remove("marvel-die");
-    dieElement.textContent = dieIndex === 1 ? roll.dieResult1 : roll.dieResult3;
+    dieElement.textContent = dieIndex === 1 ? roll.die1.text : roll.die3.text;
     dieResultElement.classList.remove("marvel-die");
   }
   function reroll(isForEdge) {
-    const newResult = rollD6();
-    let oldResult1 = dieIndex === 1 ? newResult : roll.dieResult1;
-    let oldResult2 = dieIndex === 2 ? newResult : roll.dieResult2;
-    let oldResult3 = dieIndex === 3 ? newResult : roll.dieResult3;
-    let newRoll;
-    if (roll.hasDamage) {
-      newRoll = calculateCombatRoll({
-        dieResult1: oldResult1,
-        dieResult2: oldResult2,
-        dieResult3: oldResult3,
-        abilityScore: roll.abilityScore,
-        damageAbilityScore: roll.damageAbilityScore,
-        damageMultiplier: roll.damageMultiplier,
-        damageReduction: roll.damageReduction,
-      });
-    } else {
-      newRoll = calculateRoll({
-        dieResult1: oldResult1,
-        dieResult2: oldResult2,
-        dieResult3: oldResult3,
-        abilityScore: roll.abilityScore,
-      });
+    const newRoll = (() => {
+      if (initContext) {
+        return d616.rerollInitiative({
+          initiativeModifier: initContext,
+          originalRoll: roll,
+          rerollPoisition: dieIndex,
+        });
+      } else if (roll.totalDamage != null) {
+        return d616.rerollDamage({
+          abilityScore,
+          damageAbilityScore: damageContext.damageAbilityScore,
+          damageMultiplier: damageContext.damageMultiplier,
+          damageReduction: damageContext.damageReduction,
+          originalRoll: roll,
+          rerollPoisition: dieIndex,
+        });
+      } else {
+        return d616.rerollAbility({
+          abilityScore,
+          originalRoll: roll,
+          rerollPoisition: dieIndex,
+        });
+      }
+    })();
+
+    const [oldDie, newDie] = (() => {
+      switch (dieIndex) {
+        case 1:
+          return [roll.die1, newRoll.die1];
+        case 2:
+          return [roll.die2, newRoll.die2];
+        case 3:
+          return [roll.die3, newRoll.die3];
+      }
+    })();
+    dieResultElement.textContent = newDie.text;
+
+    const isBetter = newDie.value > oldDie.value || (newDie.isMarvel && !oldDie.isMarvel);
+    const isForEdgeAndBetter = isForEdge && isBetter;
+    const isWorse = newDie.value < oldDie.value || (!newDie.isMarvel && oldDie.isMarvel);
+    const isForTroubleAndWorse = !isForEdge && isWorse;
+    const isFailedReroll = !isForEdgeAndBetter && !isForTroubleAndWorse;
+
+    if (isFailedReroll) {
+      rerollRejected.classList.remove("hidden");
     }
 
-    newRoll.context = roll.context;
-
-    dieResultElement.textContent = dieIndex === 2 ? newRoll.marvelDieText : newResult;
-
-    const isBetter = newRoll.result > roll.result || (!roll.isFantastic && newRoll.isFantastic);
-    const isForEdgeAndBetter = isForEdge && isBetter;
-    const isWorse = newRoll.result < roll.result || (roll.isFantastic && !newRoll.isFantastic);
-    const isForTroubleAndWorse = !isForEdge && isWorse;
-    if (!isForEdgeAndBetter && !isForTroubleAndWorse) {
-      rerollRejected.classList.remove("hidden");
-    } else if (newRoll.context && newRoll.context.webhookUrl) {
-      const message = buildRollMessage({ roll: newRoll, isReroll: true, ...newRoll.context });
-      sendWebhookMessage(newRoll.context.webhookUrl, message);
+    if (initContext) {
+      webhookManager.sendMessageInitiative({
+        isFailedReroll,
+        isReroll: true,
+        profile,
+        roll: newRoll,
+      });
+    } else if (roll.totalDamage != null) {
+      webhookManager.sendMessageDamage({
+        abilityType,
+        abilityScore,
+        damageAbilityScore: damageContext.damageAbilityScore,
+        damageMultiplier: damageContext.damageMultiplier,
+        damageReduction: damageContext.damageReduction,
+        isReroll: true,
+        profile,
+        roll: newRoll,
+      });
+    } else {
+      webhookManager.sendMessageAbility({
+        abilityType: abilityType,
+        abilityScore,
+        isFailedReroll,
+        isReroll: true,
+        profile,
+        roll: newRoll,
+      });
     }
 
     btnCancel.classList.remove("hidden");
     btnCancel.textContent = "Close";
     btnCancel.onclick = () => {
       if (isForEdgeAndBetter || isForTroubleAndWorse) {
-        renderDice(newRoll, false);
+        renderDice({
+          abilityScore,
+          abilityType,
+          animate: false,
+          damageContext: damageContext,
+          initContext: initContext,
+          profile,
+          roll: newRoll,
+        });
       }
       rerollContainer.classList.add("hidden");
     };
@@ -600,7 +489,7 @@ function renderReroll(roll, dieIndex) {
       didRoll = true;
       btnContainer.classList.add("hidden");
       btnCancel.classList.add("hidden");
-      rotate360(dieElement, () => reroll(true));
+      rotate360({ die: dieElement, callback: () => reroll(true) });
     }
   };
   btnTrouble.onclick = () => {
@@ -608,23 +497,27 @@ function renderReroll(roll, dieIndex) {
       didRoll = true;
       btnContainer.classList.add("hidden");
       btnCancel.classList.add("hidden");
-      rotate360(dieElement, () => reroll(false));
+      rotate360({ die: dieElement, callback: () => reroll(false) });
     }
   };
 }
 
-function renderSimpleGrid(itemIds, sourceData, gridSelector, classes, itemType) {
+function renderSimpleGrid({ itemIds, sourceData, gridSelector, classes, itemType }) {
   const fragment = document.createDocumentFragment();
 
   itemIds.forEach((id) => {
     const item = sourceData[id];
-    const row = createGridRow(classes, [item.name, item.value], () => {
-      showDetails({
-        title: item.name,
-        subtitle: itemType,
-        meta: {},
-        bodyText: item.value,
-      });
+    const row = createGridRow({
+      classes,
+      textContents: [item.name, item.value],
+      onClick: () => {
+        showDetails({
+          title: item.name,
+          subtitle: itemType,
+          meta: {},
+          bodyText: item.value,
+        });
+      },
     });
     fragment.appendChild(row);
   });
@@ -632,12 +525,9 @@ function renderSimpleGrid(itemIds, sourceData, gridSelector, classes, itemType) 
   select(gridSelector).appendChild(fragment);
 }
 
-function rollD6() {
-  return Math.floor(Math.random() * 6) + 1;
-}
-
-function rollInitiative(profile, webhookUrl) {
+function rollInitiative({ profile }) {
   const initiativeModifier = profile.initiative;
+  const abilityScore = initiativeModifier.value;
   showPopUp({
     content: `Roll for Initiative?`,
     isPrimaryVisible: true,
@@ -645,47 +535,22 @@ function rollInitiative(profile, webhookUrl) {
     primaryText: "OK",
     secondaryText: "Cancel",
     onPrimaryClick: () => {
-      const roll = calculateRoll({
-        dieResult1: rollD6(),
-        dieResult2: rollD6(),
-        dieResult3: rollD6(),
-        abilityScore: initiativeModifier.value,
-      });
-      const abilityType = "Initiative";
-      const characterName = profile.name;
-      const color = profile.color;
-      const thumbnailUrl = profile.photoUrl;
-      const isInit = true;
-      const hasEdge = initiativeModifier.edge;
-      roll.context = { abilityType, characterName, color, thumbnailUrl, webhookUrl, isInit, hasEdge };
+      const roll = d616.rollInitiative({ initiativeModifier });
+      const animate = true;
+      const initContext = initiativeModifier;
 
-      renderDice(roll, true);
-      const message = buildRollMessage({ roll, ...roll.context });
-      sendWebhookMessage(webhookUrl, message);
+      renderDice({ abilityScore, animate, profile, roll, initContext });
+      webhookManager.sendMessageInitiative({ profile, roll, isReroll: false });
     },
   });
 }
 
-function rotate360(die, callback) {
+function rotate360({ die, callback }) {
   die.classList.add("spin-active");
   setTimeout(() => {
     die.classList.remove("spin-active");
     callback();
-  }, 750);
-}
-
-function sendWebhookMessage(webhookUrl, jsonMessage) {
-  if (!webhookUrl) return;
-
-  fetch(webhookUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: jsonMessage,
-  })
-    .then((data) => console.log("Webhook Success:", data))
-    .catch((error) => console.error("Webhook Error:", error));
+  }, ROTATE_TIME);
 }
 
 function showDetails({ title, subtitle, meta = {}, bodyText }) {
