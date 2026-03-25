@@ -24,7 +24,7 @@
     "effect": "The character adds +2 to their Agility damage multiplier, and they gain a +2 bonus to Agility checks other than attacks."
   },
   {
-    "name": "Accuracy 3\n",
+    "name": "Accuracy 3",
     "text": "The character could hit a fly at one hundred paces.",
     "power_set": "None",
     "prerequisites": "Accuracy 2, Rank 3",
@@ -33,11 +33,11 @@
     "duration": "Permanent",
     "range": "",
     "cost": "",
-    "effect": "The character adds +3 to their Agility damage multiplier, and they gain a +3 bonus to Agility checks other than attacks.\n"
+    "effect": "The character adds +3 to their Agility damage multiplier, and they gain a +3 bonus to Agility checks other than attacks."
   },
   {
     "name": "Accuracy 4",
-    "text": "The character can out-target almost anyone.\n",
+    "text": "The character can out-target almost anyone.",
     "power_set": "None",
     "prerequisites": "Accuracy 3, Rank 4",
     "action": "",
@@ -61,7 +61,7 @@
   },
   {
     "name": "Advance",
-    "text": "The character can advance their allies on the battlefield.\n",
+    "text": "The character can advance their allies on the battlefield.",
     "power_set": "Tactics",
     "prerequisites": "Rally on Me, Scatter, Rank 4",
     "action": "Reaction",
@@ -97,7 +97,7 @@
   },
   {
     "name": "Animal Bond",
-    "text": "The character can communicate with an animal friend.\n",
+    "text": "The character can communicate with an animal friend.",
     "power_set": "Telepathy",
     "prerequisites": "",
     "action": "Standard",
@@ -109,7 +109,7 @@
   },
   {
     "name": "Animal Communication",
-    "text": "The character can communicate with a type of animal.\n",
+    "text": "The character can communicate with a type of animal.",
     "power_set": "Telepathy",
     "prerequisites": "",
     "action": "Standard",
@@ -121,7 +121,7 @@
   },
   {
     "name": "Animated Illusion",
-    "text": "By manipulating visual light, the character creates a moving hologram.\n",
+    "text": "By manipulating visual light, the character creates a moving hologram.",
     "power_set": "Illusion",
     "prerequisites": "Static Illusion, Rank 2",
     "action": "Standard",
@@ -133,7 +133,7 @@
   },
   {
     "name": "Astral Form",
-    "text": "The character can enter the Astral Plane.\n",
+    "text": "The character can enter the Astral Plane.",
     "power_set": "Magic, Telepathy",
     "prerequisites": "Rank 2",
     "action": "Standard",
@@ -193,7 +193,7 @@
   },
   {
     "name": "Blazing-Fast Fists",
-    "text": "The character can attack superfast.\n",
+    "text": "The character can attack superfast.",
     "power_set": "Super-Speed",
     "prerequisites": "Rank 2",
     "action": "",
@@ -241,7 +241,7 @@
   },
   {
     "name": "Blur",
-    "text": "The character moves like a blur!\n",
+    "text": "The character moves like a blur!",
     "power_set": "Super-Speed",
     "prerequisites": "Speed Run 2, Rank 2",
     "action": "Standard or reaction",
@@ -253,7 +253,7 @@
   },
   {
     "name": "Body Sheet",
-    "text": "The character can flatten themselves like a sheet.\n",
+    "text": "The character can flatten themselves like a sheet.",
     "power_set": "Plasticity",
     "prerequisites": "Flexible Bones 2, Extended Reach 2, Rank 4",
     "action": "Standard or reaction",
@@ -265,7 +265,7 @@
   },
   {
     "name": "Body Sphere",
-    "text": "The character can form their body into a protective sphere.\n",
+    "text": "The character can form their body into a protective sphere.",
     "power_set": "Plasticity",
     "prerequisites": "Body Sheet, Rank 4",
     "action": "Standard or reaction",
@@ -289,7 +289,7 @@
   },
   {
     "name": "Boost Powers",
-    "text": "The character turbocharges all of another character's powers!\n",
+    "text": "The character turbocharges all of another character's powers!",
     "power_set": "Power Control",
     "prerequisites": "Bump Power, Rank 4",
     "action": "Standard",
@@ -301,7 +301,7 @@
   },
   {
     "name": "Borrow Senses",
-    "text": "The character can use another person's senses.\n",
+    "text": "The character can use another person's senses.",
     "power_set": "Telepathy",
     "prerequisites": "Telepathic Link, Rank 2",
     "action": "Standard",
@@ -313,7 +313,7 @@
   },
   {
     "name": "Bounce Back",
-    "text": "The character bounces back from even the hardest falls.\n",
+    "text": "The character bounces back from even the hardest falls.",
     "power_set": "Plasticity",
     "prerequisites": "Flexible Bones 1, Slip Free, Rank 2",
     "action": "Reaction",
@@ -2184,16 +2184,16 @@
     "effect": "The character can manipulate objects in their line of sight with their mind. The maximum range for this is 5 spaces times the character's rank. If someone tries to prevent the character from taking control of an object, the character makes a Logic check against the opponent's Agility defense."
   },
   {
-    "name": "Telekinetic Protection 1",
-    "text": "The character uses their mind to physically protect themselves.\n",
+    "name": "Telekinetic Protection 2",
+    "text": "The character toughens their mind against physical damage.",
     "power_set": "Telekinesis",
-    "prerequisites": "Telekinetic Barrier, Rank 2",
+    "prerequisites": "Telekinetic Protection 1, Rank 3",
     "action": "Standard or reaction",
     "trigger": "The character is attacked or otherwise in danger.",
     "duration": "Concentration",
     "range": "",
-    "cost": "5 Focus",
-    "effect": "The character's personal telekinetic field protects them. Any attacks against them that do 10 points of damage or less are instantly absorbed, and the protection continues. If an attack does more than 10 points of damage, it destroys the protection, allowing excess damage through."
+    "cost": "10 Focus",
+    "effect": "The character's personal telekinetic field protects them. Any attacks against them that do 20 points of damage or less are instantly absorbed, and the protection continues. If an attack does more than 20 points of damage, it destroys the protection, allowing excess damage through."
   },
   {
     "name": "Telekinetic Sphere",
