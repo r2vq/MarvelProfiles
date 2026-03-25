@@ -31,6 +31,7 @@
       "noncombat": 0
     }
   },
+  "color": 6294283,
   "damage": {
     "melee": {
       "multiplier": 4,
@@ -49,6 +50,7 @@
       "ability": 0
     }
   },
+  "damageReduction": 2,
   "focus": 20,
   "health": 30,
   "initiative": {
@@ -62,5 +64,6 @@
   "rank": 1,
   "secretIdentity": "Secret Identity",
   "tags": [1, 2],
+  "theme": "theme-dark",
   "traits": [3, 4, 9]
 }
