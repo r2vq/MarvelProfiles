@@ -10,6 +10,8 @@ import { select } from "./utils/view-utils.mjs";
 const ROTATE_TIME = 750;
 
 async function init() {
+  bindCustomCharacterButtons();
+
   const urlParams = new URLSearchParams(window.location.search);
 
   const profile = await profileManager.getProfile(urlParams);
@@ -20,6 +22,39 @@ async function init() {
   webhookManager.updateWebhookUrl(urlParams);
 
   buildCharacterSheet({ profile });
+}
+
+function bindCustomCharacterButtons() {
+  const btnUpload = select("#btn-upload-profile");
+  btnUpload.addEventListener("click", () => inpUpload.click());
+
+  const inpUpload = select("#inp-upload-profile");
+  inpUpload.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        JSON.parse(e.target.result);
+
+        storageManager.saveCustomProfile({ jsonString: e.target.result });
+        alert("Profile loaded successfully! The page will now reload.");
+        window.location.reload();
+      } catch (err) {
+        alert("Invalid JSON file. Please check your character export.");
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  const btnClearProfile = select("#btn-clear-profile");
+  btnClearProfile.addEventListener("click", () => {
+    if (confirm("Remove the custom uploaded profile and revert to default?")) {
+      storageManager.clearCustomProfile();
+      window.location.reload();
+    }
+  });
 }
 
 function buildCharacterSheet({ profile }) {

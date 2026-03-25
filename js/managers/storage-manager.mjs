@@ -1,6 +1,10 @@
+const clearCustomProfile = () => localStorage.removeItem("customProfile");
+
 const clearProfileId = () => localStorage.removeItem("profileId");
 
 const clearWebhookUrl = () => localStorage.removeItem("webhookUrl");
+
+const getCustomProfile = () => localStorage.getItem("customProfile");
 
 const getSavedFocus = () => localStorage.getItem(`${localStorage.getItem("profileId")}_focus`);
 
@@ -11,6 +15,8 @@ const getSavedKarma = () => localStorage.getItem(`${localStorage.getItem("profil
 const getSavedProfileId = () => localStorage.getItem("profileId");
 
 const getSavedWebhookUrl = () => localStorage.getItem("webhookUrl");
+
+const saveCustomProfile = ({ jsonString }) => localStorage.setItem("customProfile", jsonString);
 
 const updateFocus = ({ newValue }) => localStorage.setItem(`${localStorage.getItem("profileId")}_focus`, newValue);
 
@@ -35,4 +41,7 @@ export default {
   updateKarma,
   updateProfileId,
   updateWebhookUrl,
+  clearCustomProfile,
+  getCustomProfile,
+  saveCustomProfile,
 };

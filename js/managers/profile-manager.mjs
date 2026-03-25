@@ -1,6 +1,16 @@
 import storageManager from "./storage-manager.mjs";
 
 async function getProfile(urlParams) {
+  const customProfileRaw = storageManager.getCustomProfile();
+  if (customProfileRaw) {
+    try {
+      return JSON.parse(customProfileRaw);
+    } catch (e) {
+      console.error("Error parsing custom profile. Falling back to default logic.", e);
+      storageManager.clearCustomProfile();
+    }
+  }
+
   if (urlParams === null) {
     console.warn("No urlParams passed in to ProfileManager");
     return null;
@@ -33,7 +43,7 @@ async function getProfile(urlParams) {
     return null;
   }
 
-  storageManager.updateProfileId({ newValue : profileId });
+  storageManager.updateProfileId({ newValue: profileId });
   return profile;
 }
 
