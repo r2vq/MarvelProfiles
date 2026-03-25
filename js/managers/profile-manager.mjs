@@ -20,7 +20,7 @@ async function getProfile(urlParams) {
   let profile = null;
   if (profileId) {
     try {
-      profile = await fetch(`./js/profile-${profileId}.json`).then((res) => res.json());
+      profile = await fetch(`./data/profile-${profileId}.json`).then((res) => res.json());
     } catch (error) {
       console.error("Failed to load profile:", error);
       return null;

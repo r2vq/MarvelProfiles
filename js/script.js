@@ -1,11 +1,11 @@
-import powers from "./powers.json" with { type: "json" };
-import tags from "./tags.json" with { type: "json" };
-import traits from "./traits.json" with { type: "json" };
-import d616 from "./d616.mjs";
-import profileManager from "./profile-manager.mjs";
-import storageManager from "./storage-manager.mjs";
-import webhookManager from "./webhook-manager.mjs";
-import { select } from "./view-utils.mjs";
+import powers from "../data/powers.json" with { type: "json" };
+import tags from "../data/tags.json" with { type: "json" };
+import traits from "../data/traits.json" with { type: "json" };
+import d616 from "./core/d616.mjs";
+import profileManager from "./managers/profile-manager.mjs";
+import storageManager from "./managers/storage-manager.mjs";
+import webhookManager from "./managers/webhook-manager.mjs";
+import { select } from "./utils/view-utils.mjs";
 
 const ROTATE_TIME = 750;
 
