@@ -15,13 +15,13 @@ function updateWebhookUrl(urlParams) {
   }
 
   if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
-    // webhookUrl = prompt("Please enter your webhook url:", "URL");
+    webhookUrl = prompt("Please enter your webhook url:", "URL");
   }
 
   if (!webhookUrl || !isValidHttpUrl(webhookUrl)) {
     webhookUrl = null;
     storageManager.clearWebhookUrl();
-    // alert("Invalid URL. Proceeding without webhooks.");
+    alert("Invalid URL. Proceeding without webhooks.");
   } else {
     storageManager.updateWebhookUrl({ newValue: webhookUrl });
   }
@@ -179,8 +179,11 @@ function sendMessageInitiative({ isFailedReroll, isReroll, profile, roll }) {
 }
 
 function sendMessageStats({ maxValue, newValue, oldValue, profile, statName, stats }) {
+  const currentHealth = stats.health.current || stats.health.max;
+  const currentFocus = stats.focus.current || stats.focus.max;
+  const currentKarma = stats.karma.current || stats.karma.max;
   const jsonData = {
-    content: `${profile.name} updated ${statName}. ~~${oldValue}~~ ${newValue} / ${maxValue}`,
+    content: `${profile.name} updated ${statName}. ~~${oldValue} / ${maxValue}~~ => ${newValue} / ${maxValue}`,
     embeds: [
       {
         color: profile.color,
@@ -191,15 +194,15 @@ function sendMessageStats({ maxValue, newValue, oldValue, profile, statName, sta
         fields: [
           {
             name: "Health",
-            value: `${stats.health.current}/${stats.health.max}`,
+            value: `${currentHealth}/${stats.health.max}`,
           },
           {
             name: "Focus",
-            value: `${stats.focus.current}/${stats.focus.max}`,
+            value: `${currentFocus}/${stats.focus.max}`,
           },
           {
             name: "Karma",
-            value: `${stats.karma.current}/${stats.karma.max}`,
+            value: `${currentKarma}/${stats.karma.max}`,
           },
         ],
       },

@@ -159,6 +159,7 @@ function buildCharacterSheet({ profile }) {
   select("#btn-delete-webhook").addEventListener("click", () => {
     if (confirm("Delete the webhook URL? This cannot be undone!!")) {
       storageManager.clearWebhookUrl();
+      window.location.reload();
     }
   });
 
