@@ -3,7 +3,7 @@ function calculateDamage({ damageAbilityScore, damageMultiplier, damageReduction
   const doesDamage = reducedMultiplier > 0;
   if (!doesDamage) return 0;
 
-  const diceTotal = die1.value + die2.value + die3.value;
+  const diceTotal = die2.value;
   const baseTotal = diceTotal * reducedMultiplier + damageAbilityScore;
   const isMarvel = die2.isMarvel;
   if (!isMarvel) return baseTotal;
