@@ -458,10 +458,11 @@ function renderPowers({ characterPowers, powersData }) {
   characterPowers.forEach((powerName) => {
     const power = powersData.find((power) => power.name === powerName);
     const cost = power.cost === 0 ? "--" : power.cost;
+    const isReaction = power.action.includes("Reaction");
 
     const row = createGridRow({
       classes: ["label power-name", "power-focus", "power-desc"],
-      textContents: [power.name, cost, power.text],
+      textContents: [power.name, `${cost}${isReaction ? "\n(Reaction)" : ""}`, `${power.text}`],
       onClick: () => {
         showDetails({
           title: power.name,
