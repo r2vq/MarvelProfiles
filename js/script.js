@@ -64,13 +64,17 @@ function buildCharacterSheet({ profile }) {
 
   select(".value", select("#stat-rank")).textContent = profile.rank;
 
-  const setupStatCard = (cardSelector, statName, maxVal, currentVal, onStoreStat) => {
+  const setupStatCard = (cardSelector, statName, maxVal, getCurrentVal, onStoreStat) => {
     const card = select(cardSelector);
 
-    select(".value", card).textContent = `${currentVal === null ? maxVal : currentVal} / ${maxVal}`;
+    const initialVal = getCurrentVal() ?? maxVal;
+
+    select(".value", card).textContent = `${initialVal} / ${maxVal}`;
     card.classList.add("clickable");
 
     card.addEventListener("click", () => {
+      const currentVal = parseInt(getCurrentVal(), 10) || 0;
+
       showPopUp({
         content: `Update ${statName.toUpperCase()}`,
         isNumberInputVisible: true,
@@ -80,8 +84,19 @@ function buildCharacterSheet({ profile }) {
         isSecondaryVisible: true,
         secondaryText: "Cancel",
         onPrimaryClick: (newValue) => {
-          onStoreStat({ newValue: newValue });
-          select(".value", card).textContent = `${newValue} / ${maxVal}`;
+          const inputStr = String(newValue).trim();
+          let resolvedValue;
+
+          if (inputStr.startsWith("+") || inputStr.startsWith("-")) {
+            resolvedValue = currentVal + (parseInt(inputStr, 10) || 0);
+          } else {
+            resolvedValue = parseInt(inputStr, 10);
+          }
+
+          if (isNaN(resolvedValue)) resolvedValue = currentVal;
+
+          onStoreStat({ newValue: resolvedValue });
+          select(".value", card).textContent = `${resolvedValue} / ${maxVal}`;
         },
       });
 
@@ -89,7 +104,7 @@ function buildCharacterSheet({ profile }) {
     });
   };
 
-  setupStatCard("#stat-health", "Health", profile.health, storageManager.getSavedHealth(), ({ newValue }) => {
+  setupStatCard("#stat-health", "Health", profile.health, storageManager.getSavedHealth, ({ newValue }) => {
     const oldValue = storageManager.getSavedHealth();
     const maxValue = profile.health;
     storageManager.updateHealth({ newValue });
@@ -115,9 +130,10 @@ function buildCharacterSheet({ profile }) {
       },
     });
   });
-  setupStatCard("#stat-focus", "Focus", profile.focus, storageManager.getSavedFocus(), ({ newValue }) => {
+  setupStatCard("#stat-focus", "Focus", profile.focus, storageManager.getSavedFocus, ({ newValue }) => {
     const oldValue = storageManager.getSavedFocus();
     const maxValue = profile.focus;
+    console.log(newValue);
     storageManager.updateFocus({ newValue });
     webhookManager.sendMessageStats({
       maxValue,
@@ -141,7 +157,7 @@ function buildCharacterSheet({ profile }) {
       },
     });
   });
-  setupStatCard("#stat-karma", "Karma", profile.karma, storageManager.getSavedKarma(), ({ newValue }) => {
+  setupStatCard("#stat-karma", "Karma", profile.karma, storageManager.getSavedKarma, ({ newValue }) => {
     const oldValue = storageManager.getSavedKarma();
     const maxValue = profile.karma;
     storageManager.updateKarma({ newValue });
@@ -725,9 +741,11 @@ function showPopUp({
     btnPrimary.textContent = primaryText;
     btnPrimary.classList.remove("hidden");
     btnPrimary.onclick = () => {
+      if (isNumberInputVisible && !inputNumber.checkValidity()) return;
+
       alertContainer.classList.add("hidden");
-      const inputNumberValue = isNumberInputVisible ? parseInt(inputNumber.value, 10) || 0 : null;
-      if (onPrimaryClick) onPrimaryClick(inputNumberValue);
+
+      if (onPrimaryClick) onPrimaryClick(isNumberInputVisible ? inputNumber.value : null);
     };
   } else {
     btnPrimary.textContent = "";
