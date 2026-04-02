@@ -457,6 +457,7 @@ function renderPowers({ characterPowers, powersData }) {
 
   characterPowers.forEach((powerName) => {
     const power = powersData.find((power) => power.name === powerName);
+    if (!power) return;
     const cost = power.cost === 0 ? "--" : power.cost;
     const isReaction = power.action.includes("Reaction");
 
@@ -466,17 +467,17 @@ function renderPowers({ characterPowers, powersData }) {
       onClick: () => {
         showDetails({
           title: power.name,
-          subtitle: power.power_set || "Power",
+          subtitle: power.power_set.join(", ") || "Power",
           meta: {
-            Action: power.action,
-            Trigger: power.trigger,
-            Cost: power.cost === 0 ? "None" : power.cost,
-            Range: power.range,
-            Duration: power.duration,
-            Effect: power.effect,
-            Prerequisites: power.prerequisites,
+            Action: power.action.length !== 0 ? power.action : null,
+            Trigger: power.trigger !== "" ? power.trigger : null,
+            Cost: power.cost !== "" ? power.cost : null,
+            Range: power.range !== "" ? power.range : null,
+            Duration: power.duration !== "" ? power.duration : null,
+            Prerequisites: power.prerequisites.length !== 0 ? power.prerequisites : null,
+            Text: power.text !== "" ? power.text : null,
           },
-          bodyText: power.text,
+          bodyText: power.effect,
         });
       },
     });
