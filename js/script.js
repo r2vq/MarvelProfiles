@@ -455,8 +455,8 @@ function renderDice({ abilityScore, abilityType, animate, damageContext, initCon
 function renderPowers({ characterPowers, powersData }) {
   const fragment = document.createDocumentFragment();
 
-  characterPowers.forEach((i) => {
-    const power = powersData[i];
+  characterPowers.forEach((powerName) => {
+    const power = powersData.find((power) => power.name === powerName);
     const cost = power.cost === 0 ? "--" : power.cost;
 
     const row = createGridRow({

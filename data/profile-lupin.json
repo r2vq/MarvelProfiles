@@ -60,7 +60,7 @@
   "karma": 3,
   "name": "Lupin",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/lupin.jpg",
-  "powers": [17, 41, 66, 177, 180, 181, 182, 183, 184, 188],
+  "powers": ["Blink", "Combat Trickery", "Elemental Burst", "Swap Places", "Telekinetic Grab", "Telekinetic Manipulation", "Telekinetic Protection 2", "Telekinetic Sphere", "Telekinetic Toss", "Teleport 1"],
   "rank": 3,
   "secretIdentity": "unknown",
   "tags": [9, 13, 23, 53, 54],

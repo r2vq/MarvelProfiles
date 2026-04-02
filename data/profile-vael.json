@@ -60,7 +60,7 @@
   "karma": 3,
   "name": "Vael",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/vael.png",
-  "powers": [11, 23, 28, 48, 59, 60, 84, 115, 129, 141, 158, 198, 211],
+  "powers": ["Astral Form", "Bolts of Balthakk", "Brain Drain", "Crimson Bands of Cyttorak", "Discipline 1", "Discipline 2", "Disguise", "Flames of the Faltine", "Images of Ikonn", "Leech Life", "Mists of Munnopor", "Shield of the Seraphim", "Vapors of Valtorr", "Wisdom"],
   "rank": 3,
   "secretIdentity": "Vaelaris the Wayward",
   "tags": [9, 23, 52, 54],

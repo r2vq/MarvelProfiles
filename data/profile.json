@@ -60,7 +60,7 @@
   "karma": 1,
   "name": "Character Name",
   "photoUrl": "https://picsum.photos/200",
-  "powers": [0, 2, 5, 10],
+  "powers": ["Blink", "Combat Trickery"],
   "rank": 1,
   "secretIdentity": "Secret Identity",
   "tags": [1, 2],

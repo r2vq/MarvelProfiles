@@ -60,7 +60,7 @@
   "karma": 3,
   "name": "Bulwark",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/bulwark.png",
-  "powers": [51, 79, 81, 96, 97, 131, 142, 149, 171, 199, 209, 211, 212],
+  "powers": ["Cure-All", "Exploit", "Fast Attacks", "Healing Factor", "Healing Hands", "Let's Go", "Never Surrender", "Reinforced Skeleton", "Sturdy 1", "Vicious Attack", "Whirling Frenzy", "Wisdom", "Wisecracker"],
   "rank": 3,
   "secretIdentity": "Cassandra \"c'ASS\" Cruz",
   "tags": [8, 23, 30],
