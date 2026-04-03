@@ -60,7 +60,7 @@
   "karma": 3,
   "name": "Barricade",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/barricade.jpeg",
-  "powers": ["Banging Heads", "Brawling", "Clobber", "Crushing Grip", "Energy Absorbtion", "Ground-Shaking Stomp", "Healing Factor", "Jump 2", "Mighty 1", "Quick Toss", "Smash", "Sturdy 2"],
+  "powers": ["Banging Heads", "Brawling", "Clobber", "Crushing Grip", "Energy Absorbtion", "Ground-Shaking Stomp", "Healing Factor", "Jump 1", "Jump 2", "Mighty 1", "Quick Toss", "Smash", "Sturdy 1", "Sturdy 2"],
   "rank": 3,
   "secretIdentity": "Elias Kaine",
   "tags": [7, 8, 13, 23, 40, 53, 54],
