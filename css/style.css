@@ -447,7 +447,9 @@ header {
 }
 
 #details-container-alert {
+  max-height: 95vh;
   max-width: 500px;
+  overflow-y: scroll;
   width: 90vw;
 }
 
