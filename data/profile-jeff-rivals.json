@@ -1,0 +1,69 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 1,
+      "defense": 12,
+      "noncombat": 1
+    },
+    "agility": {
+      "ability": 5,
+      "defense": 16,
+      "noncombat": 5
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "logic": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    }
+  },
+  "color": 4857611,
+  "damage": {
+    "melee": {
+      "multiplier": 3,
+      "ability": 1
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 5
+    },
+    "ego": {
+      "multiplier": 3,
+      "ability": 3
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": 1
+    }
+  },
+  "damageReduction": 0,
+  "focus": 60,
+  "health": 90,
+  "initiative": {
+    "value": 3,
+    "edge": false
+  },
+  "karma": 3,
+  "name": "Jeff the Land Shark",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/jeff-rivals.webp",
+  "powers": ["Inspiration", "Healing Hands", "Let's Go", "Speed Swim", "Elemental Blast", "Elemental Burst", "Elemental Grab", "Elemental Push", "Phase Self", "Quick Phase", "Keep Moving"],
+  "rank": 3,
+  "secretIdentity": "Jeff",
+  "tags": ["Amphibious", "Black Market Access", "Extreme Appearance", "Heroic", "Mute", "Public Identity", "Young"],
+  "theme": "theme-vael",
+  "traits": ["Connections", "Fearless", "Fresh Eyes", "From Range", "Small", "Weird"]
+}

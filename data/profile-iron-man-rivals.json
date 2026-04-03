@@ -59,11 +59,11 @@
   },
   "karma": 3,
   "name": "Iron Man (Marvel Rivals)",
-  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/iron-man-rivals.webp",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/iron-man-rivals.jpg",
   "powers": ["Brilliance 1", "Discipline 1", "Flight 2", "Mighty 1", "Elemental Blast (Energy)", "Elemental Burst (Energy)", "Elemental Push (Energy)", "Supernova", "Bump Power"],
   "rank": 3,
   "secretIdentity": "Anthony \"Tony\" Stark",
-  "tags": [20, 23, 30, 45, 47],
+  "tags": ["Extreme Appearance", "Heroic", "Lab Access", "Public Identity", "Rich"],
   "theme": "theme-barricade",
-  "traits": [3, 13, 20, 22, 28, 36, 57, 60]
+  "traits": ["Battle Ready", "Connections", "Extra Occupation", "Famous", "Gearhead", "Inventor", "Surprising Power", "Tech Reliance"]
 }

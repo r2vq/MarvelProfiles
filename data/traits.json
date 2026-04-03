@@ -112,6 +112,10 @@
     "value": "The character has their own way of doing things. This often makes them seem strange to those around them, but it means they can bring new perspectives to existing issues. They have an edge on Logic checks when faced with something for the first time."
   },
   {
+    "name": "From Range",
+    "value": "The character can increase the range of one of their powers from reach to 10 spaces. When the power is used on a target beyond the character's reach, the character must make an Agility check against the target's Agility defense. Additionally, if the power normally does Melee damage, it instead does Agility damage when used on such a target.\n\nIf the target is an ally, the ally can lower the target number for the check to 10.\n\nThis trait cannot be applied to powers that affect multiple targets."
+  },
+  {
     "name": "Gearhead",
     "value": "The character knows their way around machines. They have an edge on Logic checks to figure out how any machine works."
   },
