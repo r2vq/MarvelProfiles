@@ -635,8 +635,9 @@ function renderReroll({ abilityType, abilityScore, damageContext, dieIndex, init
 function renderSimpleGrid({ itemIds, sourceData, gridSelector, classes, itemType }) {
   const fragment = document.createDocumentFragment();
 
-  itemIds.forEach((id) => {
-    const item = sourceData[id];
+  itemIds.forEach((name) => {
+    const item = sourceData.find(it => it.name === name);
+    if (!item) return;
     const row = createGridRow({
       classes,
       textContents: [item.name],
