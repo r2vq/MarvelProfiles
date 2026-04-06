@@ -63,6 +63,7 @@
   "powers": ["Cure-All", "Exploit", "Fast Attacks", "Healing Factor", "Healing Hands", "Let's Go", "Never Surrender", "Reinforced Skeleton", "Sturdy 1", "Vicious Attack", "Whirling Frenzy", "Wisdom", "Wisecracker"],
   "rank": 3,
   "secretIdentity": "Cassandra \"c'ASS\" Cruz",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
   "tags": ["Backup", "Heroic", "Lab Access"],
   "theme": "theme-bulwark",
   "traits": ["Berserker", "Clinician", "Combat Reflexes", "First Aid", "Surprising Power", "Weird"]

@@ -63,6 +63,7 @@
   "powers": ["Inspiration", "Healing Hands", "Let's Go", "Speed Swim", "Elemental Blast", "Elemental Burst", "Elemental Grab", "Elemental Push", "Phase Self", "Quick Phase", "Keep Moving"],
   "rank": 3,
   "secretIdentity": "Jeff",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 9, "Jump": 3 },
   "tags": ["Amphibious", "Black Market Access", "Extreme Appearance", "Heroic", "Mute", "Public Identity", "Young"],
   "theme": "theme-vael",
   "traits": ["Connections", "Fearless", "Fresh Eyes", "From Range", "Small", "Weird"]

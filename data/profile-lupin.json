@@ -63,6 +63,7 @@
   "powers": ["Blink", "Combat Trickery", "Elemental Burst", "Swap Places", "Telekinetic Grab", "Telekinetic Manipulation", "Telekinetic Protection 1", "Telekinetic Protection 2", "Telekinetic Sphere", "Telekinetic Toss", "Teleport 1"],
   "rank": 3,
   "secretIdentity": "unknown",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
   "tags": ["Black Market Access", "Cursed", "Heroic", "Streetwise", "Supernatural"],
   "theme": "theme-lupin",
   "traits": ["Battle Ready", "Connections", "Free Running", "Investigation"]

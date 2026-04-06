@@ -63,6 +63,7 @@
   "powers": ["Accuracy 1", "Discipline 1", "Flight 1", "Iconic Weapon", "Elemental Barrier (Iron)", "Elemental Burst (Iron)", "Elemental Blast (Iron)", "Elemental Protection 1 (Iron)", "Supernova (Iron)", "Vicious Attack"],
   "rank": 3,
   "secretIdentity": "Max Eisenhardt",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Flight": 15 },
   "tags": ["Black Market Access", "Hounded", "Krakoan", "Linguist", "Public Identity", "X-Gene"],
   "theme": "theme-barricade",
   "traits": ["Connections", "Determination", "Fearless", "Iron Will", "Presence", "Surprising Power"]

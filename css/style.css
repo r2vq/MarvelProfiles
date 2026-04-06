@@ -232,6 +232,11 @@ header {
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+  white-space: pre;
+}
+
+#stat-speed .value {
+  font-size: small;
 }
 
 .stat-card:hover {

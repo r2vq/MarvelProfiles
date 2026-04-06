@@ -63,6 +63,7 @@
   "powers": ["Disguise", "Environmental Protection", "Healing Factor", "Mighty 1", "Mighty 2", "Spider-Strike", "Wallcrawling", "Webcasting", "Webgrabbing", "Webslinging", "Webtrapping", "Fast Attacks", "Vicious Attack"],
   "rank": 3,
   "secretIdentity": "Edward Charles Allan \"Eddie\" Brock",
+  "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 3, "Swingline": 18 },
   "tags": ["Black Market Access", "Enemy", "Poor", "Public Identity", "Streetwise"],
   "theme": "theme-vael",
   "traits": ["Anathema", "Audience", "Berserker", "Big", "Bloodthirsty", "Combat Reflexes", "Connections", "Free Running", "Loner", "Pundit", "Symbiotic Spider-Blinder"]

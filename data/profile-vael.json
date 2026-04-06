@@ -63,6 +63,7 @@
   "powers": ["Astral Form", "Bolts of Balthakk", "Brain Drain", "Crimson Bands of Cyttorak", "Discipline 1", "Discipline 2", "Disguise", "Flames of the Faltine", "Images of Ikonn", "Leech Life", "Mists of Munnopor", "Shield of the Seraphim", "Vapors of Valtorr", "Wisdom"],
   "rank": 3,
   "secretIdentity": "Vaelaris the Wayward",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Flight": 15 },
   "tags": ["Black Market Access", "Heroic", "Sorcerous", "Supernatural"],
   "theme": "theme-vael",
   "traits": ["Connections", "Interrogation", "Leverage", "Magic Item Reliance", "Sneaky"]

@@ -64,6 +64,14 @@ function buildCharacterSheet({ profile }) {
 
   select(".value", select("#stat-rank")).textContent = profile.rank;
 
+  if (profile.speed) {
+    let speedEntries = [];
+    for (const [key, value] of Object.entries(profile.speed)) {
+      speedEntries.push(`${key}: ${value}`);
+    }
+    select(".value", select("#stat-speed")).textContent = speedEntries.join("\r\n");
+  }
+
   const setupStatCard = (cardSelector, statName, maxVal, getCurrentVal, onStoreStat) => {
     const card = select(cardSelector);
 

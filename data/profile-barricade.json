@@ -63,6 +63,7 @@
   "powers": ["Banging Heads", "Brawling", "Clobber", "Crushing Grip", "Energy Absorbtion", "Ground-Shaking Stomp", "Healing Factor", "Jump 1", "Jump 2", "Mighty 1", "Quick Toss", "Smash", "Sturdy 1", "Sturdy 2"],
   "rank": 3,
   "secretIdentity": "Elias Kaine",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 15 },
   "tags": ["Authority", "Backup", "Cursed", "Heroic", "Mysterious", "Streetwise", "Supernatural"],
   "theme": "theme-barricade",
   "traits": ["Combat Reflexes", "Enhanced Physique", "Interrogation", "Investigation", "Surprising Power"]

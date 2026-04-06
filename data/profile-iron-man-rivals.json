@@ -63,6 +63,7 @@
   "powers": ["Brilliance 1", "Discipline 1", "Flight 2", "Mighty 1", "Elemental Blast (Energy)", "Elemental Burst (Energy)", "Elemental Push (Energy)", "Supernova", "Bump Power"],
   "rank": 3,
   "secretIdentity": "Anthony \"Tony\" Stark",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 15 },
   "tags": ["Extreme Appearance", "Heroic", "Lab Access", "Public Identity", "Rich"],
   "theme": "theme-barricade",
   "traits": ["Battle Ready", "Connections", "Extra Occupation", "Famous", "Gearhead", "Inventor", "Surprising Power", "Tech Reliance"]
