@@ -62,7 +62,7 @@
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/psylocke-rivals.webp",
   "powers": ["Accuracy 1", "Brilliance 1", "Iconic Item", "Fast Attacks", "Hit & Run", "Mental Punch", "Telepathic Blast", "Telepathic Link", "Invisibility", "Double Tap", "Snap Shooting", "Sniping"],
   "rank": 3,
-  "secretIdentity": "Sai",
+  "secretIdentity": "Unknown (goes by Sai)",
   "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 3 },
   "tags": ["Black Market Access", "Heroic", "Hounded", "Secret Identity", "X-Gene"],
   "theme": "theme-vael",

@@ -65,6 +65,6 @@
   "secretIdentity": "Jeff",
   "speed": { "Run": 5, "Climb": 3, "Swim": 9, "Jump": 3 },
   "tags": ["Amphibious", "Black Market Access", "Extreme Appearance", "Heroic", "Mute", "Public Identity", "Young"],
-  "theme": "theme-vael",
+  "theme": "theme-bulwark",
   "traits": ["Connections", "Fearless", "Fresh Eyes", "From Range", "Small", "Weird"]
 }
