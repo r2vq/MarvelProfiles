@@ -328,14 +328,12 @@ header {
   text-align: center;
 }
 
-#ability-grid .label,
-#damage-grid > .label,
-#ability-grid .grid-header:first-child {
+#damage-grid .content .label {
   justify-content: flex-start;
 }
 
 #damage-grid {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 2fr 2fr repeat(3, auto) 2fr;
 }
 
 #powers-grid {
