@@ -467,11 +467,12 @@ function renderPowers({ characterPowers, powersData }) {
     const power = powersData.find((power) => power.name === powerName);
     if (!power) return;
     const cost = power.cost === 0 ? "--" : power.cost;
-    const isReaction = power.action.includes("Reaction");
+    const reactionText = power.action.includes("Reaction") ? " (Reaction)" : "";
+    const permanentText = power.duration.includes("Permanent") ? " (Permanent)" : "";
 
     const row = createGridRow({
       classes: ["label power-name", "power-focus", "power-desc"],
-      textContents: [power.name, `${cost}${isReaction ? "\n(Reaction)" : ""}`, `${power.text}`],
+      textContents: [`${power.name}${reactionText}${permanentText}`, `${cost}`, `${power.text}`],
       onClick: () => {
         showDetails({
           title: power.name,
