@@ -60,7 +60,7 @@
   "karma": 3,
   "name": "Iron Man (Marvel Rivals)",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/iron-man-rivals.jpg",
-  "powers": ["Brilliance 1", "Discipline 1", "Flight 2", "Mighty 1", "Elemental Blast (Energy)", "Elemental Burst (Energy)", "Elemental Push (Energy)", "Supernova", "Bump Power"],
+  "powers": ["Brilliance 1", "Discipline 1", "Flight 1", "Flight 2", "Mighty 1", "Elemental Blast (Energy)", "Elemental Burst (Energy)", "Elemental Push (Energy)", "Supernova", "Bump Power"],
   "rank": 3,
   "secretIdentity": "Anthony \"Tony\" Stark",
   "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 15 },
