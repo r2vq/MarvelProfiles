@@ -463,7 +463,7 @@ function renderDice({ abilityScore, abilityType, animate, damageContext, initCon
 function renderPowers({ characterPowers, powersData }) {
   const fragment = document.createDocumentFragment();
 
-  characterPowers.forEach((powerName) => {
+  characterPowers.toSorted().forEach((powerName) => {
     const power = powersData.find((power) => power.name === powerName);
     if (!power) return;
     const cost = power.cost === 0 ? "--" : power.cost;
