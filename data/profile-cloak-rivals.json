@@ -1,0 +1,70 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "agility": {
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 7
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "logic": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    }
+  },
+  "color": 6834813,
+  "damage": {
+    "melee": {
+      "multiplier": 3,
+      "ability": 1
+    },
+    "agility": {
+      "multiplier": 5,
+      "ability": 5
+    },
+    "ego": {
+      "multiplier":3,
+      "ability": 1
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": 3
+    }
+  },
+  "damageReduction": 3,
+  "focus": 90,
+  "health": 60,
+  "initiative": {
+    "value": 3,
+    "edge": false
+  },
+  "karma": 3,
+  "name": "Cloak (Marvel Rivals)",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/cloak-rivals.webp",
+  "powers": ["Accuracy 2", "Darkness", "Elemental Barrage", "Elemental Blast", "Elemental Burst", "Extend Invisibility", "Iconic Item", "Illumination", "Invisibility", "Phase Self", "Quick Phase"],
+  "rank": 3,
+  "secretIdentity": "Tyrone \"Ty\" Johnson",
+  "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Alternate Form", "Black Market Access", "Heroic", "Secret Identity"],
+  "theme": "theme-vael",
+  "traits": ["Connections", "Fearless", "Skeptical", "Sneaky", "Surprising Power", "Weird"]
+}

@@ -1,0 +1,70 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "agility": {
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 6
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "logic": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    }
+  },
+  "color": 8414033,
+  "damage": {
+    "melee": {
+      "multiplier": 4,
+      "ability": 1
+    },
+    "agility": {
+      "multiplier": 4,
+      "ability": 5
+    },
+    "ego": {
+      "multiplier":3,
+      "ability": 3
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": 1
+    }
+  },
+  "damageReduction": 0,
+  "focus": 90,
+  "health": 60,
+  "initiative": {
+    "value": 3,
+    "edge": false
+  },
+  "karma": 3,
+  "name": "Dagger (Marvel Rivals)",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/dagger-rivals.webp",
+  "powers": ["Accuracy 1", "Dazzle", "Elemental Blast", "Elemental Burst", "Elemental Ricochet", "Flare", "Healing Hands", "Iconic Item", "Illumination", "Inspiration", "Let's Go", "Never Surrender"],
+  "rank": 3,
+  "secretIdentity": "Tandy Brown",
+  "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Alternate Form", "Black Market Access", "Heroic", "Secret Identity"],
+  "theme": "theme-bulwark",
+  "traits": ["Beguiling", "Combat Reflexes", "Connections", "Fearless", "Presence", "Weird"]
+}
