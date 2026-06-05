@@ -1,17 +1,5 @@
 [
   {
-    "name": "",
-    "text": "",
-    "power_set": [],
-    "prerequisites": [],
-    "action": [],
-    "trigger": "",
-    "duration": "",
-    "range": "",
-    "cost": "",
-    "effect": ""
-  },
-  {
     "name": "Absorption",
     "text": "The character can absorb the properties of anything that they touch and transform their body into living versions of the same substance.",
     "power_set": ["Narrative"],
