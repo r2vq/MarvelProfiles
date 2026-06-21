@@ -1035,7 +1035,7 @@
     "name": "Dimensional Portal",
     "text": "The character opens a portal to another place.",
     "power_set": ["Omniversal Travel"],
-    "prerequisites": [],
+    "prerequisites": ["Dimensional Travel Together", "Rank 4"],
     "action": ["Standard"],
     "trigger": "",
     "duration": "Concentration",
