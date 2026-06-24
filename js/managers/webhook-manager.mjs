@@ -38,7 +38,7 @@ function isValidHttpUrl(string) {
   }
 }
 
-function sendMessageAbility({ abilityType, abilityScore, isFailedReroll, isReroll, profile, roll }) {
+function sendMessageAbility({ abilityType, abilityScore, isFailedReroll, isNonCombat, isReroll, profile, roll }) {
   const isFantastic = roll.die2.isMarvel;
   const isUltimateFantastic = roll.die1.value === 6 && isFantastic && roll.die3.value === 6;
 
@@ -50,7 +50,7 @@ function sendMessageAbility({ abilityType, abilityScore, isFailedReroll, isRerol
   const abilityScoreString = `${abilityScore >= 0 ? "+" : ""}${abilityScore}`;
 
   const jsonData = {
-    content: `${rerollPrefix}${profile.name} rolled ${abilityType}.\nResult ${roll.total}.`,
+    content: `${rerollPrefix}${profile.name} rolled ${abilityType}${isNonCombat ? " Non-Combat" : ""}.\nResult ${roll.total}.`,
     embeds: [
       {
         color: profile.color,

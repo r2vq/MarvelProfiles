@@ -286,6 +286,7 @@ function renderAbility({ profile, view, ability, abilityType }) {
         webhookManager.sendMessageAbility({
           abilityType,
           abilityScore,
+          isNonCombat: false,
           isReroll: false,
           profile,
           roll,
@@ -315,6 +316,7 @@ function renderAbility({ profile, view, ability, abilityType }) {
         webhookManager.sendMessageAbility({
           abilityType,
           abilityScore,
+          isNonCombat: true,
           isReroll: false,
           profile,
           roll,
@@ -627,6 +629,7 @@ function renderReroll({ abilityType, abilityScore, damageContext, dieIndex, init
         abilityType: abilityType,
         abilityScore,
         isFailedReroll,
+        isNonCombat: false,
         isReroll: true,
         profile,
         roll: newRoll,
