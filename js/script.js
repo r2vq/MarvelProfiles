@@ -266,7 +266,35 @@ function renderAbility({ profile, view, ability, abilityType }) {
   select(".defense", view).textContent = ability.defense;
   select(".noncombat", view).textContent = `${ability.noncombat >= 0 ? "+" : "-"}${Math.abs(ability.noncombat)}`;
 
-  view.addEventListener("click", () => {
+  select(".ability", view).addEventListener("click", () => {
+    showPopUp({
+      content: `Roll ${abilityType} Ability?`,
+      isPrimaryVisible: true,
+      isSecondaryVisible: true,
+      primaryText: "OK",
+      secondaryText: "Cancel",
+      onPrimaryClick: () => {
+        const abilityScore = ability.ability;
+        const roll = d616.rollAbility({ abilityScore });
+        renderDice({
+          abilityScore,
+          abilityType,
+          animate: true,
+          profile,
+          roll,
+        });
+        webhookManager.sendMessageAbility({
+          abilityType,
+          abilityScore,
+          isReroll: false,
+          profile,
+          roll,
+        });
+      },
+    });
+  });
+
+  select(".noncombat", view).addEventListener("click", () => {
     showPopUp({
       content: `Roll ${abilityType} Non-Combat?`,
       isPrimaryVisible: true,
@@ -274,7 +302,8 @@ function renderAbility({ profile, view, ability, abilityType }) {
       primaryText: "OK",
       secondaryText: "Cancel",
       onPrimaryClick: () => {
-        const abilityScore = ability.ability;
+        console.log(ability);
+        const abilityScore = ability.noncombat;
         const roll = d616.rollAbility({ abilityScore });
         renderDice({
           abilityScore,
