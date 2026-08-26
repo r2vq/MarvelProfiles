@@ -1,0 +1,70 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "agility": {
+      "ability": 0,
+      "defense": 12,
+      "noncombat": 0
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "ego": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "logic": {
+      "ability": -1,
+      "defense": 9,
+      "noncombat": -1
+    }
+  },
+  "color": 3148640,
+  "damage": {
+    "melee": {
+      "multiplier": 1,
+      "ability": 2
+    },
+    "agility": {
+      "multiplier": 1,
+      "ability": 0
+    },
+    "ego": {
+      "multiplier": 1,
+      "ability": 1
+    },
+    "logic": {
+      "multiplier": 1,
+      "ability": 1
+    }
+  },
+  "damageReduction": 0,
+  "focus": 30,
+  "health": 60,
+  "initiative": {
+    "value": 1,
+    "edge": false
+  },
+  "karma": 1,
+  "name": "Evie",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/evie.jpg",
+  "powers": ["Brawling", "Grow 1", "Grow 2"],
+  "rank": 1,
+  "secretIdentity": "Evie",
+  "speed": { "Run": 4, "Climb": 3, "Swim": 3, "Jump": 2 },
+  "tags": ["Extreme Appearance", "Heroic", "Mute", "Mysterious", "Young"],
+  "theme": "theme-vael",
+  "traits": ["Connections", "Fresh Eyes", "Stranger", "Out of Shape"]
+}

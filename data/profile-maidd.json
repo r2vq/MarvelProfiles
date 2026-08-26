@@ -1,0 +1,70 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": -3,
+      "defense": 7,
+      "noncombat": -3
+    },
+    "agility": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 3
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "ego": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "logic": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 5
+    }
+  },
+  "color": 4857611,
+  "damage": {
+    "melee": {
+      "multiplier": 1,
+      "ability": -3
+    },
+    "agility": {
+      "multiplier": -1,
+      "ability": 2
+    },
+    "ego": {
+      "multiplier": 1,
+      "ability": 0
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 4
+    }
+  },
+  "damageReduction": 1,
+  "focus": 10,
+  "health": 60,
+  "initiative": {
+    "value": 0,
+    "edge": false
+  },
+  "karma": 1,
+  "name": "M.A.I.D.D.",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/maidd.jpeg",
+  "powers": ["Telekinetic Manipulation", "Sturdy 1", "Brilliance 1", "Evasion"],
+  "rank": 1,
+  "secretIdentity": "Mobile Android for Intensive Dust Destruction",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 5 },
+  "tags": ["Extreme Appearance", "Heroic", "AI", "Obligation"],
+  "theme": "theme-barricade",
+  "traits": ["Stranger", "Tech Reliance", "Fresh Eyes", "Connections", "Combat Reflexes"]
+}
