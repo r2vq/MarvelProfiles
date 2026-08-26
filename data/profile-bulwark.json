@@ -6,9 +6,9 @@
       "noncombat": 0
     },
     "agility": {
-      "ability": 1,
-      "defense": 11,
-      "noncombat": 1
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
     },
     "resilience": {
       "ability": 4,
@@ -16,55 +16,55 @@
       "noncombat": 4
     },
     "vigilance": {
-      "ability": 5,
-      "defense": 15,
-      "noncombat": 5
-    },
-    "ego": {
       "ability": 6,
       "defense": 16,
       "noncombat": 6
     },
+    "ego": {
+      "ability": 7,
+      "defense": 17,
+      "noncombat": 7
+    },
     "logic": {
-      "ability": -1,
-      "defense": 16,
-      "noncombat": -1
+      "ability": 0,
+      "defense": 17,
+      "noncombat": 0
     }
   },
   "color": 2910622,
   "damage": {
     "melee": {
-      "multiplier": 4,
+      "multiplier": 5,
       "ability": 0
     },
     "agility": {
-      "multiplier": 3,
-      "ability": 1
+      "multiplier": 4,
+      "ability": 3
     },
     "ego": {
-      "multiplier": 3,
-      "ability": 6
+      "multiplier": 4,
+      "ability": 7
     },
     "logic": {
-      "multiplier": 3,
-      "ability": -1
+      "multiplier": 4,
+      "ability": 0
     }
   },
   "damageReduction": -1,
-  "focus": 150,
-  "health": 110,
+  "focus": 180,
+  "health": 120,
   "initiative": {
-    "value": 5,
+    "value": 6,
     "edge": false
   },
-  "karma": 3,
+  "karma": 4,
   "name": "Bulwark",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/bulwark.png",
-  "powers": ["Cure-All", "Exploit", "Fast Attacks", "Healing Factor", "Healing Hands", "Let's Go", "Never Surrender", "Reinforced Skeleton", "Sturdy 1", "Vicious Attack", "Whirling Frenzy", "Wisdom", "Wisecracker"],
-  "rank": 3,
+  "powers": ["Cure-All", "Disrupt Person", "Exploit", "Fast Attacks", "Focused Fury", "Healing Factor", "Let's Go", "Partial Phase", "Phase Self", "Reinforced Skeleton", "Sturdy 1", "Unstoppable Assault", "Vicious Attack", "Whirling Frenzy", "Wisdom", "Wisecracker"],
+  "rank": 4,
   "secretIdentity": "Cassandra \"c'ASS\" Cruz",
-  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "speed": { "Run": 5, "Climb": 4, "Swim": 4, "Jump": 4 },
   "tags": ["Backup", "Heroic", "Lab Access"],
   "theme": "theme-bulwark",
-  "traits": ["Berserker", "Clinician", "Combat Reflexes", "First Aid", "Surprising Power", "Weird"]
+  "traits": ["Berserker", "Clinician", "Combat Reflexes", "Connections", "First Aid", "Surprising Power", "Weird"]
 }

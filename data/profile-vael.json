@@ -6,65 +6,65 @@
       "noncombat": 2
     },
     "agility": {
-      "ability": 1,
-      "defense": 11,
-      "noncombat": 1
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
     },
     "resilience": {
-      "ability": 1,
-      "defense": 11,
-      "noncombat": 1
-    },
-    "vigilance": {
       "ability": 3,
       "defense": 13,
       "noncombat": 3
     },
+    "vigilance": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
     "ego": {
-      "ability": 6,
-      "defense": 16,
-      "noncombat": 8
+      "ability": 7,
+      "defense": 17,
+      "noncombat": 10
     },
     "logic": {
       "ability": 2,
-      "defense": 16,
+      "defense": 17,
       "noncombat": 2
     }
   },
   "color": 3148640,
   "damage": {
     "melee": {
-      "multiplier": 3,
+      "multiplier": 4,
       "ability": 2
     },
     "agility": {
-      "multiplier": 3,
-      "ability": 1
+      "multiplier": 4,
+      "ability": 2
     },
     "ego": {
-      "multiplier": 5,
-      "ability": 8
+      "multiplier": 7,
+      "ability": 9
     },
     "logic": {
-      "multiplier": 3,
+      "multiplier": 4,
       "ability": 2
     }
   },
   "damageReduction": 0,
-  "focus": 90,
-  "health": 30,
+  "focus": 120,
+  "health": 90,
   "initiative": {
-    "value": 3,
+    "value": 4,
     "edge": false
   },
-  "karma": 3,
+  "karma": 4,
   "name": "Vael",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/vael.png",
-  "powers": ["Astral Form", "Bolts of Balthakk", "Brain Drain", "Crimson Bands of Cyttorak", "Discipline 1", "Discipline 2", "Disguise", "Flames of the Faltine", "Images of Ikonn", "Leech Life", "Mists of Munnopor", "Shield of the Seraphim", "Vapors of Valtorr", "Wisdom"],
-  "rank": 3,
+  "powers": ["Astral Form", "Bolts of Balthakk", "Brain Drain", "Crimson Bands of Cyttorak", "Discipline 1", "Discipline 2", "Discipline 3", "Disguise", "Flames of the Faltine", "Flight 1", "Images of Ikonn", "Leech Life", "Mists of Munnopor", "Shape-Shift", "Shield of the Seraphim", "Summon Portal", "Vapors of Valtorr", "Winds of Watoomb", "Wisdom"],
+  "rank": 4,
   "secretIdentity": "Vaelaris the Wayward",
-  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Flight": 15 },
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Flight": 20 },
   "tags": ["Black Market Access", "Heroic", "Sorcerous", "Supernatural"],
   "theme": "theme-vael",
-  "traits": ["Connections", "Interrogation", "Leverage", "Magic Item Reliance", "Sneaky"]
+  "traits": ["Combat Reflexes", "Connections", "Interrogation", "Leverage", "Magic Item Reliance", "Sneaky"]
 }
