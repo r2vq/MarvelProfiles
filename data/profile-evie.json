@@ -65,6 +65,6 @@
   "secretIdentity": "Evie",
   "speed": { "Run": 4, "Climb": 3, "Swim": 3, "Jump": 2 },
   "tags": ["Extreme Appearance", "Heroic", "Mute", "Mysterious", "Young"],
-  "theme": "theme-vael",
+  "theme": "theme-evie",
   "traits": ["Connections", "Fresh Eyes", "Stranger", "Out of Shape"]
 }
