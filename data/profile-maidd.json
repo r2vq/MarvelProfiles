@@ -38,7 +38,7 @@
       "ability": -3
     },
     "agility": {
-      "multiplier": -1,
+      "multiplier": 1,
       "ability": 2
     },
     "ego": {
