@@ -51,14 +51,14 @@
     }
   },
   "damageReduction": 0,
-  "focus": 30,
+  "focus": 60,
   "health": 10,
   "initiative": {
     "value": 1,
     "edge": true
   },
   "karma": 1,
-  "name": "Evie",
+  "name": "Ensign Dan",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/dan.jpeg",
   "powers": ["Accuracy 1", "Double Tap", "Evasion", "Inspiration"],
   "rank": 1,
