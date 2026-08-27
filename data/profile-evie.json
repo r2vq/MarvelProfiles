@@ -47,7 +47,7 @@
     },
     "logic": {
       "multiplier": 1,
-      "ability": 1
+      "ability": -1
     }
   },
   "damageReduction": 0,
