@@ -379,6 +379,49 @@ header {
   margin-bottom: 0;
 }
 
+#rolls-container {
+  align-items: center;
+  bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  left: 20px;
+  position: fixed;
+}
+
+#rolls-container .hide-pill {
+  align-self: flex-start;
+  background-color: var(--bg-header);
+  border-radius: 10px;
+  font-size: small;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
+#rolls-container .roll-row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  width: 100%;
+}
+
+#rolls-container .roll-row:hover .die, #rolls-container .roll-row:hover .roll-type, #rolls-container .hide-pill:hover {
+  box-shadow: 0 0 20px 5px var(--accent-color);
+  cursor: pointer;
+}
+
+#rolls-container .roll-row .die {
+  margin: 0 5px;
+}
+
+#rolls-container .roll-type {
+  background-color: var(--bg-header);
+  border-radius: 10px;
+  font-size: small;
+  padding: 4px 10px;
+  text-transform: uppercase;
+}
+
 /* --- TAGS & TRAITS --- */
 #tags-grid,
 #traits-grid {

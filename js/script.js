@@ -8,6 +8,12 @@ import webhookManager from "./managers/webhook-manager.mjs";
 import { select } from "./utils/view-utils.mjs";
 
 const ROTATE_TIME = 750;
+const rolls = [];
+
+function cacheRoll({ profile, roll, context }) {
+  rolls.push(roll);
+  updateCachedRolls({ profile, context });
+}
 
 async function init() {
   bindCustomCharacterButtons();
@@ -242,6 +248,16 @@ function buildCharacterSheet({ profile }) {
   });
 }
 
+function buildDieElement({ text, isMarvelDie }) {
+  const die = document.createElement("div");
+  die.className = "die";
+  if (isMarvelDie) {
+    die.classList.add("marvel-die");
+  }
+  die.textContent = text;
+  return die;
+}
+
 function createGridRow({ classes, textContents, onClick }) {
   const gridRow = document.createElement("div");
   gridRow.className = "content";
@@ -402,7 +418,7 @@ function renderDamages({ profile }) {
   });
 }
 
-function renderDice({ abilityScore, abilityType, animate, damageContext, initContext, profile, roll }) {
+function renderDice({ abilityScore, abilityType, animate, damageContext, initContext, isCache, profile, roll }) {
   const diceContainer = select("#dice-container");
   const diceResult = select("#dice-result-value", diceContainer);
   diceResult.textContent = "";
@@ -478,6 +494,25 @@ function renderDice({ abilityScore, abilityType, animate, damageContext, initCon
       select("#dice-type", diceContainer).textContent = "Fantastic!";
     } else {
       select("#dice-type", diceContainer).textContent = "Standard";
+    }
+
+    const context = {};
+    if (hasDamage) {
+      context.abilityScore = abilityScore;
+      context.abilityType = abilityType;
+      context.damageContext = damageContext;
+
+      roll.type = "damage";
+    } else if (abilityType) {
+      context.abilityScore = abilityScore;
+      context.abilityType = abilityType;
+
+      roll.type = abilityType;
+    } else {
+      roll.type = "initiative";
+    }
+    if (!isCache) {
+      cacheRoll({ profile, roll, context });
     }
   }
 
@@ -810,6 +845,97 @@ function showPopUp({
   }
 
   alertContainer.classList.remove("hidden");
+}
+
+function updateCachedRolls({ profile, context }) {
+  const rollsContainer = select("#rolls-container");
+  rollsContainer.innerHTML = "";
+
+  const maxRollsToShow = 3;
+  let currentCount = 0;
+  for (let i = rolls.length - 1; i >= 0; i--) {
+    currentCount += 1;
+    if (currentCount > maxRollsToShow) {
+      continue;
+    }
+
+    let roll = rolls[i];
+    let rollType = "";
+    if (roll.type === "initiative") {
+      rollType = roll.type;
+    } else if (roll.type === "damage") {
+      rollType = `${context.abilityType} damage`;
+    } else {
+      rollType = `${roll.type}`;
+    }
+
+    const row = document.createElement("div");
+    row.className = "roll-row";
+    row.addEventListener("click", () => {
+      const animate = false;
+      const isCache = true;
+
+      if (roll.type === "initiative") {
+        const initContext = profile.initiative;
+        const abilityScore = initContext.value;
+
+        renderDice({ abilityScore, animate, profile, roll, initContext, isCache });
+      } else if (roll.type === "damage") {
+        const abilityScore = context.abilityScore;
+        const abilityType = context.abilityType;
+        const damageContext = context.damageContext;
+
+        renderDice({ abilityScore, abilityType, animate, damageContext, profile, roll, isCache });
+      } else {
+        const abilityScore = context.abilityScore;
+        const abilityType = context.abilityType;
+
+        renderDice({ abilityScore, abilityType, animate, profile, roll, isCache });
+      }
+    });
+
+    const die1 = buildDieElement({
+      text: roll.die1.text,
+      isMarvelDie: false,
+    });
+    row.appendChild(die1);
+
+    const die2 = buildDieElement({
+      text: roll.die2.text,
+      isMarvelDie: true,
+    });
+    row.appendChild(die2);
+
+    const die3 = buildDieElement({
+      text: roll.die3.text,
+      isMarvelDie: false,
+    });
+    row.appendChild(die3);
+
+    const typePill = document.createElement("div");
+    typePill.className = "roll-type";
+    typePill.textContent = rollType;
+    row.appendChild(typePill);
+
+    rollsContainer.appendChild(row);
+  }
+
+  const hidePill = document.createElement("div");
+  hidePill.className = "hide-pill";
+  hidePill.textContent = "Hide";
+  hidePill.addEventListener("click", () => {
+    rollsContainer.innerHTML = "";
+
+
+    const showPill = document.createElement("div");
+    showPill.className = "hide-pill";
+    showPill.textContent = "Show";
+    showPill.addEventListener("click", () => {
+      updateCachedRolls({ profile, context });
+    });
+    rollsContainer.appendChild(showPill);
+  });
+  rollsContainer.appendChild(hidePill);
 }
 
 init();
