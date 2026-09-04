@@ -28,6 +28,14 @@ async function init() {
   webhookManager.updateWebhookUrl(urlParams);
 
   buildCharacterSheet({ profile });
+
+  const notesContainer = select("#notes-container");
+  notesContainer.textContent = storageManager.getSavedNotes() || "Click here to here to enter notes. They will be saved between sessions and only visible to you on this device. Line breaks are not saved. To see this message again, delete your entire note and refresh.";
+  notesContainer.addEventListener("input", () => {
+    const newValue = notesContainer.textContent;
+    storageManager.updateNotes({ newValue });
+    console.log(newValue, notesContainer.textContent, notesContainer.innerHTML);
+  }, false);
 }
 
 function bindCustomCharacterButtons() {

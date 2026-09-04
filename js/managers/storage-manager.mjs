@@ -12,6 +12,8 @@ const getSavedHealth = () => localStorage.getItem(`${localStorage.getItem("profi
 
 const getSavedKarma = () => localStorage.getItem(`${localStorage.getItem("profileId")}_karma`);
 
+const getSavedNotes = () => localStorage.getItem(`${localStorage.getItem("profileId")}_notes`);
+
 const getSavedProfileId = () => localStorage.getItem("profileId");
 
 const getSavedWebhookUrl = () => localStorage.getItem("webhookUrl");
@@ -24,6 +26,8 @@ const updateHealth = ({ newValue }) => localStorage.setItem(`${localStorage.getI
 
 const updateKarma = ({ newValue }) => localStorage.setItem(`${localStorage.getItem("profileId")}_karma`, newValue);
 
+const updateNotes = ({ newValue }) => localStorage.setItem(`${localStorage.getItem("profileId")}_notes`, newValue);
+
 const updateProfileId = ({ newValue }) => localStorage.setItem("profileId", newValue);
 
 const updateWebhookUrl = ({ newValue }) => localStorage.setItem("webhookUrl", newValue);
@@ -35,10 +39,12 @@ export default {
   getSavedHealth,
   getSavedKarma,
   getSavedProfileId,
+  getSavedNotes,
   getSavedWebhookUrl,
   updateFocus,
   updateHealth,
   updateKarma,
+  updateNotes,
   updateProfileId,
   updateWebhookUrl,
   clearCustomProfile,
