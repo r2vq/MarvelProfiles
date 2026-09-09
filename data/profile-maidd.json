@@ -50,7 +50,10 @@
       "ability": 4
     }
   },
-  "damageReduction": 1,
+  "damageReduction": {
+    "health": 1,
+    "focus": 0
+  },
   "focus": 10,
   "health": 60,
   "initiative": {

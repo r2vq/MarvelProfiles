@@ -86,6 +86,11 @@ function buildCharacterSheet({ profile }) {
     select(".value", select("#stat-speed")).textContent = speedEntries.join("\r\n");
   }
 
+  const addDamageReduction = (cardSelector, value) => {
+    const card = select(cardSelector);
+    const damage = select(".damage-reduction", card);
+    damage.textContent = value;
+  };
   const setupStatCard = (cardSelector, statName, maxVal, getCurrentVal, onStoreStat) => {
     const card = select(cardSelector);
 
@@ -152,6 +157,7 @@ function buildCharacterSheet({ profile }) {
       },
     });
   });
+  addDamageReduction("#stat-health", profile.damageReduction.health);
   setupStatCard("#stat-focus", "Focus", profile.focus, storageManager.getSavedFocus, ({ newValue }) => {
     const oldValue = storageManager.getSavedFocus();
     const maxValue = profile.focus;
@@ -179,6 +185,7 @@ function buildCharacterSheet({ profile }) {
       },
     });
   });
+  addDamageReduction("#stat-focus", profile.damageReduction.focus);
   setupStatCard("#stat-karma", "Karma", profile.karma, storageManager.getSavedKarma, ({ newValue }) => {
     const oldValue = storageManager.getSavedKarma();
     const maxValue = profile.karma;

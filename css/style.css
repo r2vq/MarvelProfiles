@@ -257,7 +257,7 @@ header {
   transform: translateY(-2px);
 }
 
-.stat-card .value {
+.stat-card .value, .stat-card .damage-reduction {
   color: var(--accent-color);
   font-size: 1.2rem;
   font-weight: bold;
@@ -308,6 +308,10 @@ header {
 
 .label {
   font-weight: bold;
+}
+
+.label.damage-reduction-label {
+  font-size: smaller;
 }
 
 .content {
