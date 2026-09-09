@@ -223,7 +223,8 @@ header {
 }
 
 #stats-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   flex-wrap: wrap;
   gap: var(--spacing-sm);
   justify-content: space-between;
@@ -259,7 +260,7 @@ header {
 
 .stat-card .value, .stat-card .damage-reduction {
   color: var(--accent-color);
-  font-size: 1.2rem;
+  font-size: 1.0rem;
   font-weight: bold;
 }
 
@@ -308,10 +309,12 @@ header {
 
 .label {
   font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .label.damage-reduction-label {
-  font-size: smaller;
+  padding-top: 12px;
+  white-space: break-spaces;
 }
 
 .content {
