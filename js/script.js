@@ -34,7 +34,6 @@ async function init() {
   notesContainer.addEventListener("input", () => {
     const newValue = notesContainer.textContent;
     storageManager.updateNotes({ newValue });
-    console.log(newValue, notesContainer.textContent, notesContainer.innerHTML);
   }, false);
 }
 
@@ -161,7 +160,6 @@ function buildCharacterSheet({ profile }) {
   setupStatCard("#stat-focus", "Focus", profile.focus, storageManager.getSavedFocus, ({ newValue }) => {
     const oldValue = storageManager.getSavedFocus();
     const maxValue = profile.focus;
-    console.log(newValue);
     storageManager.updateFocus({ newValue });
     webhookManager.sendMessageStats({
       maxValue,
@@ -336,7 +334,6 @@ function renderAbility({ profile, view, ability, abilityType }) {
       primaryText: "OK",
       secondaryText: "Cancel",
       onPrimaryClick: () => {
-        console.log(ability);
         const abilityScore = ability.noncombat;
         const roll = d616.rollAbility({ abilityScore });
         renderDice({
