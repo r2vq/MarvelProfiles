@@ -4308,6 +4308,18 @@
     "effect": "The character splits their attack to make two close attacks against separate targets within reach (or they can focus a single attack on a single target). Make a single Melee check and compare it to the targets' Melee defenses. On a success, the affected target takes half regular damage. On a Fantastic success, the affected target takes full damage, and the character can make a bonus attack with this power against any target within reach, with the same effect."
   },
   {
+    "name": "Fast Attacks (Ego)",
+    "text": "The character's weapons lash out!",
+    "power_set": ["Melee Weapons"],
+    "prerequisites": [],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Instant",
+    "range": "",
+    "cost": "",
+    "effect": "The character splits their attack to make two Ego attacks against separate targets within reach (or they can focus a single attack on a single target). Make a single Ego check and compare it to the targets' Ego defenses. On a success, the affected target takes half regular damage. On a Fantastic success, the affected target takes full damage, and the character can make a bonus attack with this power against any target within reach, with the same effect."
+  },
+  {
     "name": "Fast Hands",
     "text": "The character can shoot faster than the eye can blink.",
     "power_set": ["Ranged Weapons"],
@@ -4462,6 +4474,18 @@
     "range": "",
     "cost": "5 or more Focus",
     "effect": "The character makes a close attack with an edge. For this attack, add +1 to the character's Melee damage bonus for every 2 points of Focus they spend. On a success, an affected target takes that total damage. On a Fantastic success, an affected target takes double that total damage and suffers the weapon's special effect."
+  },
+  {
+    "name": "Focused Fury (Ego)",
+    "text": "The character channels their rage into a devastating blow.",
+    "power_set": ["Melee Weapons"],
+    "prerequisites": ["Exploit", "Rank 3"],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Instant",
+    "range": "",
+    "cost": "5 or more Focus",
+    "effect": "The character makes an Ego attack with an edge. For this attack, add +1 to the character's Ego damage bonus for every 2 points of Focus they spend. On a success, an affected target takes that total damage. On a Fantastic success, an affected target takes double that total damage and suffers the weapon's special effect."
   },
   {
     "name": "Focused Strike",
@@ -7764,6 +7788,18 @@
     "effect": "The character makes a Melee check and compares it against the Melee defense of every enemy within their reach. Any enemy the attack succeeds against takes half regular damage. On a Fantastic success, those enemies take full regular damage instead and suffer the weapon's special effect.\nThe character may then pay 15 more Focus to do the same thing again - before which they can move up to half their Speed with whatever is left from their normal movement action. They can keep doing this until they run out of Speed or Focus. Each target can only be affected by this attack by this character once per round."
   },
   {
+    "name": "Unstoppable Assault (Ego)",
+    "text": "The character hews a path through their foes.",
+    "power_set": ["Melee Weapons"],
+    "prerequisites": ["Furious Attacks, Focused Fury", "Rank 4"],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Instant",
+    "range": "",
+    "cost": "15 Focus",
+    "effect": "The character makes an Ego check and compares it against the Ego defense of every enemy within their reach. Any enemy the attack succeeds against takes half regular damage. On a Fantastic success, those enemies take full regular damage instead and suffer the weapon's special effect.\nThe character may then pay 15 more Focus to do the same thing again - before which they can move up to half their Speed with whatever is left from their normal movement action. They can keep doing this until they run out of Speed or Focus. Each target can only be affected by this attack by this character once per round."
+  },
+  {
     "name": "Untouchable Position",
     "text": "The character's enemies struggle to gang up on them.",
     "power_set": ["Martial Arts"],
@@ -7908,6 +7944,18 @@
     "effect": "The character makes a close attack. If the attack is a success, the enemy takes regular damage. On a Fantastic success, the enemy takes double damage and suffers the weapon's special effect."
   },
   {
+    "name": "Vicious Attack (Ego)",
+    "text": "The character strikes a felling blow.",
+    "power_set": ["Melee Weapons"],
+    "prerequisites": [],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Instant",
+    "range": "",
+    "cost": "",
+    "effect": "The character makes an Ego attack. If the attack is a success, the enemy takes regular damage. On a Fantastic success, the enemy takes double damage and suffers the weapon's special effect."
+  },
+  {
     "name": "Wallcrawling",
     "text": "The character can climb like a spider.",
     "power_set": ["Spider-Powers"],
@@ -8050,6 +8098,18 @@
     "range": "",
     "cost": "5 Focus",
     "effect": "The character makes a Melee check and compares it against the Melee defense of every enemy within their reach. If an attack is a success, the enemy takes half regular damage. On a Fantastic success, the enemy takes full damage and suffers the weapon's special effect."
+  },
+  {
+    "name": "Whirling Frenzy (Ego)",
+    "text": "The character assaults a foe with a tornado of whirling Ego attacks.",
+    "power_set": ["Melee Weapons"],
+    "prerequisites": ["Fast Attacks", "Rank 2"],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Instant",
+    "range": "",
+    "cost": "5 Focus",
+    "effect": "The character makes a Ego check and compares it against the Ego defense of every enemy within their reach. If an attack is a success, the enemy takes half regular damage. On a Fantastic success, the enemy takes full damage and suffers the weapon's special effect."
   },
   {
     "name": "Winds of Watoomb",

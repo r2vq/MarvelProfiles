@@ -63,7 +63,7 @@
   "karma": 4,
   "name": "Bulwark",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/bulwark.png",
-  "powers": ["Cure-All", "Disrupt Person", "Exploit", "Fast Attacks", "Focused Fury", "Healing Factor", "Let's Go", "Partial Phase", "Phase Self", "Reinforced Skeleton", "Sturdy 1", "Unstoppable Assault", "Vicious Attack", "Whirling Frenzy", "Wisdom", "Wisecracker"],
+  "powers": ["Cure-All", "Disrupt Person", "Exploit", "Fast Attacks (Ego)", "Focused Fury (Ego)", "Healing Factor", "Let's Go", "Partial Phase", "Phase Self", "Reinforced Skeleton", "Sturdy 1", "Unstoppable Assault (Ego)", "Vicious Attack (Ego)", "Whirling Frenzy (Ego)", "Wisdom", "Wisecracker"],
   "rank": 4,
   "secretIdentity": "Cassandra \"c'ASS\" Cruz",
   "speed": { "Run": 5, "Climb": 4, "Swim": 4, "Jump": 4 },
