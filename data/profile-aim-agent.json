@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "agility": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 2
+    },
+    "resilience": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "vigilance": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "ego": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "logic": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 4
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 1,
+      "ability": 0
+    },
+    "agility": {
+      "multiplier": 2,
+      "ability": 1
+    },
+    "ego": {
+      "multiplier": 1,
+      "ability": 1
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 3
+    }
+  },
+  "damageReduction": {
+    "health": 0,
+    "focus": 0
+  },
+  "focus": 60,
+  "health": 10,
+  "initiative": {
+    "value": 1,
+    "edge": false 
+  },
+  "karma": 0,
+  "name": "A.I.M. Agent",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/A.I.M._Agent-001.avif",
+  "powers": ["Accuracy 1", "Brilliance 1", "Elemental Burst"],
+  "rank": 1,
+  "secretIdentity": "Varies",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Lab Access", "Secret Identity", "Villainous"],
+  "theme": "theme-bulwark",
+  "traits": ["Battle Ready", "Inventor", "Tech Reliance", "Scientific Expertise"]
+}
