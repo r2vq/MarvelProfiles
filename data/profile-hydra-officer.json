@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "agility": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "ego": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "agility": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "ego": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 0,
+    "focus": 0
+  },
+  "focus": 90,
+  "health": 60,
+  "initiative": {
+    "value": 2,
+    "edge": true
+  },
+  "karma": 0,
+  "name": "Hydra Officer",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Hydra_Officer-001.avif",
+  "powers": ["Battle Plan", "Combat Trickery", "Double Tap", "Inspiration", "Keep Moving", "Snap Shooting", "Suppressive Fire", "Weapons Blazing"],
+  "rank": 2,
+  "secretIdentity": "Varies",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Secret Identity", "Villainous"],
+  "theme": "theme-bulwark",
+  "traits": ["Battle Ready", "Combat Expert", "Combat Reflexes", "Connections", "Determination", "Situational Awareness"]
+}

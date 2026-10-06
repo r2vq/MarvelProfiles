@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "agility": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "resilience": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "vigilance": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "ego": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 1,
+      "ability": 1
+    },
+    "agility": {
+      "multiplier": 1,
+      "ability": 1
+    },
+    "ego": {
+      "multiplier": 1,
+      "ability": 1
+    },
+    "logic": {
+      "multiplier": 1,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 0,
+    "focus": 0
+  },
+  "focus": 60,
+  "health": 30,
+  "initiative": {
+    "value": 1,
+    "edge": true
+  },
+  "karma": 0,
+  "name": "Hydra Agent",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Hydra_Agent-002.avif",
+  "powers": ["Double Tap", "Snap Shooting", "Suppressive Fire", "Weapons Blazing"],
+  "rank": 2,
+  "secretIdentity": "Varies",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Secret Identity", "Villainous"],
+  "theme": "theme-bulwark",
+  "traits": ["Battle Ready", "Combat Expert", "Combat Reflexes", "Connections", "Determination", "Situational Awareness"]
+}
