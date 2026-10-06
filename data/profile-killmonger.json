@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 7,
+      "defense": 17,
+      "noncombat": 9
+    },
+    "agility": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "resilience": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "logic": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 6,
+      "ability": 7
+    },
+    "agility": {
+      "multiplier": 4,
+      "ability": 4
+    },
+    "ego": {
+      "multiplier": 4,
+      "ability": 1
+    },
+    "logic": {
+      "multiplier": 4,
+      "ability": 2
+    }
+  },
+  "damageReduction": {
+    "health": 2,
+    "focus": 0
+  },
+  "focus": 90,
+  "health": 90,
+  "initiative": {
+    "value": 3,
+    "edge": false
+  },
+  "karma": 0,
+  "name": "Killmonger",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Killmonger-19.avif",
+  "powers": ["Always Ready", "Attack Stance", "Battle Plan", "Brace for Impact", "Chain Strikes", "Counterstrike Technique", "Do This All Day", "Fast Strikes", "Focus Fire", "Heightened Senses 1", "Inspiration", "Keep Moving", "Mighty 1", "Mighty 2", "On Your Feet", "Rally On Me", "Sturdy 1", "Sturdy 2"],
+  "rank": 4,
+  "secretIdentity": "Erik Killmonger",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Authority", "Hunted", "Powerful", "Public Identity", "Supernatural"],
+  "theme": "theme-bulwark",
+  "traits": ["Bloodthirsty", "Enhanced Physique", "Extraordinary Origin", "Presence", "Public Speaking", "Tech Reliance"]
+}

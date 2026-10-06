@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 7,
+      "defense": 17,
+      "noncombat": 8
+    },
+    "agility": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "resilience": {
+      "ability": 6,
+      "defense": 16,
+      "noncombat": 6
+    },
+    "vigilance": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "ego": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 5,
+      "ability": 7
+    },
+    "agility": {
+      "multiplier": 4,
+      "ability": 4
+    },
+    "ego": {
+      "multiplier": 4,
+      "ability": 0
+    },
+    "logic": {
+      "multiplier": 4,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 1,
+    "focus": 0
+  },
+  "focus": 150,
+  "health": 180,
+  "initiative": {
+    "value": 4,
+    "edge": true
+  },
+  "karma": 0,
+  "name": "Sabretooth",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Sabretooth_Victor_Creed-18.avif",
+  "powers": ["Brawling", "Combat Trickery", "Exploit", "Fast Attacks", "Focused Fury", "Furious Attacks", "Healing Factor", "Heightened Senses 1", "Hit & Run", "Jump 1", "Mighty 1", "Reinforced Skeleton", "Riposte", "Unstoppable Assault", "Vicious Attack", "Whirling Frenzy"],
+  "rank": 4,
+  "secretIdentity": "Victor Creed",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 5 },
+  "tags": ["Extreme Appearance", "Hounded", "Krakoan", "Villainous", "X-Gene"],
+  "theme": "theme-bulwark",
+  "traits": ["Abrasive", "Battle Ready", "Berserker", "Combat Reflexes", "Connections", "Extraordinary Origin", "Situational Awareness", "Sneaky", "Tech Reliance"]
+}

@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "agility": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "resilience": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "vigilance": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "ego": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "agility": {
+      "multiplier": 2,
+      "ability": 3
+    },
+    "ego": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 1,
+    "focus": 0
+  },
+  "focus": 90,
+  "health": 30,
+  "initiative": {
+    "value": 2,
+    "edge": true
+  },
+  "karma": 0,
+  "name": "Viper",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Viper_02.avif",
+  "powers": ["Attack Stance", "Chain Strikes", "Combat Trickery", "Counterstrike Technique", "Defense Stance", "Do This All Day", "Fast Strikes", "Reverse-Momentum Throw", "Sturdy 1"],
+  "rank": 2,
+  "secretIdentity": "Ophelia Sarkissian",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Black Market Access", "Secret Identity", "Villainous"],
+  "theme": "theme-bulwark",
+  "traits": ["Battle Ready", "Beguiling", "Connections", "Determination", "Extra Occupation", "Leverage", "Situational Awareness"]
+}
