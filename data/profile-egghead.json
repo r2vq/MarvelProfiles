@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "agility": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 3
+    },
+    "resilience": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "vigilance": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "ego": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 3
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 14,
+      "noncombat": 6
+    }
+  },
+  "color": 2910622,
+  "damage": {
+    "melee": {
+      "multiplier": 2,
+      "ability": 0
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 2
+    },
+    "ego": {
+      "multiplier": 3,
+      "ability": 2
+    },
+    "logic": {
+      "multiplier": 4,
+      "ability": 4
+    }
+  },
+  "damageReduction": {
+    "health": 0,
+    "focus": 0
+  },
+  "focus": 30,
+  "health": 30,
+  "initiative": {
+    "value": 1,
+    "edge": false
+  },
+  "karma": 0,
+  "name": "Egghead",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Egghead_01.avif",
+  "powers": ["Accuracy 1", "Battle Plan", "Brilliance 1", "Brilliance 2", "Discipline 1", "Elemental Blast", "Elemental Burst"],
+  "rank": 2,
+  "secretIdentity": "Elihas Starr",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Black Market Access", "Lab Access", "Public Identity", "Signature Weapon", "Streetwise", "Villainous"],
+  "theme": "theme-bulwark",
+  "traits": ["Abrasive", "Connections", "Extra Occupation", "Inventor", "Scientific Expertise", "Tech Reliance"]
+}
