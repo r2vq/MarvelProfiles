@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 4,
+      "defense": 12,
+      "noncombat": 5
+    },
+    "agility": {
+      "ability": 5,
+      "defense": 13,
+      "noncombat": 5
+    },
+    "resilience": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 0,
+  "damage": {
+    "melee": {
+      "multiplier": 5,
+      "ability": 4
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 5
+    },
+    "ego": {
+      "multiplier": 3,
+      "ability": 0
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 1,
+    "focus": 0
+  },
+  "focus": 90,
+  "health": 120,
+  "initiative": {
+    "value": 3,
+    "edge": false 
+  },
+  "karma": 0,
+  "name": "Black Berserker",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Black_Berserker-001.avif",
+  "powers": ["Additional Limbs", "Environmental Protection", "Fast Attacks", "Flexible Bones 1", "Flgiht 1", "Flight 2", "Hit & Run", "Might 1", "Vicious Attack", "Wallcrawling", "Whirling Frenzy"],
+  "rank": 3,
+  "secretIdentity": "Varies",
+  "speed": { "Run": 30, "Climb": 30, "Swim": 15, "Jump": 15 },
+  "tags": ["Alien Heritage", "Mute", "Public Identity"],
+  "theme": "theme-bulwark",
+  "traits": ["Anathema", "Berserker", "Connections", "Extraordinary Origin", "Fresh Eyes", "Hive Mind", "Monster", "Stranger", "Unusual Size"]
+}

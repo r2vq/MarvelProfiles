@@ -8,6 +8,10 @@
         "file": "profile-barricade.json"
     },
     {
+        "name": "Black Berserkers",
+        "file": "profile-black-berserkers.json"
+    },
+    {
         "name": "Bulwark",
         "file": "profile-bulwark.json"
     },
