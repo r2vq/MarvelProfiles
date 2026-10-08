@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "agility": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "ego": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "logic": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    }
+  },
+  "color": 2067276,
+  "damage": {
+    "melee": {
+      "multiplier": 3,
+      "ability": 2
+    },
+    "agility": {
+      "multiplier": 3,
+      "ability": 4
+    },
+    "ego": {
+      "multiplier": 3,
+      "ability": 4
+    },
+    "logic": {
+      "multiplier": 3,
+      "ability": 1
+    }
+  },
+  "damageReduction": {
+    "health": 2,
+    "focus": 0
+  },
+  "focus": 90,
+  "health": 60,
+  "initiative": {
+    "value": 2,
+    "edge": true
+  },
+  "karma": 0,
+  "name": "Skrull",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Skrull-001.avif",
+  "powers": ["Disguise", "Double Tap", "Extended Reach 1", "Extended Reach 2", "Flexible Bones 1", "Flexible Bones 2", "Flexible Fingers", "Reverse Punch", "Rubberneck", "Shape-Shift", "Slip Free", "Stilt Steps", "Suppressive Fire"],
+  "rank": 3,
+  "secretIdentity": "Varies",
+  "speed": { "Run": 10, "Climb": 5, "Swim": 5, "Jump": 5 },
+  "tags": ["Alien Heritage", "Extreme Appearance", "Secret Identity", "Villainous"],
+  "theme": "theme-bulwark",
+  "traits": ["Battle Ready", "Combat Reflexes", "Connections", "Extra Occupation", "Fresh Eyes", "Situational Awareness", "Sneaky", "Stranger"]
+}
