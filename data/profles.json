@@ -1,0 +1,98 @@
+[
+    {
+        "name": "AIM Agent",
+        "file": "profile-aim-agent.json"
+    },
+    {
+        "name": "Barricade",
+        "file": "profile-barricade.json"
+    },
+    {
+        "name": "Bulwark",
+        "file": "profile-bulwark.json"
+    },
+    {
+        "name": "Cloak (Rivals)",
+        "file": "profile-cloak-rivals.json"
+    },
+    {
+        "name": "Dagger (Rivals)",
+        "file": "profile-dagger-rivals.json"
+    },
+    {
+        "name": "Ensign Dan",
+        "file": "profile-dan.json"
+    },
+    {
+        "name": "Egghead",
+        "file": "profile-egghead.json"
+    },
+    {
+        "name": "Elite Guard (Rivals)",
+        "file": "profile-elite-guard-rivals.json"
+    },
+    {
+        "name": "Evie",
+        "file": "profile-evie.json"
+    },
+    {
+        "name": "Hydra Agent",
+        "file": "profile-hydra-agent.json"
+    },
+    {
+        "name": "Hydra Officer",
+        "file": "profile-hydra-officer.json"
+    },
+    {
+        "name": "Iron Man (Rivals)",
+        "file": "profile-iron-man-rivals.json"
+    },
+    {
+        "name": "Jeff (Rivals)",
+        "file": "profile-jeff-rivals.json"
+    },
+    {
+        "name": "Killmonger",
+        "file": "profile-killmonger.json"
+    },
+    {
+        "name": "Lupin",
+        "file": "profile-lupin.json"
+    },
+    {
+        "name": "Magneto (Rivals)",
+        "file": "profile-magneto-rivals.json"
+    },
+    {
+        "name": "M.A.I.D.D.",
+        "file": "profile-maidd.json"
+    },
+    {
+        "name": "Novice Guard (Rivals)",
+        "file": "profile-novice-guard-rivals.json"
+    },
+    {
+        "name": "Psylocke (Rivals)",
+        "file": "profile-psylocke-rivals.json"
+    },
+    {
+        "name": "Sabretooth",
+        "file": "profile-sabretooth.json"
+    },
+    {
+        "name": "Skrull",
+        "file": "profile-skrull.json"
+    },
+    {
+        "name": "Vael",
+        "file": "profile-vael.json"
+    },
+    {
+        "name": "Venom (Rivals)",
+        "file": "profile-venom-rivals.json"
+    },
+    {
+        "name": "Viper",
+        "file": "profile-viper.json"
+    }
+]
