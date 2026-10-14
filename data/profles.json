@@ -1,5 +1,9 @@
 [
     {
+        "name": "Abomination",
+        "file": "profile-abomination.json"
+    },
+    {
         "name": "AIM Agent",
         "file": "profile-aim-agent.json"
     },

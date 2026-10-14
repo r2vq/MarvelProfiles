@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 8,
+      "defense": 17,
+      "noncombat": 11
+    },
+    "agility": {
+      "ability": 3,
+      "defense": 17,
+      "noncombat": 3
+    },
+    "resilience": {
+      "ability": 8,
+      "defense": 18,
+      "noncombat": 8
+    },
+    "vigilance": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "ego": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "logic": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    }
+  },
+  "color": 2067276,
+  "damage": {
+    "melee": {
+      "multiplier": 8,
+      "ability": 8
+    },
+    "agility": {
+      "multiplier": 5,
+      "ability": 3
+    },
+    "ego": {
+      "multiplier": 5,
+      "ability": 3
+    },
+    "logic": {
+      "multiplier": 5,
+      "ability": 4
+    }
+  },
+  "damageReduction": {
+    "health": 3,
+    "focus": 0
+  },
+  "focus": 90,
+  "health": 240,
+  "initiative": {
+    "value": 3,
+    "edge": false 
+  },
+  "karma": 0,
+  "name": "Abomination",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Abomination_-_Emil_Blonsky-024.avif",
+  "powers": ["Banging Heads", "Brawling", "Combat Trickery", "Clobber", "Crushing Grip", "Ground-Shaking Stomp", "Healing Factor", "Immovable", "Jump 1", "Jump 2", "Jump 3", "Mighty 1", "Mighty 2", "Mighty 3", "Quick Toss", "Smash", "Sturdy 1", "Sturdy 2", "Sturdy 3", "Unrelenting Smash"],
+  "rank": 5,
+  "secretIdentity": "Emil Blonsky",
+  "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 30 },
+  "tags": ["Black Market Access", "Extreme Appearance", "Green Door", "Immunity", "Linguist", "Public Identity", "Radioactive", "Villainous"],
+  "theme": "theme-bulwark",
+  "traits": ["Abrasive", "Berserker", "Big", "Bloodthirsty", "Connections", "Enduring Constitution", "Leverage", "Weird"]
+}
