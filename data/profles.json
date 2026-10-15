@@ -44,6 +44,10 @@
         "file": "profile-evie.json"
     },
     {
+        "name": "Helicarrier",
+        "file": "profile-helicarrier.json"
+    },
+    {
         "name": "Hydra Agent",
         "file": "profile-hydra-agent.json"
     },
