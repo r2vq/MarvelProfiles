@@ -2,18 +2,18 @@
   "abilities": {
     "melee": {
       "ability": 0,
-      "defense": 12,
+      "defense": 15,
       "noncombat": 0
     },
     "agility": {
-      "ability": 2,
-      "defense": 12,
-      "noncombat": 3
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 6
     },
     "resilience": {
-      "ability": 0,
-      "defense": 10,
-      "noncombat": 0
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
     },
     "vigilance": {
       "ability": 1,
@@ -26,48 +26,48 @@
       "noncombat": 0
     },
     "logic": {
-      "ability": 2,
-      "defense": 12,
-      "noncombat": 2
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
     }
   },
   "color": 6294283,
   "damage": {
     "melee": {
-      "multiplier": 1,
+      "multiplier": 2,
       "ability": 0
     },
     "agility": {
-      "multiplier": 2,
-      "ability": 2
+      "multiplier": 3,
+      "ability": 5
     },
     "ego": {
-      "multiplier": 1,
+      "multiplier": 2,
       "ability": 0
     },
     "logic": {
-      "multiplier": 1,
-      "ability": 2
+      "multiplier": 2,
+      "ability": 3
     }
   },
   "damageReduction": {
     "health": 0,
     "focus": 0
   },
-  "focus": 60,
-  "health": 10,
+  "focus": 90,
+  "health": 30,
   "initiative": {
     "value": 1,
     "edge": true
   },
-  "karma": 1,
+  "karma": 2,
   "name": "Ensign Dan",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/dan.jpeg",
-  "powers": ["Accuracy 1", "Double Tap", "Evasion", "Inspiration"],
-  "rank": 1,
+  "powers": ["Accuracy 1", "Double Tap", "Evasion", "Intuition", "Inspiration", "Postcognition 1", "Precognition 1", "Stopping Power"],
+  "rank": 2,
   "secretIdentity": "Dan Ketchum",
-  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 3 },
   "tags": ["Authority", "Backup", "Heroic", "Lab Access", "Obligation", "Patron"],
   "theme": "theme-lupin",
-  "traits": ["Battle Ready", "Connections", "Gearhead", "Situational Awareness", "Tech Reliance"]
+  "traits": ["Battle Ready","Combat Reflexes", "Connections", "Gearhead", "Situational Awareness", "Tech Reliance"]
 }
