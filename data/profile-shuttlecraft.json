@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "agility": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "resilience": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "vigilance": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "ego": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 2067276,
+  "damage": {
+    "melee": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "agility": {
+      "multiplier": 2,
+      "ability": 3
+    },
+    "ego": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 1,
+    "focus": 0
+  },
+  "focus": 100,
+  "health": 100,
+  "initiative": {
+    "value": 2,
+    "edge": true
+  },
+  "karma": 0,
+  "name": "Shuttlepod",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/shuttlepod.avif",
+  "powers": ["Elemental Barrier", "Elemental Blast (Energy)", "Elemental Burst (Energy)"],
+  "rank": 2,
+  "secretIdentity": "Shuttlepod",
+  "speed": { "Fly": 36 },
+  "tags": [],
+  "theme": "theme-bulwark",
+  "traits": []
+}
