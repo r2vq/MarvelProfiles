@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 1,
+      "defense": 15,
+      "noncombat": 1
+    },
+    "agility": {
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 5
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "ego": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 3148640,
+  "damage": {
+    "melee": {
+      "multiplier": 2,
+      "ability": 1
+    },
+    "agility": {
+      "multiplier": 2,
+      "ability": 5
+    },
+    "ego": {
+      "multiplier": 2,
+      "ability": 1
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 0,
+    "focus": 0
+  },
+  "focus": 60,
+  "health": 60,
+  "initiative": {
+    "value": 2,
+    "edge": false
+  },
+  "karma": 2,
+  "name": "Sparkie",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/evie-sparkie.avif",
+  "powers": ["Disrupt Electronics", "Elemental Barrier (Electricity)", "Elemental Blast (Electricity)", "Electricity Burst (Electricity)", "Evasion", "Phase Self", "Phase Walk"],
+  "rank": 2,
+  "secretIdentity": "Evie",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Alien Heritage", "Extreme Appearance", "Heroic", "Mute", "Mysterious", "Young"],
+  "theme": "theme-evie",
+  "traits": ["Berry Stash", "Connections", "Fresh Eyes", "Sneaky", "Stranger"]
+}

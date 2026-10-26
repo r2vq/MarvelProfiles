@@ -20,6 +20,10 @@
     "value": "The character has an edge when making an Ego check to persuade someone who could be attracted to them."
   },
   {
+    "name": "Berry Stash",
+    "value": "The character always has a berry available. Once per battle, the character can consume the berry or give it to a target. Consuming a berry will heal 10hp."
+  },
+  {
     "name": "Berserker",
     "value": "The character often loses control of their temper. Any time they take physical damage, they must make an Ego check with a TN equal to the amount of damage done. If they fail, they go berserk and must charge at full speed into combat with the enemy who hurt them.\n\nBeing berserk gives the character an edge on all close attacks and adds +2 to their Melee, Resilience and Ego defenses. However, it takes -2 from their Agility defense, and they cannot use ranged weapons.\n\nIf the character defeats the enemy who hurt them, they must then charge to attack the next closest foe.\n\nAt the end of the character's turn, they lose 5 Focus. When their Focus is reduced to the point that the character could not voluntarily spend any more Focus—or if there are no enemies in sight—the berserk state automatically ends."
   },

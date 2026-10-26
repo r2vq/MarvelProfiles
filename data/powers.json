@@ -1512,6 +1512,18 @@
     "effect": "The character forms a wall of their element within their line of sight and up to 10 spaces away per rank. This covers up to 2 spaces across (vertically/horizontally) per their rank. The character makes an Agility check and compares the results against the Agility defense of any target in the affected spaces. On a success, the character chooses which side of the barrier the target winds up on. On a failure, the target chooses. On a Fantastic success, the target becomes Blinded for 1 round.\n\nAttacks against the barrier are against the character's Ego defense. Any attacks against it that do 10 points of damage or less are instantly absorbed, and the barrier continues. If an attack does more than 10 points of damage, it destroys the barrier. Either way, the attack leaves those behind the barrier unharmed."
   },
   {
+    "name": "Elemental Barrier (Fire)",
+    "text": "The character forms a wall of their element.",
+    "power_set": ["Elemental Control"],
+    "prerequisites": ["Elemental Blast", "Rank 2"],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Concentration",
+    "range": "",
+    "cost": "5 Focus",
+    "effect": "The character forms a wall of their element within their line of sight and up to 10 spaces away per rank. This covers up to 2 spaces across (vertically/horizontally) per their rank. The character makes an Agility check and compares the results against the Agility defense of any target in the affected spaces. On a success, the character chooses which side of the barrier the target winds up on. On a failure, the target chooses. On a Fantastic success, the target also is set ablaze.\n\nAttacks against the barrier are against the character's Ego defense. Any attacks against it that do 10 points of damage or less are instantly absorbed, and the barrier continues. If an attack does more than 10 points of damage, it destroys the barrier. Either way, the attack leaves those behind the barrier unharmed."
+  },
+  {
     "name": "Elemental Barrier (Hellfire)",
     "text": "The character forms a wall of their element.",
     "power_set": ["Elemental Control"],
@@ -1668,6 +1680,18 @@
     "effect": "The character makes a ranged attack with an edge at an enemy in line of sight. For this attack, add +1 to the character's Agility damage bonus for every 2 points of Focus they spend. On a success, an affected target takes that total damage. On a Fantastic success, an affected target takes double that total damage and becomes Blinded for 1 round."
   },
   {
+    "name": "Elemental Blast (Fire)",
+    "text": "The character blasts a foe with their element.",
+    "power_set": ["Elemental Control"],
+    "prerequisites": ["Elemental Burst", "Rank 2"],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Instant",
+    "range": "10 spaces",
+    "cost": "5 or more Focus",
+    "effect": "The character makes a ranged attack with an edge at an enemy in line of sight. For this attack, add +1 to the character's Agility damage bonus for every 2 points of Focus they spend. On a success, an affected target takes that total damage. On a Fantastic success, an affected target takes double that total damage and ."
+  },
+  {
     "name": "Elemental Blast (Hellfire)",
     "text": "The character blasts a foe with their element.",
     "power_set": ["Elemental Control"],
@@ -1822,6 +1846,18 @@
     "range": "10 spaces",
     "cost": "",
     "effect": "The character makes a ranged attack against an enemy in line of sight. If the attack is a success, it inflicts regular damage. On a Fantastic success, the enemy takes double damage instead and becomes Blinded for 1 round."
+  },
+  {
+    "name": "Elemental Burst (Fire)",
+    "text": "The character fires a burst of their element.",
+    "power_set": ["Elemental Control"],
+    "prerequisites": [],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Instant",
+    "range": "10 spaces",
+    "cost": "",
+    "effect": "The character makes a ranged attack against an enemy in line of sight. If the attack is a success, it inflicts regular damage. On a Fantastic success, the enemy takes double damage instead and is set ablaze."
   },
   {
     "name": "Elemental Burst (Hellfire)",
@@ -2506,6 +2542,18 @@
     "range": "",
     "cost": "Same as the character's Elemental Protection power",
     "effect": "The character picks a point within their line of sight and traps any chosen targets within up to 5 spaces times their rank-in a prison comprised of their element. When the Elemental Prison is formed, the character makes an Ego check and compares the results against the Agility defense of targets inside the enclosed spaces. On each success, the character traps the target within the prison's perimeter. On a Fantastic success, such imprisoned people suffer full damage and becomes Blinded for 1 round\n\nAttacks against the prison are against the character's Ego defense. Any attacks against the prison are absorbed as if made against the character's Elemental Protection power, and the prison continues. If an attack does more damage than the character's Elemental Protection power can sustain, it destroys the prison, but no one inside is harmed."
+  },
+  {
+    "name": "Elemental Prison (Fire)",
+    "text": "The character can create a cage of their element.",
+    "power_set": ["Elemental Control"],
+    "prerequisites": ["Elemental Protection 1"],
+    "action": ["Standard"],
+    "trigger": "",
+    "duration": "Concentration",
+    "range": "",
+    "cost": "Same as the character's Elemental Protection power",
+    "effect": "The character picks a point within their line of sight and traps any chosen targets within up to 5 spaces times their rank-in a prison comprised of their element. When the Elemental Prison is formed, the character makes an Ego check and compares the results against the Agility defense of targets inside the enclosed spaces. On each success, the character traps the target within the prison's perimeter. On a Fantastic success, such imprisoned people suffer full damage and they are set ablaze.\n\nAttacks against the prison are against the character's Ego defense. Any attacks against the prison are absorbed as if made against the character's Elemental Protection power, and the prison continues. If an attack does more damage than the character's Elemental Protection power can sustain, it destroys the prison, but no one inside is harmed."
   },
   {
     "name": "Elemental Prison (Force)",
@@ -3898,6 +3946,18 @@
     "range": "",
     "cost": "Same as the character's Elemental Protection power",
     "effect": "The character envelops themselves-and any chosen people within up to 5 spaces times their rank-in a protective sphere comprised of their element.\n\nWhen the sphere is formed, the character makes an Ego check and compares the results against the Agility defense of unwanted characters in the enclosed spaces. On a success, the character can move any unwanted people within the sphere's perimeter to spaces outside of the sphere. On a Fantastic success, such moved people suffer full damage and become Blinded for 1 round.\n\nAttacks against the sphere are against the character's Ego defense. Any attacks against the sphere are absorbed as if made against the character's Elemental Protection power, and the sphere continues. If an attack does more damage than the character's Elemental Protection power can sustain, it destroys the sphere, but no one inside is harmed."
+  },
+  {
+    "name": "Elemental Sphere (Fire)",
+    "text": "The character can create a protective sphere of their element.",
+    "power_set": ["Elemental Control"],
+    "prerequisites": ["Elemental Protection 1"],
+    "action": ["Standard", "Reaction"],
+    "trigger": "",
+    "duration": "Concentration",
+    "range": "",
+    "cost": "Same as the character's Elemental Protection power",
+    "effect": "The character envelops themselves-and any chosen people within up to 5 spaces times their rank-in a protective sphere comprised of their element.\n\nWhen the sphere is formed, the character makes an Ego check and compares the results against the Agility defense of unwanted characters in the enclosed spaces. On a success, the character can move any unwanted people within the sphere's perimeter to spaces outside of the sphere. On a Fantastic success, such moved people suffer full damage and they are set ablaze.\n\nAttacks against the sphere are against the character's Ego defense. Any attacks against the sphere are absorbed as if made against the character's Elemental Protection power, and the sphere continues. If an attack does more damage than the character's Elemental Protection power can sustain, it destroys the sphere, but no one inside is harmed."
   },
   {
     "name": "Elemental Sphere (Hellfire)",

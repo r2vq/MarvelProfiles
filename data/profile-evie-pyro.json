@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "agility": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "resilience": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "vigilance": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 2
+    },
+    "ego": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "logic": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    }
+  },
+  "color": 3148640,
+  "damage": {
+    "melee": {
+      "multiplier": 2,
+      "ability": 0
+    },
+    "agility": {
+      "multiplier": 2,
+      "ability": 2
+    },
+    "ego": {
+      "multiplier": 2,
+      "ability": 4
+    },
+    "logic": {
+      "multiplier": 2,
+      "ability": 0
+    }
+  },
+  "damageReduction": {
+    "health": 1,
+    "focus": 0
+  },
+  "focus": 60,
+  "health": 60,
+  "initiative": {
+    "value": 2,
+    "edge": false
+  },
+  "karma": 2,
+  "name": "Pyro",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/evie-pyro.avif",
+  "powers": ["Elemental Barrier (Fire)", "Elemental Blast (Fire)", "Elemental Burst (Fire)", "Elemental Grab (Fire)", "Elemental Prison (Fire)", "Elemental Protection 1 (Fire)", "Elemental Sphere (Fire)", "Environmental Protection", "Reinforced Skeleton"],
+  "rank": 2,
+  "secretIdentity": "Evie",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "tags": ["Alien Heritage", "Extreme Appearance", "Heroic", "Mute", "Mysterious", "Young"],
+  "theme": "theme-evie",
+  "traits": ["Berry Stash", "Connections", "Fresh Eyes", "Signature Attack", "Stranger"]
+}

@@ -44,6 +44,18 @@
         "file": "profile-evie.json"
     },
     {
+        "name": "Evie - Pyro",
+        "file": "profile-evie-pyro.json"
+    },
+    {
+        "name": "Evie - Rainer",
+        "file": "profile-evie-rainer.json"
+    },
+    {
+        "name": "Evie - Sparkie",
+        "file": "profile-evie-sparkie.json"
+    },
+    {
         "name": "Helicarrier",
         "file": "profile-helicarrier.json"
     },
