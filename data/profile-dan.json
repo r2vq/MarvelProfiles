@@ -69,5 +69,5 @@
   "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 3 },
   "tags": ["Authority", "Backup", "Heroic", "Lab Access", "Obligation", "Patron"],
   "theme": "theme-lupin",
-  "traits": ["Battle Ready","Combat Reflexes", "Connections", "Gearhead", "Situational Awareness", "Tech Reliance"]
+  "traits": ["Battle Ready","Combat Reflexes", "Connections", "Gearhead", "Piloting", "Situational Awareness"]
 }
