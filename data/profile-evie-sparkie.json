@@ -63,10 +63,10 @@
   "karma": 2,
   "name": "Sparkie",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/evie-sparkie.avif",
-  "powers": ["Disrupt Electronics", "Elemental Barrier (Electricity)", "Elemental Blast (Electricity)", "Electricity Burst (Electricity)", "Evasion", "Phase Self", "Phase Walk"],
+  "powers": ["Disrupt Electronics", "Elemental Barrier (Electricity)", "Elemental Blast (Electricity)", "Elemental Burst (Electricity)", "Evasion", "Phase Self", "Phase Walk"],
   "rank": 2,
   "secretIdentity": "Evie",
-  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 3 },
+  "speed": { "Run": 6, "Climb": 3, "Swim": 3, "Jump": 3 },
   "tags": ["Alien Heritage", "Extreme Appearance", "Heroic", "Mute", "Mysterious", "Young"],
   "theme": "theme-evie",
   "traits": ["Berry Stash", "Connections", "Fresh Eyes", "Sneaky", "Stranger"]
