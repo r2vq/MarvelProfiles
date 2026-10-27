@@ -2,23 +2,23 @@
   "abilities": {
     "melee": {
       "ability": -3,
-      "defense": 7,
+      "defense": 12,
       "noncombat": -3
     },
     "agility": {
       "ability": 2,
       "defense": 12,
-      "noncombat": 3
-    },
-    "resilience": {
-      "ability": 2,
-      "defense": 12,
       "noncombat": 2
     },
+    "resilience": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
     "vigilance": {
-      "ability": 0,
-      "defense": 10,
-      "noncombat": 0
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
     },
     "ego": {
       "ability": 0,
@@ -26,48 +26,48 @@
       "noncombat": 0
     },
     "logic": {
-      "ability": 4,
-      "defense": 14,
-      "noncombat": 5
+      "ability": 5,
+      "defense": 15,
+      "noncombat": 6
     }
   },
   "color": 4857611,
   "damage": {
     "melee": {
-      "multiplier": 1,
+      "multiplier": 2,
       "ability": -3
     },
     "agility": {
-      "multiplier": 1,
+      "multiplier": 2,
       "ability": 2
     },
     "ego": {
-      "multiplier": 1,
+      "multiplier": 2,
       "ability": 0
     },
     "logic": {
-      "multiplier": 2,
-      "ability": 4
+      "multiplier": 3,
+      "ability": 5
     }
   },
   "damageReduction": {
-    "health": 1,
+    "health": 0,
     "focus": 0
   },
-  "focus": 10,
-  "health": 60,
+  "focus": 90,
+  "health": 90,
   "initiative": {
-    "value": 0,
+    "value": 3,
     "edge": false
   },
-  "karma": 1,
+  "karma": 2,
   "name": "M.A.I.D.D.",
   "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/maidd.jpeg",
-  "powers": ["Telekinetic Manipulation", "Sturdy 1", "Brilliance 1", "Evasion"],
-  "rank": 1,
+  "powers": ["Brilliance 1", "Evasion", "Flight 1", "Telekinetic Attack", "Telekinetic Barrier", "Telekinetic Grab", "Telekinetic Manipulation", "Telekinetic Protection 1", "Telekinetic Sphere"],
+  "rank": 2,
   "secretIdentity": "Mobile Android for Intensive Dust Destruction",
-  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 5 },
-  "tags": ["Extreme Appearance", "Heroic", "AI", "Obligation"],
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Flight": 10 },
+  "tags": ["A.I.", "Extreme Appearance", "Heroic", "Lab Access", "Obligation"],
   "theme": "theme-maidd",
-  "traits": ["Stranger", "Tech Reliance", "Fresh Eyes", "Connections", "Combat Reflexes"]
+  "traits": ["Combat Reflexes", "Connections", "Extra Occupation", "Fresh Eyes", "Gearhead", "Inventor", "Stranger", "Tech Reliance"]
 }
