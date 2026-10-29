@@ -118,5 +118,9 @@
     {
         "name": "Viper",
         "file": "profile-viper.json"
+    },
+    {
+        "name": "Zombie",
+        "file": "profile-zombie.json"
     }
 ]

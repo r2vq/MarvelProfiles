@@ -1,0 +1,73 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "agility": {
+      "ability": 1,
+      "defense": 11,
+      "noncombat": 1
+    },
+    "resilience": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "vigilance": {
+      "ability": 0,
+      "defense": 10,
+      "noncombat": 0
+    },
+    "ego": {
+      "ability": -1,
+      "defense": 9,
+      "noncombat": -1
+    },
+    "logic": {
+      "ability": -1,
+      "defense": 9,
+      "noncombat": -1
+    }
+  },
+  "color": 2067276,
+  "damage": {
+    "melee": {
+      "multiplier": 1,
+      "ability": 1
+    },
+    "agility": {
+      "multiplier": 1,
+      "ability": 1
+    },
+    "ego": {
+      "multiplier": 1,
+      "ability": -1
+    },
+    "logic": {
+      "multiplier": 1,
+      "ability": -1
+    }
+  },
+  "damageReduction": {
+    "health": 0,
+    "focus": 0
+  },
+  "focus": 10,
+  "health": 10,
+  "initiative": {
+    "value": 0,
+    "edge": false 
+  },
+  "karma": 0,
+  "name": "Zombie",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/zombie.avif",
+  "powers": [],
+  "rank": 1,
+  "secretIdentity": "Varies",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Jump": 30 },
+  "tags": [],
+  "theme": "theme-bulwark",
+  "traits": []
+}
