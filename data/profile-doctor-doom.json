@@ -1,0 +1,70 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 2,
+      "defense": 12,
+      "noncombat": 3
+    },
+    "agility": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "resilience": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "vigilance": {
+      "ability": 4,
+      "defense": 14,
+      "noncombat": 4
+    },
+    "ego": {
+      "ability": 7,
+      "defense": 17,
+      "noncombat": 9
+    },
+    "logic": {
+      "ability": 6,
+      "defense": 16,
+      "noncombat": 7
+    }
+  },
+  "color": 2067276,
+  "damage": {
+    "melee": {
+      "multiplier": 6,
+      "ability": 2
+    },
+    "agility": {
+      "multiplier": 5,
+      "ability": 3
+    },
+    "ego": {
+      "multiplier": 7,
+      "ability": 7
+    },
+    "logic": {
+      "multiplier": 6,
+      "ability": 6
+    }
+  },
+  "damageReduction": 2,
+  "focus": 120,
+  "health": 90,
+  "initiative": {
+    "value": 4,
+    "edge": false
+  },
+  "karma": 0,
+  "name": "Doctor Doom",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Doctor_Doom-001.avif",
+  "powers": ["Astral Form", "Attack Stance", "Brilliance 1", "Crimson Bands of Cyttorak", "Defense Stance", "Discipline 1", "Discipline 2", "Dispel Spell", "Elemental Barrier", "Elemental Blast", "Elemental Burst", "Flames of the Faltine", "Flight 1", "Machine Telepathy", "Mighty 1", "Sturdy 1", "Sturdy 2", "Summon Portal", "Telepathic Link", "Uncanny 1", "Uncanny 2"],
+  "rank": 5,
+  "secretIdentity": "Victor Von Doom",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Flight": 25 },
+  "tags": ["Authority", "Extreme Appearance", "Lab Access", "Linguist", "Powerful", "Public Identity", "Sorcerous", "Supernatural", "Villainous"],
+  "theme": "theme-vael",
+  "traits": ["Combat Expert", "Font of Information", "Inventor", "Iron Will", "Piloting", "Presence", "Tech Reliance"]
+}
