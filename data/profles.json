@@ -32,6 +32,10 @@
         "file": "profile-doctor-doom.json"
     },
     {
+        "name": "Doctor Strange",
+        "file": "profile-doctor-strange.json"
+    },
+    {
         "name": "Ensign Dan",
         "file": "profile-dan.json"
     },

@@ -1,0 +1,70 @@
+{
+  "abilities": {
+    "melee": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "agility": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 4
+    },
+    "resilience": {
+      "ability": 3,
+      "defense": 13,
+      "noncombat": 3
+    },
+    "vigilance": {
+      "ability": 7,
+      "defense": 17,
+      "noncombat": 7
+    },
+    "ego": {
+      "ability": 9,
+      "defense": 19,
+      "noncombat": 13
+    },
+    "logic": {
+      "ability": 6,
+      "defense": 16,
+      "noncombat": 7
+    }
+  },
+  "color": 4857611,
+  "damage": {
+    "melee": {
+      "multiplier": 6,
+      "ability": 3
+    },
+    "agility": {
+      "multiplier": 7,
+      "ability": 3
+    },
+    "ego": {
+      "multiplier": 10,
+      "ability": 9
+    },
+    "logic": {
+      "multiplier": 7,
+      "ability": 6
+    }
+  },
+  "damageReduction": 0,
+  "focus": 210,
+  "health": 90,
+  "initiative": {
+    "value": 7,
+    "edge": false
+  },
+  "karma": 6,
+  "name": "Doctor Strange",
+  "photoUrl": "https://r2vq.github.io/MarvelProfiles/img/Doctor_Strange-001.avif",
+  "powers": ["Accuracy 1", "Astral Form", "Attack Stance", "Bolts of Balthakk", "Brilliance 1", "Crimson Bands of Cyttorak", "Defense Stance", "Discipline 1", "Discipline 2", "Discipline 3", "Discipline 4", "Dispel Spell", "Do This All Day", "Flames of the Faltine", "Flight 1", "Flight 2", "Icy Tendrils of Ikthalon", "Images of Ikonn", "Mists of Morpheus", "Mists of Munnopor", "Shield of the Seraphim", "Summon Portal", "Telepathic Link", "Telepathic Network", "Vapors of Valtorr", "Winds of Watoomb"],
+  "rank": 6,
+  "secretIdentity": "Stephen Vincent Strange",
+  "speed": { "Run": 5, "Climb": 3, "Swim": 3, "Flight": 30 },
+  "tags": ["Enemy", "Heroic", "Public Identity", "Sorcerous", "Supernatural"],
+  "theme": "theme-vael",
+  "traits": ["Abrasive", "Clinician", "Combat Reflexes", "First Aid", "Font of Information", "Honest", "Iron Will", "Loner"]
+}
